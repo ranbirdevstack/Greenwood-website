@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Institutional Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen antialiased selection:bg-amber-300 selection:text-slate-900">
+
+  <div class="bg-amber-400 text-slate-950 font-bold px-4 py-2 text-xs flex items-center justify-between shadow-inner">
+    <div class="flex items-center space-x-2 overflow-hidden">
+      <span class="bg-black text-amber-300 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">Notice</span>
+      <span class="truncate">Admissions open for Session 2026-27 &bull; Term 1 Datesheets Published &bull; Scholarship Test Registrations Open</span>
+    </div>
+    <button onclick="navigate('admissions')" class="underline text-xs whitespace-nowrap ml-2 font-extrabold hover:text-indigo-950">Apply Online</button>
+  </div>
+
+  <header class="bg-indigo-950 text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap justify-between items-center gap-4">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="navigate('home')">
+        <div class="w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center font-black text-slate-950 text-xl shadow-md">
+          🏫
+        </div>
+        <div>
+          <span id="brandNameDisplay" class="text-xl font-black tracking-tight block">Greenwood Public School</span>
+          <span id="brandTaglineDisplay" class="text-[10px] tracking-widest text-indigo-300 uppercase block font-semibold">Affiliated to CBSE &bull; New Delhi</span>
+        </div>
+      </div>
+
+      <nav class="flex items-center flex-wrap gap-1 text-xs font-semibold">
+        <button onclick="navigate('home')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-home">Home</button>
+        <button onclick="navigate('about')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-about">About Us</button>
+        <button onclick="navigate('academics')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-academics">Academics</button>
+        <button onclick="navigate('events')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-events">Calendar</button>
+        <button onclick="navigate('notices')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-notices">Notices</button>
+        <button onclick="navigate('gallery')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-gallery">Gallery</button>
+        <button onclick="navigate('admissions')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-admissions">Admissions</button>
+        <button onclick="navigate('portal')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-portal">Student Portal</button>
+        <button onclick="navigate('contact')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-contact">Contact</button>
+        <button onclick="navigate('admin')" class="px-3.5 py-1.5 rounded-lg bg-amber-400 text-slate-950 font-bold hover:bg-amber-300 transition shadow-sm ml-2">Admin Hub</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl mx-auto w-full p-4 sm:p-6">
+
+    <section id="page-home" class="page-view space-y-12">
+      <div class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-900 text-white rounded-3xl p-8 sm:p-14 shadow-xl relative overflow-hidden">
+        <div class="max-w-2xl relative z-10 space-y-4">
+          <span class="px-3 py-1 bg-amber-400 text-slate-950 text-xs font-bold rounded-full uppercase tracking-wider">Session 2026-2027</span>
+          <h1 id="heroTitleDisplay" class="text-4xl sm:text-5xl font-extrabold leading-tight">Welcome to Greenwood Public School</h1>
+          <p class="text-indigo-200 text-sm sm:text-base leading-relaxed">Inspiring intellectual curiosity, innovative thinking, and grounded human character in an environment designed for holistic growth.</p>
+          <div class="pt-2 flex flex-wrap gap-4">
+            <button onclick="navigate('admissions')" class="bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-amber-300 transition">Online Admission Form</button>
+            <button onclick="navigate('portal')" class="bg-indigo-900/80 border border-indigo-700 text-white font-semibold px-6 py-3 rounded-xl hover:bg-indigo-800 transition">Check Student Status</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-3xl font-extrabold text-indigo-950">2,400+</div>
+          <div class="text-xs text-slate-500 font-semibold uppercase mt-1">Students Enrolled</div>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-3xl font-extrabold text-indigo-950">100%</div>
+          <div class="text-xs text-slate-500 font-semibold uppercase mt-1">Board Pass Record</div>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-3xl font-extrabold text-indigo-950">1:20</div>
+          <div class="text-xs text-slate-500 font-semibold uppercase mt-1">Faculty Ratio</div>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-3xl font-extrabold text-indigo-950">15 Acres</div>
+          <div class="text-xs text-slate-500 font-semibold uppercase mt-1">Smart Campus</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-about" class="page-view hidden space-y-8">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-3xl font-extrabold text-slate-900">About Our Campus</h2>
+        <p class="text-slate-500 text-sm mt-1">Core institutional values, leadership, and regulatory safety compliances.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+        <div class="space-y-4 text-slate-700 text-sm leading-relaxed">
+          <h3 class="text-xl font-bold text-slate-900">Principal's Address</h3>
+          <p>We believe every child deserves a stimulating environment that balances academic focus with competitive sports, artistic expression, and ethical character.</p>
+          <p>Our faculty leverages technology-enabled smart classes, robotics prototyping, and tailored student mentoring to prepare our graduates for top global universities.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-sm text-slate-800">Mandatory Public Compliance Disclosures</h4>
+          <div class="text-xs space-y-2 divide-y divide-slate-100">
+            <div class="pt-2 flex justify-between"><span>Affiliation Number:</span> <strong class="font-mono">2130849</strong></div>
+            <div class="pt-2 flex justify-between"><span>Fire & Structural Safety:</span> <span class="text-emerald-600 font-semibold">Certified Valid</span></div>
+            <div class="pt-2 flex justify-between"><span>Clean Drinking Water & Sanitation:</span> <span class="text-emerald-600 font-semibold">Certified Safe</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-academics" class="page-view hidden space-y-8">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-3xl font-extrabold text-slate-900">Curriculum & Wings</h2>
+        <p class="text-slate-500 text-sm mt-1">Comprehensive pedagogical structure aligned with NEP guidelines.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded">Classes 1 - 5</span>
+          <h3 class="text-lg font-bold text-slate-900">Primary Wing</h3>
+          <p class="text-xs text-slate-600">Language phonics, activity-based mathematics, and fundamental motor development.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded">Classes 6 - 8</span>
+          <h3 class="text-lg font-bold text-slate-900">Middle School Wing</h3>
+          <p class="text-xs text-slate-600">Hands-on lab sciences, algebra, foundational coding logic, and competitive team athletics.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded">Classes 9 - 12</span>
+          <h3 class="text-lg font-bold text-slate-900">Senior Secondary</h3>
+          <p class="text-xs text-slate-600">Dedicated Science (PCM/PCB), Commerce, and Humanities tracks with national competitive exam guidance.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-events" class="page-view hidden space-y-8">
+      <div class="border-b border-slate-200 pb-4 flex justify-between items-center">
+        <div>
+          <h2 class="text-3xl font-extrabold text-slate-900">Academic Calendar & Events</h2>
+          <p class="text-slate-500 text-xs mt-1">Click on any event or calendar date to see timings and venue details.</p>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold">Live Synced</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div id="calendar"></div>
+        </div>
+        <div class="space-y-4">
+          <h3 class="font-bold text-base text-slate-800 flex justify-between">
+            <span>Upcoming Events</span>
+            <span id="eventsCount" class="text-xs font-normal text-slate-400"></span>
+          </h3>
+          <div id="eventsList" class="space-y-3 max-h-[500px] overflow-y-auto pr-1">
+            <p class="text-xs text-slate-400">Loading events...</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="eventModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-4">
+          <div class="flex justify-between items-start">
+            <span id="modalDateBadge" class="bg-indigo-50 text-indigo-700 font-bold px-3 py-1 rounded-full text-xs font-mono"></span>
+            <button onclick="closeEventModal()" class="text-slate-400 hover:text-slate-700 text-lg font-bold">✕</button>
+          </div>
+          <h3 id="modalTitle" class="text-xl font-extrabold text-slate-900 leading-snug"></h3>
+          <p id="modalDesc" class="text-xs text-slate-600 leading-relaxed"></p>
+          <div class="bg-slate-50 p-3 rounded-xl space-y-1 text-xs">
+            <p>⏰ <strong>Time:</strong> <span id="modalTime"></span></p>
+            <p>📍 <strong>Location:</strong> <span id="modalLocation"></span></p>
+          </div>
+          <button onclick="closeEventModal()" class="w-full py-2 bg-indigo-950 text-white rounded-xl text-xs font-bold hover:bg-indigo-900">Close</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-notices" class="page-view hidden space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-3xl font-extrabold text-slate-900">Circulars & Notices</h2>
+        <p class="text-slate-500 text-sm mt-1">Official circulars, exam schedules, and holiday announcements.</p>
+      </div>
+      <div id="noticesList" class="grid gap-4 md:grid-cols-2">
+        <p class="text-xs text-slate-400">Loading notices...</p>
+      </div>
+    </section>
+
+    <section id="page-gallery" class="page-view hidden space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex flex-wrap justify-between items-center gap-4">
+        <div>
+          <h2 class="text-3xl font-extrabold text-slate-900">Campus Gallery</h2>
+          <p class="text-slate-500 text-sm mt-1">Snapshots of school life, academic laboratories, and athletic meets.</p>
+        </div>
+        <button onclick="fetchGallery()" class="px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold rounded-lg text-xs transition">
+          🔄 Refresh Gallery
+        </button>
+      </div>
+
+      <div id="galleryCategoryFilter" class="flex flex-wrap gap-2 text-xs font-semibold">
+        <button onclick="filterGallery('All')" class="gal-chip px-3 py-1 rounded-full bg-indigo-950 text-white">All Photos</button>
+      </div>
+
+      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <p class="text-xs text-slate-400">Loading gallery...</p>
+      </div>
+
+      <div id="galleryLightbox" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="relative max-w-3xl w-full" onclick="event.stopPropagation()">
+          <img id="lightboxImg" src="" alt="Enlarged View" class="max-h-[80vh] w-auto mx-auto rounded-2xl shadow-2xl object-contain">
+          <div class="p-4 text-center text-white space-y-1">
+            <h4 id="lightboxTitle" class="font-bold text-lg"></h4>
+            <span id="lightboxCategory" class="text-xs text-amber-300 font-semibold uppercase"></span>
+          </div>
+          <button onclick="closeLightbox()" class="absolute -top-3 -right-3 w-8 h-8 bg-white text-black font-bold rounded-full shadow-lg flex items-center justify-center">✕</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-admissions" class="page-view hidden space-y-8">
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900">Fee Matrix (2026-27)</h2>
+          <p class="text-xs text-slate-500">Regulated quarterly tuition fees in Indian Rupees (₹).</p>
+          <div class="border rounded-2xl overflow-hidden text-xs">
+            <table class="w-full text-left">
+              <thead class="bg-slate-50 border-b">
+                <tr><th class="p-3">Class</th><th class="p-3">Admission</th><th class="p-3">Quarterly</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                <tr><td class="p-3">Pre-Primary</td><td class="p-3">₹15,000</td><td class="p-3">₹12,500</td></tr>
+                <tr><td class="p-3">Classes 1 - 5</td><td class="p-3">₹20,000</td><td class="p-3">₹16,000</td></tr>
+                <tr><td class="p-3">Classes 6 - 8</td><td class="p-3">₹25,000</td><td class="p-3">₹19,500</td></tr>
+                <tr><td class="p-3">Classes 9 - 10</td><td class="p-3">₹30,000</td><td class="p-3">₹24,000</td></tr>
+                <tr><td class="p-3">Classes 11 - 12</td><td class="p-3">₹35,000</td><td class="p-3">₹28,500</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900">Apply for Admission</h2>
+          <form onsubmit="handleAdmissionSubmit(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block font-semibold mb-1">Student's Full Name</label>
+              <input type="text" id="admStudent" required class="w-full p-2.5 border rounded-xl">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-semibold mb-1">Parent's Name</label>
+                <input type="text" id="admParent" required class="w-full p-2.5 border rounded-xl">
+              </div>
+              <div>
+                <label class="block font-semibold mb-1">Class Applying For</label>
+                <select id="admGrade" required class="w-full p-2.5 border rounded-xl bg-white">
+                  <option value="Nursery">Nursery</option>
+                  <option value="Class 1">Class 1</option>
+                  <option value="Class 6">Class 6</option>
+                  <option value="Class 9">Class 9</option>
+                  <option value="Class 11 (PCM)">Class 11 (PCM)</option>
+                  <option value="Class 11 (Commerce)">Class 11 (Commerce)</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-semibold mb-1">Mobile Number</label>
+                <input type="tel" id="admPhone" required class="w-full p-2.5 border rounded-xl">
+              </div>
+              <div>
+                <label class="block font-semibold mb-1">Email Address</label>
+                <input type="email" id="admEmail" required class="w-full p-2.5 border rounded-xl">
+              </div>
+            </div>
+            <button type="submit" class="w-full py-3 bg-amber-400 text-slate-950 font-bold rounded-xl hover:bg-amber-300 transition">Submit Admission Application &rarr;</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-portal" class="page-view hidden space-y-6">
+      <div class="max-w-xl mx-auto bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">Student Record Verification</h2>
+          <p class="text-slate-500 text-xs mt-1">Enter Student ID (e.g. STU101) to verify attendance, grades, and fee clearance status.</p>
+        </div>
+        <form onsubmit="handlePortalLookup(event)" class="flex gap-2">
+          <input type="text" id="portalId" placeholder="e.g. STU101" required class="flex-grow p-2.5 border rounded-xl text-xs font-mono">
+          <button type="submit" class="bg-indigo-950 text-white px-5 rounded-xl text-xs font-bold hover:bg-indigo-900">Search</button>
+        </form>
+        <div id="portalResult" class="hidden border-t pt-4 space-y-2 text-xs"></div>
+      </div>
+    </section>
+
+    <section id="page-contact" class="page-view hidden space-y-8">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900">Get in Touch</h2>
+          <p class="text-xs text-slate-600">Contact our administrative front desk for visits, campus admissions, and transport routes.</p>
+          <div class="space-y-2 text-xs text-slate-700 pt-2">
+            <p>📍 <strong>Address:</strong> Knowledge Park, Varanasi, UP - 221005</p>
+            <p>📞 <strong>Phone:</strong> +91 542 223344, +91 98765 43210</p>
+            <p>✉️ <strong>Email:</strong> helpdesk@schoolportal.edu.in</p>
+            <p>⏰ <strong>Office Hours:</strong> Mon - Sat (8:00 AM - 2:30 PM)</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <h3 class="text-lg font-bold text-slate-900">Send an Inquiry</h3>
+          <form onsubmit="handleInquirySubmit(event)" class="space-y-3 text-xs">
+            <input type="text" id="inqName" placeholder="Your Name" required class="w-full p-2.5 border rounded-xl">
+            <input type="email" id="inqEmail" placeholder="Email Address" required class="w-full p-2.5 border rounded-xl">
+            <input type="text" id="inqSubject" placeholder="Subject" required class="w-full p-2.5 border rounded-xl">
+            <textarea id="inqMessage" placeholder="Message details..." rows="3" required class="w-full p-2.5 border rounded-xl"></textarea>
+            <button type="submit" class="w-full py-2.5 bg-indigo-950 text-white font-bold rounded-xl hover:bg-indigo-900 transition">Send Inquiry</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-admin" class="page-view hidden space-y-8">
+      <div class="border-b border-slate-200 pb-4 flex justify-between items-center">
+        <div>
+          <h2 class="text-3xl font-black text-slate-900">Admin Control Hub</h2>
+          <p class="text-slate-500 text-xs mt-0.5">Customize institution brand, inspect section metrics, and insert items.</p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="fetchAdminData()" class="px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold hover:bg-indigo-100">Refresh Data</button>
+          <button onclick="navigate('home')" class="px-3 py-1.5 bg-slate-800 text-white rounded-lg text-xs font-bold">Exit Admin</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-2xl font-black text-indigo-950" id="statStudents">-</span>
+          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Students</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-2xl font-black text-indigo-950" id="statEvents">-</span>
+          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Events</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-2xl font-black text-indigo-950" id="statNotices">-</span>
+          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Notices</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-2xl font-black text-indigo-950" id="statGallery">-</span>
+          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Photos</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-2xl font-black text-amber-600" id="statAdmissions">-</span>
+          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Applicants</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-2xl font-black text-indigo-950" id="statInquiries">-</span>
+          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Inquiries</p>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h3 class="font-bold text-sm text-slate-900">⚙️ Customize School Branding</h3>
+        <form onsubmit="handleBrandUpdate(event)" class="grid sm:grid-cols-3 gap-3 text-xs">
+          <div>
+            <label class="block font-semibold mb-1">School Name</label>
+            <input type="text" id="cfgSchoolName" required class="w-full p-2 border rounded-lg">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Affiliation / Tagline</label>
+            <input type="text" id="cfgSchoolTagline" required class="w-full p-2 border rounded-lg">
+          </div>
+          <div class="flex items-end">
+            <button type="submit" class="w-full py-2 bg-indigo-950 text-white font-bold rounded-lg hover:bg-indigo-900 transition">Save Brand Name</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-xs text-indigo-950 uppercase">📢 Add Notice</h4>
+          <form onsubmit="adminAddNotice(event)" class="space-y-2 text-xs">
+            <input type="date" id="adNoticeDate" required class="w-full p-2 border rounded-lg">
+            <input type="text" id="adNoticeCat" placeholder="Category" required class="w-full p-2 border rounded-lg">
+            <input type="text" id="adNoticeTitle" placeholder="Title" required class="w-full p-2 border rounded-lg">
+            <textarea id="adNoticeContent" placeholder="Details..." rows="2" required class="w-full p-2 border rounded-lg"></textarea>
+            <button type="submit" class="w-full py-2 bg-indigo-950 text-white font-bold rounded-lg hover:bg-indigo-900">Post Notice</button>
+          </form>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-xs text-indigo-950 uppercase">📅 Add Event</h4>
+          <form onsubmit="adminAddEvent(event)" class="space-y-2 text-xs">
+            <input type="text" id="adEventTitle" placeholder="Event Title" required class="w-full p-2 border rounded-lg">
+            <input type="date" id="adEventDate" required class="w-full p-2 border rounded-lg">
+            <input type="text" id="adEventTime" placeholder="Time (e.g. 10:00 AM)" required class="w-full p-2 border rounded-lg">
+            <input type="text" id="adEventLoc" placeholder="Location" required class="w-full p-2 border rounded-lg">
+            <textarea id="adEventDesc" placeholder="Event Details..." rows="1" required class="w-full p-2 border rounded-lg"></textarea>
+            <button type="submit" class="w-full py-2 bg-indigo-950 text-white font-bold rounded-lg hover:bg-indigo-900">Schedule Event</button>
+          </form>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-xs text-indigo-950 uppercase">👨‍🎓 Enroll Student</h4>
+          <form onsubmit="adminAddStudent(event)" class="space-y-2 text-xs">
+            <input type="text" id="adStuId" placeholder="ID (STU105)" required class="w-full p-2 border rounded-lg font-mono">
+            <input type="text" id="adStuName" placeholder="Full Name" required class="w-full p-2 border rounded-lg">
+            <div class="grid grid-cols-2 gap-2">
+              <input type="text" id="adStuGrade" placeholder="Class 10" required class="w-full p-2 border rounded-lg">
+              <input type="text" id="adStuSec" placeholder="Section A" required class="w-full p-2 border rounded-lg">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <input type="text" id="adStuAtt" placeholder="Att: 95%" required class="w-full p-2 border rounded-lg">
+              <input type="text" id="adStuRes" placeholder="Grade A" required class="w-full p-2 border rounded-lg">
+            </div>
+            <select id="adStuFee" class="w-full p-2 border rounded-lg bg-white">
+              <option value="Paid">Fee: Paid</option>
+              <option value="Dues Pending">Fee: Dues Pending</option>
+            </select>
+            <button type="submit" class="w-full py-2 bg-amber-400 text-slate-950 font-bold rounded-lg hover:bg-amber-300">Enroll Student</button>
+          </form>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-xs text-indigo-950 uppercase">🖼️ Add Photo</h4>
+            <div class="flex bg-slate-100 p-1 rounded-lg text-[10px] font-bold">
+              <button type="button" onclick="switchGalleryMode('url')" id="tabModeUrl" class="px-2 py-0.5 rounded-md bg-white shadow-sm text-indigo-950">URL</button>
+              <button type="button" onclick="switchGalleryMode('file')" id="tabModeFile" class="px-2 py-0.5 rounded-md text-slate-500 hover:text-indigo-950">Device</button>
+            </div>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <input type="text" id="galTitleCommon" placeholder="Photo Caption" required class="w-full p-2 border rounded-lg">
+            <input type="text" id="galCatCommon" placeholder="Category (e.g. Sports, Lab, Campus)" required class="w-full p-2 border rounded-lg">
+          </div>
+
+          <form id="formUploadUrl" onsubmit="handleGalleryUrlSubmit(event)" class="space-y-2 text-xs">
+            <input type="url" id="galUrlInput" placeholder="Direct Image URL (https://...)" required class="w-full p-2 border rounded-lg">
+            <button type="submit" id="btnUrlSubmit" class="w-full py-2 bg-indigo-950 text-white font-bold rounded-lg hover:bg-indigo-900 transition">Save to Gallery</button>
+          </form>
+
+          <form id="formUploadFile" onsubmit="handleGalleryFileSubmit(event)" class="hidden space-y-2 text-xs">
+            <input type="file" id="galFileInput" accept="image/*" required class="w-full p-2 border rounded-lg bg-slate-50 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:bg-indigo-50 file:text-indigo-700">
+            <button type="submit" id="btnFileSubmit" class="w-full py-2 bg-amber-400 text-slate-950 font-bold rounded-lg hover:bg-amber-300 transition">Upload to Drive</button>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+        <h3 class="font-bold text-sm text-slate-900">Recent Online Admissions</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs min-w-[650px]">
+            <thead class="bg-slate-50 border-b">
+              <tr>
+                <th class="p-3">Time</th>
+                <th class="p-3">Student</th>
+                <th class="p-3">Parent</th>
+                <th class="p-3">Grade</th>
+                <th class="p-3">Phone</th>
+                <th class="p-3">Status</th>
+              </tr>
+            </thead>
+            <tbody id="admissionsTableBody" class="divide-y divide-slate-100">
+              <tr><td colspan="6" class="p-3 text-center text-slate-400">Loading admissions records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-indigo-950 text-indigo-300 text-xs py-8 border-t border-indigo-900 mt-12">
+    <div class="max-w-7xl mx-auto px-6 text-center space-y-2">
+      <p>&copy; 2026 <span class="footerBrand">Greenwood Public School</span>. All rights reserved.</p>
+      <p class="text-[10px] text-indigo-400">Integrated with Google Workspace Engine &bull; Apps Script</p>
+    </div>
+  </footer>
+
+  <script>
+    let calendarInstance = null;
+    let allEventsCache = [];
+    let allGalleryCache = [];
+    let selectedCategory = 'All';
+
+    function navigate(view) {
+      document.querySelectorAll('.page-view').forEach(p => p.classList.add('hidden'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('text-white', 'font-bold'));
+
+      const target = document.getElementById('page-' + view);
+      if (target) target.classList.remove('hidden');
+
+      const btn = document.getElementById('btn-' + view);
+      if (btn) btn.classList.add('text-white', 'font-bold');
+
+      if (view === 'notices') fetchNotices();
+      if (view === 'events') fetchEvents();
+      if (view === 'gallery') fetchGallery();
+      if (view === 'admin') fetchAdminData();
+    }
+
+    // Branding Loader
+    function loadBrandSettings() {
+      google.script.run.withSuccessHandler(settings => {
+        document.getElementById('brandNameDisplay').innerText = settings.name;
+        document.getElementById('brandTaglineDisplay').innerText = settings.tagline;
+        document.getElementById('heroTitleDisplay').innerText = 'Welcome to ' + settings.name;
+        document.querySelectorAll('.footerBrand').forEach(el => el.innerText = settings.name);
+
+        document.getElementById('cfgSchoolName').value = settings.name;
+        document.getElementById('cfgSchoolTagline').value = settings.tagline;
+      }).getSchoolSettings();
+    }
+
+    function handleBrandUpdate(e) {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('cfgSchoolName').value,
+        tagline: document.getElementById('cfgSchoolTagline').value
+      };
+      google.script.run.withSuccessHandler(() => {
+        alert('Branding updated successfully!');
+        loadBrandSettings();
+      }).updateSchoolSettings(payload);
+    }
+
+    // Notices Fetcher
+    function fetchNotices() {
+      google.script.run.withSuccessHandler(data => {
+        const c = document.getElementById('noticesList');
+        if (!data || !data.length) return c.innerHTML = '<p class="text-slate-400 text-xs">No notices posted.</p>';
+        c.innerHTML = data.map(n => `
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded">${n.category}</span>
+              <span class="text-slate-400 font-mono">${n.date}</span>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900">${n.title}</h4>
+            <p class="text-xs text-slate-600">${n.content}</p>
+          </div>
+        `).join('');
+      }).getNotices();
+    }
+
+    // Events & Calendar Fetcher
+    function fetchEvents() {
+  const list = document.getElementById('eventsList');
+  list.innerHTML = '<p class="text-xs text-slate-400">Loading events...</p>';
+
+  google.script.run.withSuccessHandler(data => {
+    allEventsCache = (data || []).map(e => {
+      // 1. Sanitize Time: strip out any 'Sat Dec 30 1899' epoch leak
+      let cleanTime = String(e.time || '').trim();
+      if (cleanTime.includes('1899') || cleanTime.includes('GMT')) {
+        const match = cleanTime.match(/\b\d{1,2}:\d{2}(?::\d{2})?\b/);
+        cleanTime = match ? match[0] : '';
+      }
+
+      // 2. Sanitize Date: ensure YYYY-MM-DD format
+      let cleanDate = String(e.date || '').trim();
+      if (cleanDate.includes('T')) {
+        cleanDate = cleanDate.split('T')[0];
+      }
+
+      return {
+        ...e,
+        date: cleanDate,
+        time: cleanTime
+      };
+    });
+
+    document.getElementById('eventsCount').innerText = `${allEventsCache.length} scheduled`;
+
+    // Render Side List Cards
+    if (!allEventsCache.length) {
+      list.innerHTML = '<p class="text-xs text-slate-400">No scheduled events.</p>';
+    } else {
+      list.innerHTML = allEventsCache.map((e, index) => `
+        <div onclick="openEventByIndex(${index})" class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-indigo-400 transition cursor-pointer text-xs space-y-1">
+          <div class="font-bold text-slate-800 flex justify-between">
+            <span>${e.title}</span>
+            <span class="text-[10px] text-indigo-600 font-mono">View &rarr;</span>
+          </div>
+          <div class="text-[11px] text-amber-600 font-semibold">
+            ${e.date}${e.time ? ' &bull; ' + e.time : ''}
+          </div>
+          <div class="text-slate-500 line-clamp-2">${e.description}</div>
+          <div class="text-[10px] text-slate-400 pt-1">📍 ${e.location}</div>
+        </div>
+      `).join('');
+    }
+
+    // Render FullCalendar
+    const calEl = document.getElementById('calendar');
+    if (calendarInstance) calendarInstance.destroy();
+    
+    calendarInstance = new FullCalendar.Calendar(calEl, {
+      initialView: 'dayGridMonth',
+      headerToolbar: { 
+        left: 'prev,next today', 
+        center: 'title', 
+        right: 'dayGridMonth,timeGridWeek,listMonth' 
+      },
+      events: allEventsCache.map(ev => ({
+        // Show clean title (or clean time + title if desired)
+        title: ev.title,
+        start: ev.date,
+        extendedProps: { ...ev }
+      })),
+      eventClick: function(info) {
+        info.jsEvent.preventDefault();
+        const props = info.event.extendedProps;
+        showEventModal(props.title, props.date, props.time, props.location, props.description);
+      }
+    });
+    
+    calendarInstance.render();
+  }).getEvents();
+}
+
+    function showEventModal(title, date, time, loc, desc) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalDateBadge').innerText = date;
+      document.getElementById('modalTime').innerText = time;
+      document.getElementById('modalLocation').innerText = loc;
+      document.getElementById('modalDesc').innerText = desc;
+      document.getElementById('eventModal').classList.remove('hidden');
+    }
+
+    function openEventByIndex(idx) {
+      const e = allEventsCache[idx];
+      if (!e) return;
+      showEventModal(e.title, e.date, e.time, e.location, e.description);
+      if (calendarInstance && e.date) calendarInstance.gotoDate(e.date);
+    }
+
+    function closeEventModal() {
+      document.getElementById('eventModal').classList.add('hidden');
+    }
+
+    // --- Dynamic Gallery with Filter Chips & Immediate Reflection ---
+    function fetchGallery() {
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = '<p class="text-xs text-slate-400">Loading gallery...</p>';
+
+      google.script.run.withSuccessHandler(data => {
+        allGalleryCache = data || [];
+        renderGalleryChips();
+        renderGalleryItems();
+      }).getGallery();
+    }
+
+    function renderGalleryChips() {
+      const chipContainer = document.getElementById('galleryCategoryFilter');
+      const categories = ['All', ...new Set(allGalleryCache.map(item => item.category).filter(Boolean))];
+
+      chipContainer.innerHTML = categories.map(cat => {
+        const isActive = cat === selectedCategory;
+        return `
+          <button onclick="filterGallery('${cat}')" class="gal-chip px-3 py-1 rounded-full text-xs font-semibold transition ${
+            isActive ? 'bg-indigo-950 text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+          }">
+            ${cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function filterGallery(category) {
+      selectedCategory = category;
+      renderGalleryChips();
+      renderGalleryItems();
+    }
+
+    function renderGalleryItems() {
+      const grid = document.getElementById('galleryGrid');
+      const filtered = selectedCategory === 'All' 
+        ? allGalleryCache 
+        : allGalleryCache.filter(item => item.category === selectedCategory);
+
+      if (!filtered.length) {
+        grid.innerHTML = '<p class="text-xs text-slate-400 col-span-full">No pictures found in this category.</p>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map((g, idx) => `
+        <div onclick="openLightbox('${encodeURIComponent(g.url)}', '${encodeURIComponent(g.title)}', '${encodeURIComponent(g.category)}')" 
+             class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition cursor-pointer group">
+          <div class="h-48 overflow-hidden bg-slate-100 relative">
+            <img src="${g.url}" alt="${g.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" 
+                 onerror="this.src='https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600'">
+            <span class="absolute top-2 right-2 bg-indigo-950/80 backdrop-blur-sm text-white font-bold text-[10px] px-2 py-0.5 rounded-md">
+              ${g.category}
+            </span>
+          </div>
+          <div class="p-3 flex justify-between items-center text-xs">
+            <span class="font-bold text-slate-800 truncate">${g.title}</span>
+            <span class="text-indigo-600 text-[11px] font-semibold">Enlarge &rarr;</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openLightbox(encodedUrl, encodedTitle, encodedCategory) {
+      const url = decodeURIComponent(encodedUrl);
+      const title = decodeURIComponent(encodedTitle);
+      const cat = decodeURIComponent(encodedCategory);
+
+      document.getElementById('lightboxImg').src = url;
+      document.getElementById('lightboxTitle').innerText = title;
+      document.getElementById('lightboxCategory').innerText = cat;
+      document.getElementById('galleryLightbox').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('galleryLightbox').classList.add('hidden');
+    }
+
+    // Admin Dashboard Data Fetcher
+    function fetchAdminData() {
+      google.script.run.withSuccessHandler(stats => {
+        document.getElementById('statStudents').innerText = stats.students;
+        document.getElementById('statEvents').innerText = stats.events;
+        document.getElementById('statNotices').innerText = stats.notices;
+        document.getElementById('statGallery').innerText = stats.gallery;
+        document.getElementById('statAdmissions').innerText = stats.admissions;
+        document.getElementById('statInquiries').innerText = stats.inquiries;
+      }).getAdminStats();
+
+      google.script.run.withSuccessHandler(rows => {
+        const tbody = document.getElementById('admissionsTableBody');
+        if (!rows || !rows.length) return tbody.innerHTML = '<tr><td colspan="6" class="p-3 text-center text-slate-400">No applicants yet.</td></tr>';
+        tbody.innerHTML = rows.map(r => `
+          <tr class="hover:bg-slate-50">
+            <td class="p-3 text-slate-400">${r.time}</td>
+            <td class="p-3 font-bold">${r.student}</td>
+            <td class="p-3">${r.parent}</td>
+            <td class="p-3 font-semibold">${r.grade}</td>
+            <td class="p-3 font-mono">${r.phone}</td>
+            <td class="p-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-semibold text-[10px]">${r.status}</span></td>
+          </tr>
+        `).join('');
+      }).getAdmissions();
+    }
+
+    // Student Portal Lookup
+    function handlePortalLookup(e) {
+      e.preventDefault();
+      const id = document.getElementById('portalId').value;
+      const res = document.getElementById('portalResult');
+      res.classList.remove('hidden');
+      res.innerHTML = '<p class="text-slate-400">Verifying records...</p>';
+
+      google.script.run.withSuccessHandler(stu => {
+        if (!stu.found) {
+          res.innerHTML = '<p class="text-rose-500 font-semibold">No record located for this ID.</p>';
+          return;
+        }
+        res.innerHTML = `
+          <div class="p-4 bg-slate-50 rounded-2xl border space-y-1">
+            <p><strong>Student Name:</strong> ${stu.name}</p>
+            <p><strong>Class & Section:</strong> ${stu.grade} (${stu.section})</p>
+            <p><strong>Attendance Percentage:</strong> <span class="text-indigo-600 font-bold">${stu.attendance}</span></p>
+            <p><strong>Term Assessment:</strong> <span class="font-bold">${stu.result}</span></p>
+            <p><strong>Quarterly Fee Status:</strong> <span class="${stu.feeStatus === 'Paid' ? 'text-emerald-600' : 'text-rose-600'} font-bold">${stu.feeStatus}</span></p>
+          </div>
+        `;
+      }).findStudentById(id);
+    }
+
+    // Public Form Submissions
+    function handleAdmissionSubmit(e) {
+      e.preventDefault();
+      const payload = {
+        studentName: document.getElementById('admStudent').value,
+        parentName: document.getElementById('admParent').value,
+        grade: document.getElementById('admGrade').value,
+        phone: document.getElementById('admPhone').value,
+        email: document.getElementById('admEmail').value
+      };
+      google.script.run.withSuccessHandler(() => {
+        alert('Admission submitted! The office will contact you.');
+        e.target.reset();
+      }).submitAdmission(payload);
+    }
+
+    function handleInquirySubmit(e) {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('inqName').value,
+        email: document.getElementById('inqEmail').value,
+        subject: document.getElementById('inqSubject').value,
+        message: document.getElementById('inqMessage').value
+      };
+      google.script.run.withSuccessHandler(() => {
+        alert('Inquiry sent successfully!');
+        e.target.reset();
+      }).submitInquiry(payload);
+    }
+
+    // Admin Creation Form Handlers
+    function adminAddNotice(e) {
+      e.preventDefault();
+      const payload = {
+        date: document.getElementById('adNoticeDate').value,
+        category: document.getElementById('adNoticeCat').value,
+        title: document.getElementById('adNoticeTitle').value,
+        content: document.getElementById('adNoticeContent').value
+      };
+      google.script.run.withSuccessHandler(() => {
+        alert('Notice published!');
+        e.target.reset();
+        fetchAdminData();
+      }).addNotice(payload);
+    }
+
+    function adminAddEvent(e) {
+      e.preventDefault();
+      const payload = {
+        title: document.getElementById('adEventTitle').value,
+        date: document.getElementById('adEventDate').value,
+        time: document.getElementById('adEventTime').value,
+        location: document.getElementById('adEventLoc').value,
+        desc: document.getElementById('adEventDesc').value
+      };
+      google.script.run.withSuccessHandler(() => {
+        alert('Event added!');
+        e.target.reset();
+        fetchAdminData();
+      }).addEvent(payload);
+    }
+
+    function adminAddStudent(e) {
+      e.preventDefault();
+      const payload = {
+        id: document.getElementById('adStuId').value,
+        name: document.getElementById('adStuName').value,
+        grade: document.getElementById('adStuGrade').value,
+        section: document.getElementById('adStuSec').value,
+        attendance: document.getElementById('adStuAtt').value,
+        result: document.getElementById('adStuRes').value,
+        feeStatus: document.getElementById('adStuFee').value
+      };
+      google.script.run.withSuccessHandler(() => {
+        alert('Student enrolled!');
+        e.target.reset();
+        fetchAdminData();
+      }).addStudent(payload);
+    }
+
+    // Dual-Mode Gallery Manager Handlers
+    function switchGalleryMode(mode) {
+      const isUrl = mode === 'url';
+      document.getElementById('formUploadUrl').classList.toggle('hidden', !isUrl);
+      document.getElementById('formUploadFile').classList.toggle('hidden', isUrl);
+
+      const tabUrl = document.getElementById('tabModeUrl');
+      const tabFile = document.getElementById('tabModeFile');
+      if (isUrl) {
+        tabUrl.className = 'px-2 py-0.5 rounded-md bg-white shadow-sm text-indigo-950';
+        tabFile.className = 'px-2 py-0.5 rounded-md text-slate-500 hover:text-indigo-950';
+      } else {
+        tabFile.className = 'px-2 py-0.5 rounded-md bg-white shadow-sm text-indigo-950';
+        tabUrl.className = 'px-2 py-0.5 rounded-md text-slate-500 hover:text-indigo-950';
+      }
+    }
+
+    function handleGalleryUrlSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('galTitleCommon').value;
+      const category = document.getElementById('galCatCommon').value;
+      const url = document.getElementById('galUrlInput').value;
+      const btn = document.getElementById('btnUrlSubmit');
+
+      btn.disabled = true;
+      btn.innerText = 'Saving...';
+
+      google.script.run.withSuccessHandler(() => {
+        btn.disabled = false;
+        btn.innerText = 'Save to Gallery';
+        alert('Photo link added to Gallery!');
+        document.getElementById('galTitleCommon').value = '';
+        document.getElementById('galCatCommon').value = '';
+        document.getElementById('galUrlInput').value = '';
+        fetchAdminData();
+        fetchGallery(); // Immediately reflects in the Gallery section
+      }).addGalleryItem({ title, category, url });
+    }
+
+    function handleGalleryFileSubmit(e) {
+      e.preventDefault();
+      const fileInput = document.getElementById('galFileInput');
+      const file = fileInput.files[0];
+      if (!file) return alert('Please choose an image file.');
+
+      const title = document.getElementById('galTitleCommon').value;
+      const category = document.getElementById('galCatCommon').value;
+      const btn = document.getElementById('btnFileSubmit');
+
+      btn.disabled = true;
+      btn.innerText = 'Uploading to Drive...';
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const payload = {
+          name: file.name,
+          type: file.type,
+          base64: event.target.result,
+          title: title,
+          category: category
+        };
+
+        google.script.run.withSuccessHandler(res => {
+          btn.disabled = false;
+          btn.innerText = 'Upload to Drive';
+          if (res.success) {
+            alert('Photo uploaded to Google Drive & reflected in Gallery!');
+            document.getElementById('galTitleCommon').value = '';
+            document.getElementById('galCatCommon').value = '';
+            fileInput.value = '';
+            fetchAdminData();
+            fetchGallery(); // Immediately reflects in the Gallery section
+          } else {
+            alert('Upload error: ' + res.message);
+          }
+        }).uploadImageToDrive(payload);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Initialize
+    window.onload = () => {
+      loadBrandSettings();
+      navigate('home');
+    };
+  </script>
+</body>
+</html>
