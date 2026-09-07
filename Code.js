@@ -1,247 +1,434 @@
-function doGet() {
-  return HtmlService.createTemplateFromFile('Index')
-    .evaluate()
-    .setTitle('Greenwood Public School | Portal & Admin')
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+/**
+ * Greenwood Public School & Agency Portal / Admin CRM
+ * Serverless Backend Engine for Google Apps Script
+ */
+
+function doGet(e) {
+  return HtmlService.createHtmlOutputFromFile('Index')
+    .setTitle('Greenwood Public School — Official Portal & Admin')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
-function getOrCreateSheet(name, headers) {
+// -------------------------------------------------------------
+// 1. DATABASE & SHEET HELPERS
+// -------------------------------------------------------------
+
+function getOrCreateSheet(sheetName, headers) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = ss.getSheetByName(name);
+  let sheet = ss.getSheetByName(sheetName);
   if (!sheet) {
-    sheet = ss.insertSheet(name);
-    if (headers) sheet.appendRow(headers);
+    sheet = ss.insertSheet(sheetName);
+    if (headers && headers.length) {
+      sheet.appendRow(headers);
+    }
   }
   return sheet;
 }
 
+function sanitizeDateString(dateVal, tz) {
+  if (!dateVal) return '';
+  if (dateVal instanceof Date) {
+    return Utilities.formatDate(dateVal, tz, 'yyyy-MM-dd');
+  }
+  const s = String(dateVal).trim();
+  if (s.includes('T')) return s.split('T')[0];
+  return s;
+}
+
+function sanitizeTimeString(timeVal, tz) {
+  if (!timeVal) return '';
+  if (timeVal instanceof Date) {
+    return Utilities.formatDate(timeVal, tz, 'hh:mm a');
+  }
+  let s = String(timeVal).trim();
+  if (s.includes('1899') || s.includes('GMT')) {
+    const match = s.match(/\b\d{1,2}:\d{2}(?::\d{2})?\b/);
+    return match ? match[0] : '';
+  }
+  return s;
+}
+
+// -------------------------------------------------------------
+// 2. SETTINGS & BRANDING
+// -------------------------------------------------------------
+
+// Get School Settings AND Dynamic Sheet Counters
 function getSchoolSettings() {
-  const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
-  const rows = sheet.getDataRange().getValues();
-  let settings = { name: 'Greenwood Public School', tagline: 'Affiliated to CBSE • New Delhi' };
-  
-  if (rows.length > 1) {
-    for (let i = 1; i < rows.length; i++) {
-      if (String(rows[i][0]).trim() === 'SchoolName') settings.name = String(rows[i][1]);
-      if (String(rows[i][0]).trim() === 'SchoolTagline') settings.tagline = String(rows[i][1]);
-    }
-  } else {
-    sheet.appendRow(['SchoolName', settings.name]);
-    sheet.appendRow(['SchoolTagline', settings.tagline]);
-  }
-  return settings;
-}
-
-function updateSchoolSettings(data) {
-  const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
-  const rows = sheet.getDataRange().getValues();
-  let nameFound = false, tagFound = false;
-
-  for (let i = 1; i < rows.length; i++) {
-    if (String(rows[i][0]).trim() === 'SchoolName') {
-      sheet.getRange(i + 1, 2).setValue(data.name);
-      nameFound = true;
-    }
-    if (String(rows[i][0]).trim() === 'SchoolTagline') {
-      sheet.getRange(i + 1, 2).setValue(data.tagline);
-      tagFound = true;
-    }
-  }
-  if (!nameFound) sheet.appendRow(['SchoolName', data.name]);
-  if (!tagFound) sheet.appendRow(['SchoolTagline', data.tagline]);
-  return { success: true };
-}
-
-function getAdminStats() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  function getCount(tab) {
-    const s = ss.getSheetByName(tab);
-    if (!s) return 0;
-    const count = s.getLastRow();
-    return count > 1 ? count - 1 : 0;
-  }
-
-  return {
-    students: getCount('Students'),
-    events: getCount('Events'),
-    notices: getCount('Notices'),
-    gallery: getCount('Gallery'),
-    admissions: getCount('Admissions'),
-    inquiries: getCount('Inquiries')
-  };
-}
-
-function getNotices() {
-  const sheet = getOrCreateSheet('Notices', ['Date', 'Category', 'Title', 'Content']);
-  const rows = sheet.getDataRange().getValues();
-  if (rows.length <= 1) return [];
-  rows.shift();
-  return rows.map(r => ({
-    date: r[0] ? String(r[0]) : '',
-    category: r[1] ? String(r[1]) : 'General',
-    title: r[2] ? String(r[2]) : '',
-    content: r[3] ? String(r[3]) : ''
-  })).reverse();
-}
-
-function getEvents() {
-  const sheet = getOrCreateSheet('Events', ['Title', 'Date', 'Time', 'Location', 'Description']);
-  const rows = sheet.getDataRange().getValues();
-  if (rows.length <= 1) return [];
-  rows.shift();
-  
-  const timeZone = Session.getScriptTimeZone() || 'Asia/Kolkata';
-
-  return rows.map(r => {
-    // 1. Clean up Date
-    let dateStr = '';
-    if (r[1] instanceof Date) {
-      dateStr = Utilities.formatDate(r[1], timeZone, 'yyyy-MM-dd');
-    } else if (r[1]) {
-      dateStr = String(r[1]).split('T')[0].trim();
-    }
-
-    let timeStr = '';
-    if (r[2] instanceof Date) {
-      timeStr = Utilities.formatDate(r[2], timeZone, 'hh:mm a');
-    } else if (r[2]) {
-      timeStr = String(r[2]).trim();
+  try {
+    const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
+    const rows = sheet.getDataRange().getValues();
     
-      if (timeStr.includes('1899')) {
-        const timeMatch = timeStr.match(/\d{2}:\d{2}(:\d{2})?/);
-        timeStr = timeMatch ? timeMatch[0] : '';
+    // Default base metrics
+    const settings = {
+      schoolName: 'Greenwood Public School',
+      tagline: 'AFFILIATED TO CBSE • NEW DELHI',
+      noticeTicker: 'Admissions open for Session 2026-27 • Term 1 Datesheets Published • Scholarship Test Registrations Open',
+      countStudents: '2,400+',
+      countBoardPass: '100%',
+      countFacultyRatio: '1:20',
+      countCampusArea: '15 Acres'
+    };
+
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i][0]) settings[String(rows[i][0])] = String(rows[i][1]);
+    }
+
+    // Optional Auto-Count: If Students sheet has more records, reflect live count
+    const studentSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Students');
+    if (studentSheet) {
+      const studentCount = Math.max(0, studentSheet.getLastRow() - 1);
+      if (studentCount > 0 && (!settings.countStudents || settings.countStudents === '2,400+')) {
+        settings.countStudents = studentCount + '+';
       }
     }
 
-    return {
-      title: String(r[0] || ''),
-      date: dateStr,
-      time: timeStr,
-      location: String(r[3] || ''),
-      description: String(r[4] || '')
-    };
-  });
-}
-
-function getGallery() {
-  const sheet = getOrCreateSheet('Gallery', ['Title', 'Category', 'ImageURL']);
-  const rows = sheet.getDataRange().getValues();
-  if (rows.length <= 1) return [];
-  rows.shift();
-  return rows.map(r => ({ 
-    title: String(r[0] || ''), 
-    category: String(r[1] || 'General'), 
-    url: String(r[2] || '') 
-  })).reverse();
-}
-
-function getAdmissions() {
-  const sheet = getOrCreateSheet('Admissions', ['Timestamp', 'StudentName', 'ParentName', 'Grade', 'Phone', 'Email', 'Status']);
-  const rows = sheet.getDataRange().getValues();
-  if (rows.length <= 1) return [];
-  rows.shift();
-  return rows.map(r => ({
-    time: String(r[0]),
-    student: String(r[1]),
-    parent: String(r[2]),
-    grade: String(r[3]),
-    phone: String(r[4]),
-    email: String(r[5]),
-    status: String(r[6])
-  })).reverse();
-}
-
-function findStudentById(id) {
-  const sheet = getOrCreateSheet('Students', ['StudentID', 'Name', 'Grade', 'Section', 'Attendance', 'TermResult', 'FeeStatus']);
-  const rows = sheet.getDataRange().getValues();
-  if (rows.length <= 1) return { found: false };
-  rows.shift();
-  const match = rows.find(r => String(r[0]).trim().toUpperCase() === String(id).trim().toUpperCase());
-  if (match) {
-    return {
-      found: true,
-      id: String(match[0]),
-      name: String(match[1]),
-      grade: String(match[2]),
-      section: String(match[3]),
-      attendance: String(match[4]),
-      result: String(match[5]),
-      feeStatus: String(match[6])
-    };
-  }
-  return { found: false };
-}
-
-function submitAdmission(data) {
-  const sheet = getOrCreateSheet('Admissions', ['Timestamp', 'StudentName', 'ParentName', 'Grade', 'Phone', 'Email', 'Status']);
-  sheet.appendRow([
-    new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
-    data.studentName,
-    data.parentName,
-    data.grade,
-    data.phone,
-    data.email,
-    'Pending Review'
-  ]);
-  return { success: true };
-}
-
-function submitInquiry(data) {
-  const sheet = getOrCreateSheet('Inquiries', ['Timestamp', 'Name', 'Email', 'Subject', 'Message']);
-  sheet.appendRow([
-    new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
-    data.name,
-    data.email,
-    data.subject,
-    data.message
-  ]);
-  return { success: true };
-}
-
-function addNotice(data) {
-  getOrCreateSheet('Notices').appendRow([data.date, data.category, data.title, data.content]);
-  return { success: true };
-}
-
-function addEvent(data) {
-  getOrCreateSheet('Events').appendRow([data.title, data.date, data.time, data.location, data.desc]);
-  return { success: true };
-}
-
-function addStudent(data) {
-  getOrCreateSheet('Students').appendRow([data.id, data.name, data.grade, data.section, data.attendance, data.result, data.feeStatus]);
-  return { success: true };
-}
-
-function addGalleryItem(data) {
-  const sheet = getOrCreateSheet('Gallery', ['Title', 'Category', 'ImageURL']);
-  sheet.appendRow([data.title, data.category, data.url]);
-  return { success: true };
-}
-
-function uploadImageToDrive(fileData) {
-  try {
-    const contentType = fileData.type;
-    const bytes = Utilities.base64Decode(fileData.base64.split(',')[1]);
-    const blob = Utilities.newBlob(bytes, contentType, fileData.name);
-
-    const folder = DriveApp.getRootFolder();
-    const file = folder.createFile(blob);
-    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-
-    const fileId = file.getId();
-    const publicUrl = 'https://drive.google.com/thumbnail?id=' + fileId + '&sz=w1000';
-
-    const sheet = getOrCreateSheet('Gallery', ['Title', 'Category', 'ImageURL']);
-    sheet.appendRow([fileData.title, fileData.category, publicUrl]);
-
-    return { success: true, url: publicUrl };
+    return { success: true, data: settings };
   } catch (err) {
     return { success: false, message: err.toString() };
   }
 }
-function testAuthorize() {
-  DriveApp.getRootFolder();
-  SpreadsheetApp.getActiveSpreadsheet();
+
+function updateSchoolSettings(settings) {
+  try {
+    const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
+    const data = sheet.getDataRange().getValues();
+    const keys = Object.keys(settings);
+
+    keys.forEach(key => {
+      let found = false;
+      for (let i = 1; i < data.length; i++) {
+        if (data[i][0] === key) {
+          sheet.getRange(i + 1, 2).setValue(settings[key]);
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        sheet.appendRow([key, settings[key]]);
+      }
+    });
+    return { success: true, message: 'Settings updated successfully!' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+// -------------------------------------------------------------
+// 3. CALENDAR EVENTS ENGINE
+// -------------------------------------------------------------
+
+function getEvents() {
+  try {
+    const sheet = getOrCreateSheet('Events', ['Title', 'Date', 'Time', 'Location', 'Description']);
+    const rows = sheet.getDataRange().getValues();
+    if (rows.length <= 1) return [];
+    rows.shift();
+
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+
+    return rows.map((r, index) => ({
+      id: index + 1,
+      title: String(r[0] || ''),
+      date: sanitizeDateString(r[1], tz),
+      time: sanitizeTimeString(r[2], tz),
+      location: String(r[3] || ''),
+      description: String(r[4] || '')
+    }));
+  } catch (err) {
+    return [];
+  }
+}
+
+function addCalendarEvent(eventData) {
+  try {
+    const sheet = getOrCreateSheet('Events', ['Title', 'Date', 'Time', 'Location', 'Description']);
+    const title = String(eventData.title || '').trim();
+    const date = String(eventData.date || '').trim();
+    const time = String(eventData.time || '').trim();
+    const location = String(eventData.location || '').trim();
+    const desc = String(eventData.description || '').trim();
+
+    if (!title || !date) throw new Error('Title and Date are required.');
+
+    sheet.appendRow([title, date, time, location, desc]);
+    return { success: true, message: 'Event successfully published!' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function deleteCalendarEvent(rowNumber) {
+  try {
+    const sheet = getOrCreateSheet('Events', ['Title', 'Date', 'Time', 'Location', 'Description']);
+    sheet.deleteRow(Number(rowNumber) + 1);
+    return { success: true, message: 'Event removed.' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+// -------------------------------------------------------------
+// 4. NOTICES & CIRCULARS ENGINE
+// -------------------------------------------------------------
+
+function getNotices() {
+  try {
+    const sheet = getOrCreateSheet('Notices', ['Title', 'Category', 'Date', 'Details']);
+    const rows = sheet.getDataRange().getValues();
+    if (rows.length <= 1) return [];
+    rows.shift();
+
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+
+    return rows.reverse().map((r, index) => ({
+      id: index + 1,
+      title: String(r[0] || ''),
+      category: String(r[1] || 'General'),
+      date: sanitizeDateString(r[2], tz),
+      details: String(r[3] || '')
+    }));
+  } catch (err) {
+    return [];
+  }
+}
+
+function addNotice(noticeData) {
+  try {
+    const sheet = getOrCreateSheet('Notices', ['Title', 'Category', 'Date', 'Details']);
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+    const dateStr = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd');
+
+    sheet.appendRow([
+      String(noticeData.title || '').trim(),
+      String(noticeData.category || 'General').trim(),
+      dateStr,
+      String(noticeData.details || '').trim()
+    ]);
+    return { success: true, message: 'Notice posted successfully!' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+// -------------------------------------------------------------
+// 5. STUDENT ROSTER & VERIFICATION PORTAL
+// -------------------------------------------------------------
+
+function lookupStudent(studentId) {
+  try {
+    const sheet = getOrCreateSheet('Students', ['ID', 'Name', 'Class', 'Attendance', 'FeeStatus', 'Result']);
+    const rows = sheet.getDataRange().getValues();
+    const query = String(studentId).trim().toLowerCase();
+
+    for (let i = 1; i < rows.length; i++) {
+      if (String(rows[i][0]).trim().toLowerCase() === query) {
+        return {
+          success: true,
+          student: {
+            id: rows[i][0],
+            name: rows[i][1],
+            class: rows[i][2],
+            attendance: rows[i][3],
+            feeStatus: rows[i][4],
+            result: rows[i][5]
+          }
+        };
+      }
+    }
+    return { success: false, message: 'No student found with ID: ' + studentId };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function getAllStudents() {
+  try {
+    const sheet = getOrCreateSheet('Students', ['ID', 'Name', 'Class', 'Attendance', 'FeeStatus', 'Result']);
+    const rows = sheet.getDataRange().getValues();
+    if (rows.length <= 1) return [];
+    rows.shift();
+    return rows.map(r => ({
+      id: r[0],
+      name: r[1],
+      class: r[2],
+      attendance: r[3],
+      feeStatus: r[4],
+      result: r[5]
+    }));
+  } catch (err) {
+    return [];
+  }
+}
+
+function saveStudentRecord(student) {
+  try {
+    const sheet = getOrCreateSheet('Students', ['ID', 'Name', 'Class', 'Attendance', 'FeeStatus', 'Result']);
+    const rows = sheet.getDataRange().getValues();
+    const targetId = String(student.id || '').trim().toLowerCase();
+
+    for (let i = 1; i < rows.length; i++) {
+      if (String(rows[i][0]).trim().toLowerCase() === targetId) {
+        sheet.getRange(i + 1, 2).setValue(student.name);
+        sheet.getRange(i + 1, 3).setValue(student.class);
+        sheet.getRange(i + 1, 4).setValue(student.attendance);
+        sheet.getRange(i + 1, 5).setValue(student.feeStatus);
+        sheet.getRange(i + 1, 6).setValue(student.result);
+        return { success: true, message: 'Student record updated.' };
+      }
+    }
+
+    sheet.appendRow([
+      student.id,
+      student.name,
+      student.class,
+      student.attendance,
+      student.feeStatus,
+      student.result
+    ]);
+    return { success: true, message: 'New student added.' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+// -------------------------------------------------------------
+// 6. ADMISSIONS PIPELINE
+// -------------------------------------------------------------
+
+function submitAdmissionForm(formData) {
+  try {
+    const sheet = getOrCreateSheet('Admissions', ['Timestamp', 'StudentName', 'ParentName', 'Class', 'Phone', 'Email', 'Address']);
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+    const dateStr = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd HH:mm:ss');
+
+    sheet.appendRow([
+      dateStr,
+      String(formData.studentName || ''),
+      String(formData.parentName || ''),
+      String(formData.grade || ''),
+      String(formData.phone || ''),
+      String(formData.email || ''),
+      String(formData.address || '')
+    ]);
+    return { success: true, message: 'Application registered successfully!' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function getAdmissions() {
+  try {
+    const sheet = getOrCreateSheet('Admissions', ['Timestamp', 'StudentName', 'ParentName', 'Class', 'Phone', 'Email', 'Address']);
+    const rows = sheet.getDataRange().getValues();
+    if (rows.length <= 1) return [];
+    rows.shift();
+    return rows.reverse().map(r => ({
+      timestamp: r[0],
+      studentName: r[1],
+      parentName: r[2],
+      grade: r[3],
+      phone: r[4],
+      email: r[5],
+      address: r[6]
+    }));
+  } catch (err) {
+    return [];
+  }
+}
+
+// -------------------------------------------------------------
+// 7. LEADS & INQUIRIES CRM
+// -------------------------------------------------------------
+
+function submitInquiry(lead) {
+  try {
+    const sheet = getOrCreateSheet('Inquiries', ['Timestamp', 'Name', 'Email', 'Service', 'Budget', 'Details']);
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+    const dateStr = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd HH:mm:ss');
+
+    sheet.appendRow([
+      dateStr,
+      String(lead.name || ''),
+      String(lead.email || ''),
+      String(lead.service || ''),
+      String(lead.budget || ''),
+      String(lead.details || '')
+    ]);
+    return { success: true, message: 'Inquiry submitted successfully!' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function getLeads() {
+  try {
+    const sheet = getOrCreateSheet('Inquiries', ['Timestamp', 'Name', 'Email', 'Service', 'Budget', 'Details']);
+    const rows = sheet.getDataRange().getValues();
+    if (rows.length <= 1) return [];
+    rows.shift();
+
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+
+    return rows.reverse().map(r => ({
+      timestamp: r[0] instanceof Date ? Utilities.formatDate(r[0], tz, 'yyyy-MM-dd HH:mm') : String(r[0] || ''),
+      name: String(r[1] || ''),
+      email: String(r[2] || ''),
+      service: String(r[3] || ''),
+      budget: String(r[4] || ''),
+      details: String(r[5] || '')
+    }));
+  } catch (err) {
+    return [];
+  }
+}
+
+// -------------------------------------------------------------
+// 8. GOOGLE DRIVE MEDIA UPLOADER & GALLERY
+// -------------------------------------------------------------
+
+function uploadImageToDrive(base64Data, fileName, title, category) {
+  try {
+    const cleanBase64 = base64Data.replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, '');
+    const decoded = Utilities.base64Decode(cleanBase64);
+    const blob = Utilities.newBlob(decoded, 'image/jpeg', fileName || 'portal_upload.jpg');
+
+    let folderIterator = DriveApp.getFoldersByName('School_Portal_Uploads');
+    let folder = folderIterator.hasNext() ? folderIterator.next() : DriveApp.createFolder('School_Portal_Uploads');
+
+    const file = folder.createFile(blob);
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+
+    const publicUrl = 'https://drive.google.com/uc?export=view&id=' + file.getId();
+
+    const gallerySheet = getOrCreateSheet('Gallery', ['Title', 'Category', 'URL', 'Timestamp']);
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+    gallerySheet.appendRow([
+      title || 'Campus Event',
+      category || 'General',
+      publicUrl,
+      Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd')
+    ]);
+
+    return { success: true, url: publicUrl, message: 'Image uploaded and linked to gallery!' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function getGalleryImages() {
+  try {
+    const sheet = getOrCreateSheet('Gallery', ['Title', 'Category', 'URL', 'Timestamp']);
+    const rows = sheet.getDataRange().getValues();
+    if (rows.length <= 1) return [];
+    rows.shift();
+    return rows.reverse().map(r => ({
+      title: r[0],
+      category: r[1],
+      url: r[2],
+      date: r[3]
+    }));
+  } catch (err) {
+    return [];
+  }
 }

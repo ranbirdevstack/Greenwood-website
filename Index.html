@@ -1,928 +1,1249 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <title>Institutional Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Greenwood Public School — Official Portal &amp; Management Hub</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FullCalendar Core & Plugins -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+  <!-- Custom Styling for Ticker & FullCalendar Overrides -->
+  <style>
+    @keyframes tickerSlide {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .animate-ticker {
+      display: inline-block;
+      white-space: nowrap;
+      animation: tickerSlide 28s linear infinite;
+    }
+    .animate-ticker:hover {
+      animation-play-state: paused;
+    }
+    .fc-theme-standard td, .fc-theme-standard th {
+      border-color: #334155 !important;
+    }
+    .fc .fc-toolbar-title {
+      font-size: 1.1rem !important;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .fc .fc-button-primary {
+      background-color: #1e293b !important;
+      border-color: #475569 !important;
+      color: #e2e8f0 !important;
+      font-size: 0.75rem !important;
+      text-transform: capitalize;
+    }
+    .fc .fc-button-primary:hover {
+      background-color: #334155 !important;
+    }
+    .fc .fc-button-primary:disabled {
+      background-color: #0f172a !important;
+    }
+    .fc .fc-daygrid-day-number {
+      color: #cbd5e1;
+      font-size: 0.8rem;
+    }
+    .fc .fc-day-today {
+      background: rgba(99, 102, 241, 0.1) !important;
+    }
+    .fc-event {
+      background-color: #4f46e5 !important;
+      border-color: #6366f1 !important;
+      color: #ffffff !important;
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-size: 0.75rem !important;
+      cursor: pointer;
+    }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen antialiased selection:bg-amber-300 selection:text-slate-900">
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-amber-400 selection:text-slate-950 flex flex-col">
 
-  <div class="bg-amber-400 text-slate-950 font-bold px-4 py-2 text-xs flex items-center justify-between shadow-inner">
-    <div class="flex items-center space-x-2 overflow-hidden">
-      <span class="bg-black text-amber-300 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">Notice</span>
-      <span class="truncate">Admissions open for Session 2026-27 &bull; Term 1 Datesheets Published &bull; Scholarship Test Registrations Open</span>
+  <!-- ========================================================= -->
+  <!-- 1. TOP NOTICE TICKER ANNOUNCEMENT BAR                    -->
+  <!-- ========================================================= -->
+  <aside class="bg-amber-400 text-slate-950 px-4 py-1.5 text-xs font-semibold flex items-center justify-between overflow-hidden shadow-sm z-50">
+    <div class="flex items-center space-x-3 overflow-hidden mr-4 w-full">
+      <span class="bg-slate-950 text-amber-400 px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider shrink-0 shadow-sm">
+        NOTICE
+      </span>
+      <div class="overflow-hidden whitespace-nowrap w-full">
+        <span id="tickerContent" class="animate-ticker font-medium tracking-wide">
+          Admissions open for Session 2026-27 • Term 1 Datesheets Published • Scholarship Test Registrations Open
+        </span>
+      </div>
     </div>
-    <button onclick="navigate('admissions')" class="underline text-xs whitespace-nowrap ml-2 font-extrabold hover:text-indigo-950">Apply Online</button>
-  </div>
+    <button onclick="navigateTo('admissions')" class="shrink-0 whitespace-nowrap underline font-bold hover:text-slate-800 transition text-[11px] sm:text-xs">
+      Apply Online &rarr;
+    </button>
+  </aside>
 
-  <header class="bg-indigo-950 text-white sticky top-0 z-50 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap justify-between items-center gap-4">
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="navigate('home')">
-        <div class="w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center font-black text-slate-950 text-xl shadow-md">
+  <!-- ========================================================= -->
+  <!-- 2. STICKY TOP NAVIGATION BAR                             -->
+  <!-- ========================================================= -->
+  <header class="sticky top-0 z-40 bg-[#0c0d1c]/95 border-b border-slate-800/80 shadow-xl backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- School Logo & Branding -->
+      <div class="flex items-center space-x-3.5 cursor-pointer" onclick="navigateTo('home')">
+        <div class="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-black text-2xl shadow-lg shadow-amber-500/10">
           🏫
         </div>
         <div>
-          <span id="brandNameDisplay" class="text-xl font-black tracking-tight block">Greenwood Public School</span>
-          <span id="brandTaglineDisplay" class="text-[10px] tracking-widest text-indigo-300 uppercase block font-semibold">Affiliated to CBSE &bull; New Delhi</span>
+          <h1 id="brandSchoolName" class="font-extrabold text-base tracking-wide text-white leading-tight">Greenwood Public School</h1>
+          <p id="brandTagline" class="text-[10px] text-amber-400 tracking-wider font-semibold uppercase">AFFILIATED TO CBSE • NEW DELHI</p>
         </div>
       </div>
 
-      <nav class="flex items-center flex-wrap gap-1 text-xs font-semibold">
-        <button onclick="navigate('home')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-home">Home</button>
-        <button onclick="navigate('about')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-about">About Us</button>
-        <button onclick="navigate('academics')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-academics">Academics</button>
-        <button onclick="navigate('events')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-events">Calendar</button>
-        <button onclick="navigate('notices')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-notices">Notices</button>
-        <button onclick="navigate('gallery')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-gallery">Gallery</button>
-        <button onclick="navigate('admissions')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-admissions">Admissions</button>
-        <button onclick="navigate('portal')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-portal">Student Portal</button>
-        <button onclick="navigate('contact')" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-indigo-900 text-indigo-200 transition" id="btn-contact">Contact</button>
-        <button onclick="navigate('admin')" class="px-3.5 py-1.5 rounded-lg bg-amber-400 text-slate-950 font-bold hover:bg-amber-300 transition shadow-sm ml-2">Admin Hub</button>
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden xl:flex items-center space-x-5 text-[13px] font-medium text-slate-300">
+        <button onclick="navigateTo('home')" class="nav-item hover:text-amber-400 transition" data-target="home">Home</button>
+        <button onclick="navigateTo('about')" class="nav-item hover:text-amber-400 transition" data-target="about">About Us</button>
+        <button onclick="navigateTo('academics')" class="nav-item hover:text-amber-400 transition" data-target="academics">Academics</button>
+        <button onclick="navigateTo('calendar')" class="nav-item hover:text-amber-400 transition" data-target="calendar">Calendar</button>
+        <button onclick="navigateTo('notices')" class="nav-item hover:text-amber-400 transition" data-target="notices">Notices</button>
+        <button onclick="navigateTo('gallery')" class="nav-item hover:text-amber-400 transition" data-target="gallery">Gallery</button>
+        <button onclick="navigateTo('admissions')" class="nav-item hover:text-amber-400 transition" data-target="admissions">Admissions</button>
+        <button onclick="navigateTo('student-portal')" class="nav-item hover:text-amber-400 transition" data-target="student-portal">Student Portal</button>
+        <button onclick="navigateTo('contact')" class="nav-item hover:text-amber-400 transition" data-target="contact">Contact</button>
+        <button onclick="navigateTo('admin')" class="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg shadow-md transition transform active:scale-95">
+          Admin Hub
+        </button>
       </nav>
+
+      <!-- Mobile Navbar Hamburger -->
+      <div class="xl:hidden flex items-center space-x-2">
+        <button onclick="navigateTo('admin')" class="px-3 py-1.5 bg-amber-400 text-slate-950 font-bold text-xs rounded-lg">Admin</button>
+        <button onclick="toggleMobileNav()" class="p-2 text-slate-400 hover:text-white rounded-lg focus:outline-none bg-slate-900 border border-slate-800">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobileNav" class="hidden xl:hidden bg-[#0a0c1a] border-b border-slate-800 px-6 py-5 space-y-3 text-sm">
+      <button onclick="navigateTo('home')" class="block w-full text-left py-1 text-slate-300 hover:text-amber-400">Home</button>
+      <button onclick="navigateTo('about')" class="block w-full text-left py-1 text-slate-300 hover:text-amber-400">About Us</button>
+      <button onclick="navigateTo('academics')" class="block w-full text-left py-1 text-slate-300 hover:text-amber-400">Academics</button>
+      <button onclick="navigateTo('calendar')" class="block w-full text-left py-1 text-slate-300 hover:text-amber-400">Calendar</button>
+      <button onclick="navigateTo('notices')" class="block w-full text-left py-1 text-slate-300 hover:text-amber-400">Notices</button>
+      <button onclick="navigateTo('gallery')" class="block w-full text-left py-1 text-slate-300 hover:text-amber-400">Gallery</button>
+      <button onclick="navigateTo('admissions')" class="block w-full text-left py-1 text-slate-300 hover:text-amber-400">Admissions</button>
+      <button onclick="navigateTo('student-portal')" class="block w-full text-left py-1 text-slate-300 hover:text-amber-400">Student Portal</button>
+      <button onclick="navigateTo('contact')" class="block w-full text-left py-1 text-slate-300 hover:text-amber-400">Contact</button>
+      <button onclick="navigateTo('admin')" class="block w-full text-left py-1 text-amber-400 font-bold border-t border-slate-800 pt-3">Admin Hub &rarr;</button>
     </div>
   </header>
 
-  <main class="flex-grow max-w-7xl mx-auto w-full p-4 sm:p-6">
+  <!-- ========================================================= -->
+  <!-- 3. MAIN APPLICATION CONTAINER                            -->
+  <!-- ========================================================= -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
-    <section id="page-home" class="page-view space-y-12">
-      <div class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-900 text-white rounded-3xl p-8 sm:p-14 shadow-xl relative overflow-hidden">
-        <div class="max-w-2xl relative z-10 space-y-4">
-          <span class="px-3 py-1 bg-amber-400 text-slate-950 text-xs font-bold rounded-full uppercase tracking-wider">Session 2026-2027</span>
-          <h1 id="heroTitleDisplay" class="text-4xl sm:text-5xl font-extrabold leading-tight">Welcome to Greenwood Public School</h1>
-          <p class="text-indigo-200 text-sm sm:text-base leading-relaxed">Inspiring intellectual curiosity, innovative thinking, and grounded human character in an environment designed for holistic growth.</p>
-          <div class="pt-2 flex flex-wrap gap-4">
-            <button onclick="navigate('admissions')" class="bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-amber-300 transition">Online Admission Form</button>
-            <button onclick="navigate('portal')" class="bg-indigo-900/80 border border-indigo-700 text-white font-semibold px-6 py-3 rounded-xl hover:bg-indigo-800 transition">Check Student Status</button>
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 1: HOME PAGE (HERO SECTION + DYNAMIC STATS)     -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-home" class="page-view space-y-12">
+      <!-- Hero Banner Card -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#121633] via-[#0d1024] to-[#080914] border border-indigo-900/40 p-8 sm:p-14 lg:p-16 shadow-2xl">
+        <div class="max-w-3xl space-y-6 relative z-10">
+          <span class="inline-block bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+            SESSION 2026-2027
+          </span>
+          <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight">
+            Welcome to Greenwood Public School
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl font-normal">
+            Inspiring intellectual curiosity, innovative thinking, and grounded human character in an environment designed for holistic growth.
+          </p>
+          <div class="flex flex-wrap gap-4 pt-2">
+            <button onclick="navigateTo('admissions')" class="px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl shadow-lg shadow-amber-400/20 transition transform active:scale-95">
+              Online Admission Form
+            </button>
+            <button onclick="navigateTo('student-portal')" class="px-6 py-3.5 bg-slate-800/80 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 shadow-md transition transform active:scale-95">
+              Check Student Status
+            </button>
           </div>
         </div>
+        <!-- Decorative Glow Blur -->
+        <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="text-3xl font-extrabold text-indigo-950">2,400+</div>
-          <div class="text-xs text-slate-500 font-semibold uppercase mt-1">Students Enrolled</div>
+      <!-- 4 DYNAMIC STAT COUNTERS -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 text-center space-y-1 shadow-lg hover:border-slate-700 transition">
+          <div id="heroStatStudents" class="text-3xl sm:text-4xl font-black text-white">2,400+</div>
+          <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Students Enrolled</div>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="text-3xl font-extrabold text-indigo-950">100%</div>
-          <div class="text-xs text-slate-500 font-semibold uppercase mt-1">Board Pass Record</div>
+        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 text-center space-y-1 shadow-lg hover:border-slate-700 transition">
+          <div id="heroStatBoardPass" class="text-3xl sm:text-4xl font-black text-white">100%</div>
+          <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Board Pass Record</div>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="text-3xl font-extrabold text-indigo-950">1:20</div>
-          <div class="text-xs text-slate-500 font-semibold uppercase mt-1">Faculty Ratio</div>
+        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 text-center space-y-1 shadow-lg hover:border-slate-700 transition">
+          <div id="heroStatFacultyRatio" class="text-3xl sm:text-4xl font-black text-white">1:20</div>
+          <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Faculty Ratio</div>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="text-3xl font-extrabold text-indigo-950">15 Acres</div>
-          <div class="text-xs text-slate-500 font-semibold uppercase mt-1">Smart Campus</div>
+        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 text-center space-y-1 shadow-lg hover:border-slate-700 transition">
+          <div id="heroStatCampusArea" class="text-3xl sm:text-4xl font-black text-white">15 Acres</div>
+          <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Smart Campus</div>
+        </div>
+      </div>
+
+      <!-- Quick Feature Highlights -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+        <div class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <div class="text-2xl">🔬</div>
+          <h3 class="text-lg font-bold text-white">STEM &amp; Robotics Labs</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">State-of-the-art physics, chemistry, biology, and AI innovation spaces equipped for practical discovery.</p>
+        </div>
+        <div class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <div class="text-2xl">🏆</div>
+          <h3 class="text-lg font-bold text-white">Comprehensive Athletics</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Olympic-grade track, football fields, indoor badminton courts, and competitive swimming coaching.</p>
+        </div>
+        <div class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <div class="text-2xl">🎨</div>
+          <h3 class="text-lg font-bold text-white">Arts &amp; Leadership</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Fostering creative confidence through performing arts, MUN parliamentary debates, and community service.</p>
         </div>
       </div>
     </section>
 
-    <section id="page-about" class="page-view hidden space-y-8">
-      <div class="border-b border-slate-200 pb-4">
-        <h2 class="text-3xl font-extrabold text-slate-900">About Our Campus</h2>
-        <p class="text-slate-500 text-sm mt-1">Core institutional values, leadership, and regulatory safety compliances.</p>
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 2: ABOUT US                                      -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-about" class="page-view hidden space-y-8">
+      <div class="max-w-3xl space-y-4">
+        <h2 class="text-3xl font-extrabold text-white tracking-tight">About Greenwood Public School</h2>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Founded on principles of educational excellence and moral discipline, Greenwood Public School provides premier CBSE schooling from kindergarten through senior secondary level. Our campus integrates green spaces with intelligent learning infrastructure.
+        </p>
       </div>
-      <div class="grid md:grid-cols-2 gap-8 items-start">
-        <div class="space-y-4 text-slate-700 text-sm leading-relaxed">
-          <h3 class="text-xl font-bold text-slate-900">Principal's Address</h3>
-          <p>We believe every child deserves a stimulating environment that balances academic focus with competitive sports, artistic expression, and ethical character.</p>
-          <p>Our faculty leverages technology-enabled smart classes, robotics prototyping, and tailored student mentoring to prepare our graduates for top global universities.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+        <div class="bg-slate-900/70 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <h3 class="text-base font-bold text-amber-400 uppercase tracking-wide">Our Mission</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            To empower young learners with rigorous intellectual stamina, ethical resilience, and global competence so they emerge as empathetic leaders of tomorrow.
+          </p>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <h4 class="font-bold text-sm text-slate-800">Mandatory Public Compliance Disclosures</h4>
-          <div class="text-xs space-y-2 divide-y divide-slate-100">
-            <div class="pt-2 flex justify-between"><span>Affiliation Number:</span> <strong class="font-mono">2130849</strong></div>
-            <div class="pt-2 flex justify-between"><span>Fire & Structural Safety:</span> <span class="text-emerald-600 font-semibold">Certified Valid</span></div>
-            <div class="pt-2 flex justify-between"><span>Clean Drinking Water & Sanitation:</span> <span class="text-emerald-600 font-semibold">Certified Safe</span></div>
-          </div>
+        <div class="bg-slate-900/70 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <h3 class="text-base font-bold text-cyan-400 uppercase tracking-wide">Our Vision</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            To remain a pioneer in experiential schooling, setting benchmarks in technology-driven pedagogy, inclusivity, and holistic student achievement.
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="page-academics" class="page-view hidden space-y-8">
-      <div class="border-b border-slate-200 pb-4">
-        <h2 class="text-3xl font-extrabold text-slate-900">Curriculum & Wings</h2>
-        <p class="text-slate-500 text-sm mt-1">Comprehensive pedagogical structure aligned with NEP guidelines.</p>
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 3: ACADEMICS                                     -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-academics" class="page-view hidden space-y-8">
+      <div>
+        <h2 class="text-3xl font-extrabold text-white tracking-tight">Academic Framework</h2>
+        <p class="text-xs text-slate-400 mt-1">Structured CBSE curriculum tailored for continuous scholastic evaluation.</p>
       </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-          <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded">Classes 1 - 5</span>
-          <h3 class="text-lg font-bold text-slate-900">Primary Wing</h3>
-          <p class="text-xs text-slate-600">Language phonics, activity-based mathematics, and fundamental motor development.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <span class="text-[10px] font-black uppercase text-amber-400 tracking-wider">FOUNDATION</span>
+          <h3 class="text-lg font-bold text-white">Primary Wing (Grades 1-5)</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Focus on phonetics, numeracy, thematic project modules, environmental awareness, and emotional socialization.</p>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-          <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded">Classes 6 - 8</span>
-          <h3 class="text-lg font-bold text-slate-900">Middle School Wing</h3>
-          <p class="text-xs text-slate-600">Hands-on lab sciences, algebra, foundational coding logic, and competitive team athletics.</p>
+        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <span class="text-[10px] font-black uppercase text-cyan-400 tracking-wider">DEVELOPMENT</span>
+          <h3 class="text-lg font-bold text-white">Middle Wing (Grades 6-8)</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Applied sciences, languages, computational logic, algebra, social histories, and structured sports regimens.</p>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-          <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded">Classes 9 - 12</span>
-          <h3 class="text-lg font-bold text-slate-900">Senior Secondary</h3>
-          <p class="text-xs text-slate-600">Dedicated Science (PCM/PCB), Commerce, and Humanities tracks with national competitive exam guidance.</p>
+        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <span class="text-[10px] font-black uppercase text-emerald-400 tracking-wider">ADVANCED</span>
+          <h3 class="text-lg font-bold text-white">Senior Secondary (Grades 9-12)</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Specialized streams in Science (PCM/PCB), Commerce, and Humanities paired with competitive exam mentoring (NEET, JEE, CUET).</p>
         </div>
       </div>
     </section>
 
-    <section id="page-events" class="page-view hidden space-y-8">
-      <div class="border-b border-slate-200 pb-4 flex justify-between items-center">
-        <div>
-          <h2 class="text-3xl font-extrabold text-slate-900">Academic Calendar & Events</h2>
-          <p class="text-slate-500 text-xs mt-1">Click on any event or calendar date to see timings and venue details.</p>
-        </div>
-        <span class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold">Live Synced</span>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 4: CALENDAR & EVENTS                             -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-calendar" class="page-view hidden space-y-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Interactive FullCalendar Element -->
+        <div class="lg:col-span-2 bg-slate-900/70 p-6 rounded-2xl border border-slate-800 shadow-xl backdrop-blur-sm">
           <div id="calendar"></div>
         </div>
+
+        <!-- Scheduled Events Sidebar -->
         <div class="space-y-4">
-          <h3 class="font-bold text-base text-slate-800 flex justify-between">
-            <span>Upcoming Events</span>
-            <span id="eventsCount" class="text-xs font-normal text-slate-400"></span>
-          </h3>
-          <div id="eventsList" class="space-y-3 max-h-[500px] overflow-y-auto pr-1">
-            <p class="text-xs text-slate-400">Loading events...</p>
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <h3 class="text-sm font-bold tracking-wide uppercase text-slate-300">Scheduled Events</h3>
+            <span id="eventsCount" class="text-xs bg-indigo-500/20 text-indigo-400 px-2.5 py-0.5 rounded-full border border-indigo-500/30">Loading...</span>
           </div>
-        </div>
-      </div>
-
-      <div id="eventModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-4">
-          <div class="flex justify-between items-start">
-            <span id="modalDateBadge" class="bg-indigo-50 text-indigo-700 font-bold px-3 py-1 rounded-full text-xs font-mono"></span>
-            <button onclick="closeEventModal()" class="text-slate-400 hover:text-slate-700 text-lg font-bold">✕</button>
+          <div id="eventsList" class="space-y-3 max-h-[580px] overflow-y-auto pr-1">
+            <p class="text-xs text-slate-500">Loading events...</p>
           </div>
-          <h3 id="modalTitle" class="text-xl font-extrabold text-slate-900 leading-snug"></h3>
-          <p id="modalDesc" class="text-xs text-slate-600 leading-relaxed"></p>
-          <div class="bg-slate-50 p-3 rounded-xl space-y-1 text-xs">
-            <p>⏰ <strong>Time:</strong> <span id="modalTime"></span></p>
-            <p>📍 <strong>Location:</strong> <span id="modalLocation"></span></p>
-          </div>
-          <button onclick="closeEventModal()" class="w-full py-2 bg-indigo-950 text-white rounded-xl text-xs font-bold hover:bg-indigo-900">Close</button>
         </div>
       </div>
     </section>
 
-    <section id="page-notices" class="page-view hidden space-y-6">
-      <div class="border-b border-slate-200 pb-4">
-        <h2 class="text-3xl font-extrabold text-slate-900">Circulars & Notices</h2>
-        <p class="text-slate-500 text-sm mt-1">Official circulars, exam schedules, and holiday announcements.</p>
-      </div>
-      <div id="noticesList" class="grid gap-4 md:grid-cols-2">
-        <p class="text-xs text-slate-400">Loading notices...</p>
-      </div>
-    </section>
-
-    <section id="page-gallery" class="page-view hidden space-y-6">
-      <div class="border-b border-slate-200 pb-4 flex flex-wrap justify-between items-center gap-4">
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 5: NOTICES & CIRCULARS                           -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-notices" class="page-view hidden space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 class="text-3xl font-extrabold text-slate-900">Campus Gallery</h2>
-          <p class="text-slate-500 text-sm mt-1">Snapshots of school life, academic laboratories, and athletic meets.</p>
+          <h2 class="text-2xl font-bold text-white tracking-tight">Official Circulars &amp; Notices</h2>
+          <p class="text-xs text-slate-400">Timely administrative announcements, examination datesheets, and holiday schedules.</p>
         </div>
-        <button onclick="fetchGallery()" class="px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold rounded-lg text-xs transition">
-          🔄 Refresh Gallery
+        <button onclick="fetchNotices()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-lg border border-slate-700 transition">
+          Refresh Circulars
         </button>
       </div>
 
-      <div id="galleryCategoryFilter" class="flex flex-wrap gap-2 text-xs font-semibold">
-        <button onclick="filterGallery('All')" class="gal-chip px-3 py-1 rounded-full bg-indigo-950 text-white">All Photos</button>
-      </div>
-
-      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <p class="text-xs text-slate-400">Loading gallery...</p>
-      </div>
-
-      <div id="galleryLightbox" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4" onclick="closeLightbox()">
-        <div class="relative max-w-3xl w-full" onclick="event.stopPropagation()">
-          <img id="lightboxImg" src="" alt="Enlarged View" class="max-h-[80vh] w-auto mx-auto rounded-2xl shadow-2xl object-contain">
-          <div class="p-4 text-center text-white space-y-1">
-            <h4 id="lightboxTitle" class="font-bold text-lg"></h4>
-            <span id="lightboxCategory" class="text-xs text-amber-300 font-semibold uppercase"></span>
-          </div>
-          <button onclick="closeLightbox()" class="absolute -top-3 -right-3 w-8 h-8 bg-white text-black font-bold rounded-full shadow-lg flex items-center justify-center">✕</button>
-        </div>
+      <div id="noticesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <p class="text-xs text-slate-500">Loading notices...</p>
       </div>
     </section>
 
-    <section id="page-admissions" class="page-view hidden space-y-8">
-      <div class="grid md:grid-cols-2 gap-8 items-start">
-        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-          <h2 class="text-2xl font-bold text-slate-900">Fee Matrix (2026-27)</h2>
-          <p class="text-xs text-slate-500">Regulated quarterly tuition fees in Indian Rupees (₹).</p>
-          <div class="border rounded-2xl overflow-hidden text-xs">
-            <table class="w-full text-left">
-              <thead class="bg-slate-50 border-b">
-                <tr><th class="p-3">Class</th><th class="p-3">Admission</th><th class="p-3">Quarterly</th></tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100 font-medium">
-                <tr><td class="p-3">Pre-Primary</td><td class="p-3">₹15,000</td><td class="p-3">₹12,500</td></tr>
-                <tr><td class="p-3">Classes 1 - 5</td><td class="p-3">₹20,000</td><td class="p-3">₹16,000</td></tr>
-                <tr><td class="p-3">Classes 6 - 8</td><td class="p-3">₹25,000</td><td class="p-3">₹19,500</td></tr>
-                <tr><td class="p-3">Classes 9 - 10</td><td class="p-3">₹30,000</td><td class="p-3">₹24,000</td></tr>
-                <tr><td class="p-3">Classes 11 - 12</td><td class="p-3">₹35,000</td><td class="p-3">₹28,500</td></tr>
-              </tbody>
-            </table>
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 6: PHOTO GALLERY                                 -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-gallery" class="page-view hidden space-y-6">
+      <div>
+        <h2 class="text-2xl font-bold text-white tracking-tight">Campus &amp; Event Gallery</h2>
+        <p class="text-xs text-slate-400">Moments from annual functions, sports meets, exhibitions, and campus activities.</p>
+      </div>
+
+      <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <p class="text-xs text-slate-500">Loading gallery photos...</p>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 7: ADMISSIONS                                    -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-admissions" class="page-view hidden max-w-2xl mx-auto space-y-6">
+      <div class="text-center space-y-2">
+        <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">ENROLLMENT OPEN</span>
+        <h2 class="text-3xl font-extrabold text-white">Online Admission Application</h2>
+        <p class="text-xs text-slate-400">Complete the form below to initiate enrollment for Academic Session 2026-2027.</p>
+      </div>
+
+      <form onsubmit="submitAdmission(event)" class="bg-slate-900/80 p-8 rounded-2xl border border-slate-800 space-y-4 text-xs shadow-2xl">
+        <div>
+          <label class="block text-slate-300 mb-1">Student Full Name *</label>
+          <input type="text" id="admStudent" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Parent / Guardian Full Name *</label>
+          <input type="text" id="admParent" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-300 mb-1">Applying for Class *</label>
+            <input type="text" id="admClass" placeholder="e.g. Class 6 / Class 11 (PCM)" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Contact Phone Number *</label>
+            <input type="tel" id="admPhone" placeholder="+91 XXXXXXXXXX" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
           </div>
         </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Email Address</label>
+          <input type="email" id="admEmail" placeholder="guardian@example.com" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Residential Address</label>
+          <textarea id="admAddress" rows="2" placeholder="Full residential postal address" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400"></textarea>
+        </div>
+        <button type="submit" id="admSubmitBtn" class="w-full py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg text-sm transition shadow-lg shadow-amber-400/20 active:scale-95">
+          Submit Admission Application
+        </button>
+      </form>
+    </section>
 
-        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-          <h2 class="text-2xl font-bold text-slate-900">Apply for Admission</h2>
-          <form onsubmit="handleAdmissionSubmit(event)" class="space-y-3 text-xs">
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 8: STUDENT PORTAL (STATUS & RESULTS)             -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-student-portal" class="page-view hidden max-w-xl mx-auto space-y-6">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl font-bold text-white">Student Status &amp; Result Lookup</h2>
+        <p class="text-xs text-slate-400">Enter your official Student Enrollment ID to view verified attendance, fee clearance, and term grades.</p>
+      </div>
+
+      <div class="flex gap-2">
+        <input type="text" id="searchStudentId" placeholder="e.g. GW-2026-001" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+        <button onclick="searchStudent()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 font-semibold text-xs rounded-lg transition shadow-md">
+          Verify Record
+        </button>
+      </div>
+
+      <div id="studentResultCard" class="hidden bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-4 text-xs shadow-xl"></div>
+    </section>
+
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 9: CONTACT US                                    -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-contact" class="page-view hidden max-w-2xl mx-auto space-y-6">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl font-bold text-white">Get in Touch</h2>
+        <p class="text-xs text-slate-400">Have questions about admissions, campus visits, or academics? Send us a direct inquiry.</p>
+      </div>
+
+      <form onsubmit="submitGeneralInquiry(event)" class="bg-slate-900/80 p-8 rounded-2xl border border-slate-800 space-y-4 text-xs shadow-2xl">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-300 mb-1">Your Name *</label>
+            <input type="text" id="contactName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Email Address *</label>
+            <input type="email" id="contactEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Subject / Inquiry Type</label>
+          <input type="text" id="contactSubject" placeholder="Admissions / Transport / Transfer Certificate" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Your Message *</label>
+          <textarea id="contactMessage" rows="4" required placeholder="Write your message here..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg transition shadow-md">
+          Send Inquiry
+        </button>
+      </form>
+    </section>
+
+    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 10: ADMIN HUB (FULL FUNCTIONALITY)               -->
+    <!-- ----------------------------------------------------- -->
+    <section id="view-admin" class="page-view hidden space-y-8">
+      <!-- Admin Hub Navigation / Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-800">
+        <div>
+          <h2 class="text-2xl font-extrabold text-white tracking-tight">Administration Control Hub</h2>
+          <p class="text-xs text-slate-400">Directly sync branding, calendar events, notices, admissions, and student records with Google Sheets.</p>
+        </div>
+        <!-- Admin Sub-Navigation Tabs -->
+        <div class="flex flex-wrap gap-2 text-xs">
+          <button onclick="switchAdminTab('branding')" class="admin-tab-btn px-3 py-1.5 bg-slate-800 text-amber-400 rounded-lg font-bold border border-slate-700" data-tab="branding">Branding</button>
+          <button onclick="switchAdminTab('events')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="events">Events</button>
+          <button onclick="switchAdminTab('notices')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="notices">Notices</button>
+          <button onclick="switchAdminTab('students')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="students">Students</button>
+          <button onclick="switchAdminTab('admissions')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="admissions">Admissions</button>
+          <button onclick="switchAdminTab('drive')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="drive">Drive Upload</button>
+          <button onclick="switchAdminTab('leads')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="leads">Agency Leads</button>
+        </div>
+      </div>
+
+      <!-- TAB 1: BRANDING, TICKER & STAT COUNTERS -->
+      <div id="admin-tab-branding" class="admin-tab-pane space-y-6">
+        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-2xl space-y-5 shadow-xl">
+          <h3 class="font-bold text-sm text-amber-400 uppercase tracking-wide">1. School Branding &amp; Notice Ticker</h3>
+          <div class="space-y-3 text-xs">
             <div>
-              <label class="block font-semibold mb-1">Student's Full Name</label>
-              <input type="text" id="admStudent" required class="w-full p-2.5 border rounded-xl">
+              <label class="block text-slate-400 mb-1">School / Organization Name</label>
+              <input type="text" id="adminSchoolName" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-400 mb-1">Header Tagline</label>
+              <input type="text" id="adminTagline" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Top Notice Ticker Text</label>
+              <input type="text" id="adminNoticeTicker" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
+            </div>
+
+            <!-- Hero Live Stat Counters Settings -->
+            <div class="pt-4 border-t border-slate-800 space-y-3">
+              <h4 class="font-bold text-xs text-amber-400 uppercase tracking-wide">Hero Stat Counters</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-slate-400 mb-1">Students Enrolled Count</label>
+                  <input type="text" id="adminCountStudents" placeholder="2,400+" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
+                </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">Board Pass Record</label>
+                  <input type="text" id="adminCountBoardPass" placeholder="100%" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
+                </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">Faculty Ratio</label>
+                  <input type="text" id="adminCountFacultyRatio" placeholder="1:20" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
+                </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">Campus Area</label>
+                  <input type="text" id="adminCountCampusArea" placeholder="15 Acres" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
+                </div>
+              </div>
+            </div>
+
+            <button onclick="saveAdminSettings()" class="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg transition shadow-md">
+              Save Branding &amp; Counter Updates
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: EVENTS SCHEDULER -->
+      <div id="admin-tab-events" class="admin-tab-pane hidden space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-4 shadow-xl">
+            <h3 class="font-bold text-sm text-cyan-400 uppercase tracking-wide">Add New Calendar Event</h3>
+            <form onsubmit="adminAddEvent(event)" class="space-y-3 text-xs">
               <div>
-                <label class="block font-semibold mb-1">Parent's Name</label>
-                <input type="text" id="admParent" required class="w-full p-2.5 border rounded-xl">
+                <label class="block text-slate-400 mb-1">Event Title *</label>
+                <input type="text" id="evTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-slate-400 mb-1">Date *</label>
+                  <input type="date" id="evDate" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+                </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">Time (e.g. 10:00 AM)</label>
+                  <input type="text" id="evTime" placeholder="10:00 AM" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+                </div>
               </div>
               <div>
-                <label class="block font-semibold mb-1">Class Applying For</label>
-                <select id="admGrade" required class="w-full p-2.5 border rounded-xl bg-white">
-                  <option value="Nursery">Nursery</option>
-                  <option value="Class 1">Class 1</option>
-                  <option value="Class 6">Class 6</option>
-                  <option value="Class 9">Class 9</option>
-                  <option value="Class 11 (PCM)">Class 11 (PCM)</option>
-                  <option value="Class 11 (Commerce)">Class 11 (Commerce)</option>
-                </select>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block font-semibold mb-1">Mobile Number</label>
-                <input type="tel" id="admPhone" required class="w-full p-2.5 border rounded-xl">
+                <label class="block text-slate-400 mb-1">Location</label>
+                <input type="text" id="evLoc" placeholder="Senior Auditorium" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
               </div>
               <div>
-                <label class="block font-semibold mb-1">Email Address</label>
-                <input type="email" id="admEmail" required class="w-full p-2.5 border rounded-xl">
+                <label class="block text-slate-400 mb-1">Description</label>
+                <textarea id="evDesc" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400"></textarea>
               </div>
-            </div>
-            <button type="submit" class="w-full py-3 bg-amber-400 text-slate-950 font-bold rounded-xl hover:bg-amber-300 transition">Submit Admission Application &rarr;</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section id="page-portal" class="page-view hidden space-y-6">
-      <div class="max-w-xl mx-auto bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
-        <div>
-          <h2 class="text-2xl font-bold text-slate-900">Student Record Verification</h2>
-          <p class="text-slate-500 text-xs mt-1">Enter Student ID (e.g. STU101) to verify attendance, grades, and fee clearance status.</p>
-        </div>
-        <form onsubmit="handlePortalLookup(event)" class="flex gap-2">
-          <input type="text" id="portalId" placeholder="e.g. STU101" required class="flex-grow p-2.5 border rounded-xl text-xs font-mono">
-          <button type="submit" class="bg-indigo-950 text-white px-5 rounded-xl text-xs font-bold hover:bg-indigo-900">Search</button>
-        </form>
-        <div id="portalResult" class="hidden border-t pt-4 space-y-2 text-xs"></div>
-      </div>
-    </section>
-
-    <section id="page-contact" class="page-view hidden space-y-8">
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-          <h2 class="text-2xl font-bold text-slate-900">Get in Touch</h2>
-          <p class="text-xs text-slate-600">Contact our administrative front desk for visits, campus admissions, and transport routes.</p>
-          <div class="space-y-2 text-xs text-slate-700 pt-2">
-            <p>📍 <strong>Address:</strong> Knowledge Park, Varanasi, UP - 221005</p>
-            <p>📞 <strong>Phone:</strong> +91 542 223344, +91 98765 43210</p>
-            <p>✉️ <strong>Email:</strong> helpdesk@schoolportal.edu.in</p>
-            <p>⏰ <strong>Office Hours:</strong> Mon - Sat (8:00 AM - 2:30 PM)</p>
+              <button type="submit" class="w-full py-2.5 bg-cyan-600 hover:bg-cyan-500 font-semibold rounded-lg transition shadow-md">
+                Publish Event
+              </button>
+            </form>
           </div>
-        </div>
 
-        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-          <h3 class="text-lg font-bold text-slate-900">Send an Inquiry</h3>
-          <form onsubmit="handleInquirySubmit(event)" class="space-y-3 text-xs">
-            <input type="text" id="inqName" placeholder="Your Name" required class="w-full p-2.5 border rounded-xl">
-            <input type="email" id="inqEmail" placeholder="Email Address" required class="w-full p-2.5 border rounded-xl">
-            <input type="text" id="inqSubject" placeholder="Subject" required class="w-full p-2.5 border rounded-xl">
-            <textarea id="inqMessage" placeholder="Message details..." rows="3" required class="w-full p-2.5 border rounded-xl"></textarea>
-            <button type="submit" class="w-full py-2.5 bg-indigo-950 text-white font-bold rounded-xl hover:bg-indigo-900 transition">Send Inquiry</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section id="page-admin" class="page-view hidden space-y-8">
-      <div class="border-b border-slate-200 pb-4 flex justify-between items-center">
-        <div>
-          <h2 class="text-3xl font-black text-slate-900">Admin Control Hub</h2>
-          <p class="text-slate-500 text-xs mt-0.5">Customize institution brand, inspect section metrics, and insert items.</p>
-        </div>
-        <div class="flex gap-2">
-          <button onclick="fetchAdminData()" class="px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold hover:bg-indigo-100">Refresh Data</button>
-          <button onclick="navigate('home')" class="px-3 py-1.5 bg-slate-800 text-white rounded-lg text-xs font-bold">Exit Admin</button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-          <span class="text-2xl font-black text-indigo-950" id="statStudents">-</span>
-          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Students</p>
-        </div>
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-          <span class="text-2xl font-black text-indigo-950" id="statEvents">-</span>
-          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Events</p>
-        </div>
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-          <span class="text-2xl font-black text-indigo-950" id="statNotices">-</span>
-          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Notices</p>
-        </div>
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-          <span class="text-2xl font-black text-indigo-950" id="statGallery">-</span>
-          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Photos</p>
-        </div>
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-          <span class="text-2xl font-black text-amber-600" id="statAdmissions">-</span>
-          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Applicants</p>
-        </div>
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-          <span class="text-2xl font-black text-indigo-950" id="statInquiries">-</span>
-          <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Inquiries</p>
-        </div>
-      </div>
-
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-        <h3 class="font-bold text-sm text-slate-900">⚙️ Customize School Branding</h3>
-        <form onsubmit="handleBrandUpdate(event)" class="grid sm:grid-cols-3 gap-3 text-xs">
-          <div>
-            <label class="block font-semibold mb-1">School Name</label>
-            <input type="text" id="cfgSchoolName" required class="w-full p-2 border rounded-lg">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Affiliation / Tagline</label>
-            <input type="text" id="cfgSchoolTagline" required class="w-full p-2 border rounded-lg">
-          </div>
-          <div class="flex items-end">
-            <button type="submit" class="w-full py-2 bg-indigo-950 text-white font-bold rounded-lg hover:bg-indigo-900 transition">Save Brand Name</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <h4 class="font-bold text-xs text-indigo-950 uppercase">📢 Add Notice</h4>
-          <form onsubmit="adminAddNotice(event)" class="space-y-2 text-xs">
-            <input type="date" id="adNoticeDate" required class="w-full p-2 border rounded-lg">
-            <input type="text" id="adNoticeCat" placeholder="Category" required class="w-full p-2 border rounded-lg">
-            <input type="text" id="adNoticeTitle" placeholder="Title" required class="w-full p-2 border rounded-lg">
-            <textarea id="adNoticeContent" placeholder="Details..." rows="2" required class="w-full p-2 border rounded-lg"></textarea>
-            <button type="submit" class="w-full py-2 bg-indigo-950 text-white font-bold rounded-lg hover:bg-indigo-900">Post Notice</button>
-          </form>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <h4 class="font-bold text-xs text-indigo-950 uppercase">📅 Add Event</h4>
-          <form onsubmit="adminAddEvent(event)" class="space-y-2 text-xs">
-            <input type="text" id="adEventTitle" placeholder="Event Title" required class="w-full p-2 border rounded-lg">
-            <input type="date" id="adEventDate" required class="w-full p-2 border rounded-lg">
-            <input type="text" id="adEventTime" placeholder="Time (e.g. 10:00 AM)" required class="w-full p-2 border rounded-lg">
-            <input type="text" id="adEventLoc" placeholder="Location" required class="w-full p-2 border rounded-lg">
-            <textarea id="adEventDesc" placeholder="Event Details..." rows="1" required class="w-full p-2 border rounded-lg"></textarea>
-            <button type="submit" class="w-full py-2 bg-indigo-950 text-white font-bold rounded-lg hover:bg-indigo-900">Schedule Event</button>
-          </form>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <h4 class="font-bold text-xs text-indigo-950 uppercase">👨‍🎓 Enroll Student</h4>
-          <form onsubmit="adminAddStudent(event)" class="space-y-2 text-xs">
-            <input type="text" id="adStuId" placeholder="ID (STU105)" required class="w-full p-2 border rounded-lg font-mono">
-            <input type="text" id="adStuName" placeholder="Full Name" required class="w-full p-2 border rounded-lg">
-            <div class="grid grid-cols-2 gap-2">
-              <input type="text" id="adStuGrade" placeholder="Class 10" required class="w-full p-2 border rounded-lg">
-              <input type="text" id="adStuSec" placeholder="Section A" required class="w-full p-2 border rounded-lg">
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <input type="text" id="adStuAtt" placeholder="Att: 95%" required class="w-full p-2 border rounded-lg">
-              <input type="text" id="adStuRes" placeholder="Grade A" required class="w-full p-2 border rounded-lg">
-            </div>
-            <select id="adStuFee" class="w-full p-2 border rounded-lg bg-white">
-              <option value="Paid">Fee: Paid</option>
-              <option value="Dues Pending">Fee: Dues Pending</option>
-            </select>
-            <button type="submit" class="w-full py-2 bg-amber-400 text-slate-950 font-bold rounded-lg hover:bg-amber-300">Enroll Student</button>
-          </form>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <div class="flex justify-between items-center">
-            <h4 class="font-bold text-xs text-indigo-950 uppercase">🖼️ Add Photo</h4>
-            <div class="flex bg-slate-100 p-1 rounded-lg text-[10px] font-bold">
-              <button type="button" onclick="switchGalleryMode('url')" id="tabModeUrl" class="px-2 py-0.5 rounded-md bg-white shadow-sm text-indigo-950">URL</button>
-              <button type="button" onclick="switchGalleryMode('file')" id="tabModeFile" class="px-2 py-0.5 rounded-md text-slate-500 hover:text-indigo-950">Device</button>
+          <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-sm text-slate-300 uppercase tracking-wide">Live Calendar Sync</h3>
+            <div id="adminEventsReviewList" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 text-xs">
+              <p class="text-slate-500">Loading events...</p>
             </div>
           </div>
-
-          <div class="space-y-2 text-xs">
-            <input type="text" id="galTitleCommon" placeholder="Photo Caption" required class="w-full p-2 border rounded-lg">
-            <input type="text" id="galCatCommon" placeholder="Category (e.g. Sports, Lab, Campus)" required class="w-full p-2 border rounded-lg">
-          </div>
-
-          <form id="formUploadUrl" onsubmit="handleGalleryUrlSubmit(event)" class="space-y-2 text-xs">
-            <input type="url" id="galUrlInput" placeholder="Direct Image URL (https://...)" required class="w-full p-2 border rounded-lg">
-            <button type="submit" id="btnUrlSubmit" class="w-full py-2 bg-indigo-950 text-white font-bold rounded-lg hover:bg-indigo-900 transition">Save to Gallery</button>
-          </form>
-
-          <form id="formUploadFile" onsubmit="handleGalleryFileSubmit(event)" class="hidden space-y-2 text-xs">
-            <input type="file" id="galFileInput" accept="image/*" required class="w-full p-2 border rounded-lg bg-slate-50 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:bg-indigo-50 file:text-indigo-700">
-            <button type="submit" id="btnFileSubmit" class="w-full py-2 bg-amber-400 text-slate-950 font-bold rounded-lg hover:bg-amber-300 transition">Upload to Drive</button>
-          </form>
         </div>
-
       </div>
 
-      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-        <h3 class="font-bold text-sm text-slate-900">Recent Online Admissions</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs min-w-[650px]">
-            <thead class="bg-slate-50 border-b">
+      <!-- TAB 3: NOTICES POSTER -->
+      <div id="admin-tab-notices" class="admin-tab-pane hidden space-y-6">
+        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-xl space-y-4 shadow-xl">
+          <h3 class="font-bold text-sm text-emerald-400 uppercase tracking-wide">Post Official Circular / Notice</h3>
+          <form onsubmit="adminAddNotice(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Notice Title *</label>
+              <input type="text" id="ntTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-emerald-400">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Category</label>
+              <input type="text" id="ntCat" placeholder="Academic / Examination / Holiday" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-emerald-400">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Notice Details *</label>
+              <textarea id="ntDet" rows="3" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-emerald-400"></textarea>
+            </div>
+            <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 font-semibold rounded-lg transition shadow-md">
+              Broadcast Notice
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TAB 4: STUDENT ROSTER EDITOR -->
+      <div id="admin-tab-students" class="admin-tab-pane hidden space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-4 shadow-xl">
+            <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wide">Add / Update Student Record</h3>
+            <form onsubmit="adminSaveStudent(event)" class="space-y-3 text-xs">
+              <div>
+                <label class="block text-slate-400 mb-1">Enrollment ID *</label>
+                <input type="text" id="stId" placeholder="GW-2026-001" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Student Full Name *</label>
+                <input type="text" id="stName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-slate-400 mb-1">Class / Section</label>
+                  <input type="text" id="stClass" placeholder="Class 10-A" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+                </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">Attendance (e.g. 96%)</label>
+                  <input type="text" id="stAtt" placeholder="96%" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-slate-400 mb-1">Fee Status</label>
+                  <input type="text" id="stFee" placeholder="Cleared / Pending" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+                </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">Term Result</label>
+                  <input type="text" id="stRes" placeholder="Grade A+ (94%)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+                </div>
+              </div>
+              <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 font-semibold rounded-lg transition shadow-md">
+                Save Student to Database
+              </button>
+            </form>
+          </div>
+
+          <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-sm text-slate-300 uppercase tracking-wide">Current Student Records</h3>
+            <button onclick="adminLoadStudents()" class="px-3 py-1 bg-slate-800 text-xs rounded border border-slate-700 hover:bg-slate-700">Refresh Roster</button>
+            <div id="adminStudentsTable" class="max-h-[380px] overflow-y-auto text-xs space-y-2">
+              <p class="text-slate-500">Click Refresh to inspect records.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: ADMISSIONS REVIEW -->
+      <div id="admin-tab-admissions" class="admin-tab-pane hidden space-y-6">
+        <div class="flex justify-between items-center">
+          <h3 class="font-bold text-sm text-amber-400 uppercase tracking-wide">Submitted Admission Applications</h3>
+          <button onclick="adminLoadAdmissions()" class="px-3 py-1 bg-slate-800 text-xs rounded border border-slate-700 hover:bg-slate-700">Refresh Applications</button>
+        </div>
+        <div class="overflow-x-auto bg-slate-900/80 rounded-2xl border border-slate-800">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="text-[11px] uppercase tracking-wider text-slate-400 bg-slate-950/80 border-b border-slate-800">
               <tr>
-                <th class="p-3">Time</th>
-                <th class="p-3">Student</th>
-                <th class="p-3">Parent</th>
-                <th class="p-3">Grade</th>
-                <th class="p-3">Phone</th>
-                <th class="p-3">Status</th>
+                <th class="px-4 py-3">Timestamp</th>
+                <th class="px-4 py-3">Student Name</th>
+                <th class="px-4 py-3">Parent Name</th>
+                <th class="px-4 py-3">Grade</th>
+                <th class="px-4 py-3">Phone</th>
+                <th class="px-4 py-3">Email</th>
               </tr>
             </thead>
-            <tbody id="admissionsTableBody" class="divide-y divide-slate-100">
-              <tr><td colspan="6" class="p-3 text-center text-slate-400">Loading admissions records...</td></tr>
+            <tbody id="admissionsTableBody" class="divide-y divide-slate-800">
+              <tr><td colspan="6" class="px-4 py-6 text-center text-slate-500">Click refresh to load submissions.</td></tr>
             </tbody>
           </table>
         </div>
       </div>
+
+      <!-- TAB 6: GOOGLE DRIVE UPLOADER -->
+      <div id="admin-tab-drive" class="admin-tab-pane hidden space-y-6">
+        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-xl space-y-4 shadow-xl">
+          <h3 class="font-bold text-sm text-purple-400 uppercase tracking-wide">Direct Cloud Drive Media Uploader</h3>
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Image Title</label>
+              <input type="text" id="upTitle" placeholder="Annual Sports Day 2026" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Category</label>
+              <input type="text" id="upCat" placeholder="Sports / Campus / Science" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Choose File</label>
+              <input type="file" id="mediaFile" accept="image/*" class="w-full text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-white hover:file:bg-slate-700">
+            </div>
+            <button onclick="adminUploadDriveMedia()" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 font-semibold rounded-lg transition shadow-md">
+              Upload to Drive &amp; Sync Gallery
+            </button>
+            <div id="driveUploadResult" class="hidden p-3 bg-slate-950 rounded-lg border border-slate-800 break-all text-xs"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 7: AGENCY LEADS CRM -->
+      <div id="admin-tab-leads" class="admin-tab-pane hidden space-y-6">
+        <div class="flex justify-between items-center">
+          <h3 class="font-bold text-sm text-cyan-400 uppercase tracking-wide">Agency Project Leads CRM</h3>
+          <button onclick="adminLoadLeads()" class="px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-xs rounded shadow transition">Refresh Leads</button>
+        </div>
+        <div class="overflow-x-auto bg-slate-900/80 rounded-2xl border border-slate-800">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="text-[11px] uppercase tracking-wider text-slate-400 bg-slate-950/80 border-b border-slate-800">
+              <tr>
+                <th class="px-4 py-3">Timestamp</th>
+                <th class="px-4 py-3">Client</th>
+                <th class="px-4 py-3">Email</th>
+                <th class="px-4 py-3">Service</th>
+                <th class="px-4 py-3">Budget</th>
+                <th class="px-4 py-3">Details</th>
+              </tr>
+            </thead>
+            <tbody id="adminLeadsTableBody" class="divide-y divide-slate-800">
+              <tr><td colspan="6" class="px-4 py-6 text-center text-slate-500">Click refresh to load inquiries.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </section>
 
   </main>
 
-  <footer class="bg-indigo-950 text-indigo-300 text-xs py-8 border-t border-indigo-900 mt-12">
-    <div class="max-w-7xl mx-auto px-6 text-center space-y-2">
-      <p>&copy; 2026 <span class="footerBrand">Greenwood Public School</span>. All rights reserved.</p>
-      <p class="text-[10px] text-indigo-400">Integrated with Google Workspace Engine &bull; Apps Script</p>
+  <!-- ========================================================= -->
+  <!-- 4. FOOTER                                                 -->
+  <!-- ========================================================= -->
+  <footer class="border-t border-slate-900 bg-[#080a14] py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p>&copy; 2026 Greenwood Public School. Affiliated to CBSE, New Delhi.</p>
+      <p class="text-[11px] text-slate-600">Powered by Google Apps Script, Google Sheets CRM &amp; Tailwind CSS.</p>
     </div>
   </footer>
 
+  <!-- ========================================================= -->
+  <!-- 5. CLIENT-SIDE CONTROLLER & APP ENGINE                    -->
+  <!-- ========================================================= -->
   <script>
     let calendarInstance = null;
-    let allEventsCache = [];
-    let allGalleryCache = [];
-    let selectedCategory = 'All';
+    let eventsCache = [];
 
-    function navigate(view) {
-      document.querySelectorAll('.page-view').forEach(p => p.classList.add('hidden'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('text-white', 'font-bold'));
-
-      const target = document.getElementById('page-' + view);
-      if (target) target.classList.remove('hidden');
-
-      const btn = document.getElementById('btn-' + view);
-      if (btn) btn.classList.add('text-white', 'font-bold');
-
-      if (view === 'notices') fetchNotices();
-      if (view === 'events') fetchEvents();
-      if (view === 'gallery') fetchGallery();
-      if (view === 'admin') fetchAdminData();
-    }
-
-    // Branding Loader
-    function loadBrandSettings() {
-      google.script.run.withSuccessHandler(settings => {
-        document.getElementById('brandNameDisplay').innerText = settings.name;
-        document.getElementById('brandTaglineDisplay').innerText = settings.tagline;
-        document.getElementById('heroTitleDisplay').innerText = 'Welcome to ' + settings.name;
-        document.querySelectorAll('.footerBrand').forEach(el => el.innerText = settings.name);
-
-        document.getElementById('cfgSchoolName').value = settings.name;
-        document.getElementById('cfgSchoolTagline').value = settings.tagline;
-      }).getSchoolSettings();
-    }
-
-    function handleBrandUpdate(e) {
-      e.preventDefault();
-      const payload = {
-        name: document.getElementById('cfgSchoolName').value,
-        tagline: document.getElementById('cfgSchoolTagline').value
-      };
-      google.script.run.withSuccessHandler(() => {
-        alert('Branding updated successfully!');
-        loadBrandSettings();
-      }).updateSchoolSettings(payload);
-    }
-
-    // Notices Fetcher
-    function fetchNotices() {
-      google.script.run.withSuccessHandler(data => {
-        const c = document.getElementById('noticesList');
-        if (!data || !data.length) return c.innerHTML = '<p class="text-slate-400 text-xs">No notices posted.</p>';
-        c.innerHTML = data.map(n => `
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div class="flex justify-between items-center text-xs">
-              <span class="bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded">${n.category}</span>
-              <span class="text-slate-400 font-mono">${n.date}</span>
-            </div>
-            <h4 class="font-bold text-sm text-slate-900">${n.title}</h4>
-            <p class="text-xs text-slate-600">${n.content}</p>
-          </div>
-        `).join('');
-      }).getNotices();
-    }
-
-    // Events & Calendar Fetcher
-    function fetchEvents() {
-  const list = document.getElementById('eventsList');
-  list.innerHTML = '<p class="text-xs text-slate-400">Loading events...</p>';
-
-  google.script.run.withSuccessHandler(data => {
-    allEventsCache = (data || []).map(e => {
-      // 1. Sanitize Time: strip out any 'Sat Dec 30 1899' epoch leak
-      let cleanTime = String(e.time || '').trim();
-      if (cleanTime.includes('1899') || cleanTime.includes('GMT')) {
-        const match = cleanTime.match(/\b\d{1,2}:\d{2}(?::\d{2})?\b/);
-        cleanTime = match ? match[0] : '';
-      }
-
-      // 2. Sanitize Date: ensure YYYY-MM-DD format
-      let cleanDate = String(e.date || '').trim();
-      if (cleanDate.includes('T')) {
-        cleanDate = cleanDate.split('T')[0];
-      }
-
-      return {
-        ...e,
-        date: cleanDate,
-        time: cleanTime
-      };
+    // Bootstrapping on DOM Load
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchSettings();
+      fetchEvents();
+      fetchNotices();
+      fetchGallery();
     });
 
-    document.getElementById('eventsCount').innerText = `${allEventsCache.length} scheduled`;
-
-    // Render Side List Cards
-    if (!allEventsCache.length) {
-      list.innerHTML = '<p class="text-xs text-slate-400">No scheduled events.</p>';
-    } else {
-      list.innerHTML = allEventsCache.map((e, index) => `
-        <div onclick="openEventByIndex(${index})" class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-indigo-400 transition cursor-pointer text-xs space-y-1">
-          <div class="font-bold text-slate-800 flex justify-between">
-            <span>${e.title}</span>
-            <span class="text-[10px] text-indigo-600 font-mono">View &rarr;</span>
-          </div>
-          <div class="text-[11px] text-amber-600 font-semibold">
-            ${e.date}${e.time ? ' &bull; ' + e.time : ''}
-          </div>
-          <div class="text-slate-500 line-clamp-2">${e.description}</div>
-          <div class="text-[10px] text-slate-400 pt-1">📍 ${e.location}</div>
-        </div>
-      `).join('');
-    }
-
-    // Render FullCalendar
-    const calEl = document.getElementById('calendar');
-    if (calendarInstance) calendarInstance.destroy();
-    
-    calendarInstance = new FullCalendar.Calendar(calEl, {
-      initialView: 'dayGridMonth',
-      headerToolbar: { 
-        left: 'prev,next today', 
-        center: 'title', 
-        right: 'dayGridMonth,timeGridWeek,listMonth' 
-      },
-      events: allEventsCache.map(ev => ({
-        // Show clean title (or clean time + title if desired)
-        title: ev.title,
-        start: ev.date,
-        extendedProps: { ...ev }
-      })),
-      eventClick: function(info) {
-        info.jsEvent.preventDefault();
-        const props = info.event.extendedProps;
-        showEventModal(props.title, props.date, props.time, props.location, props.description);
-      }
-    });
-    
-    calendarInstance.render();
-  }).getEvents();
-}
-
-    function showEventModal(title, date, time, loc, desc) {
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalDateBadge').innerText = date;
-      document.getElementById('modalTime').innerText = time;
-      document.getElementById('modalLocation').innerText = loc;
-      document.getElementById('modalDesc').innerText = desc;
-      document.getElementById('eventModal').classList.remove('hidden');
-    }
-
-    function openEventByIndex(idx) {
-      const e = allEventsCache[idx];
-      if (!e) return;
-      showEventModal(e.title, e.date, e.time, e.location, e.description);
-      if (calendarInstance && e.date) calendarInstance.gotoDate(e.date);
-    }
-
-    function closeEventModal() {
-      document.getElementById('eventModal').classList.add('hidden');
-    }
-
-    // --- Dynamic Gallery with Filter Chips & Immediate Reflection ---
-    function fetchGallery() {
-      const grid = document.getElementById('galleryGrid');
-      grid.innerHTML = '<p class="text-xs text-slate-400">Loading gallery...</p>';
-
-      google.script.run.withSuccessHandler(data => {
-        allGalleryCache = data || [];
-        renderGalleryChips();
-        renderGalleryItems();
-      }).getGallery();
-    }
-
-    function renderGalleryChips() {
-      const chipContainer = document.getElementById('galleryCategoryFilter');
-      const categories = ['All', ...new Set(allGalleryCache.map(item => item.category).filter(Boolean))];
-
-      chipContainer.innerHTML = categories.map(cat => {
-        const isActive = cat === selectedCategory;
-        return `
-          <button onclick="filterGallery('${cat}')" class="gal-chip px-3 py-1 rounded-full text-xs font-semibold transition ${
-            isActive ? 'bg-indigo-950 text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
-          }">
-            ${cat}
-          </button>
-        `;
-      }).join('');
-    }
-
-    function filterGallery(category) {
-      selectedCategory = category;
-      renderGalleryChips();
-      renderGalleryItems();
-    }
-
-    function renderGalleryItems() {
-      const grid = document.getElementById('galleryGrid');
-      const filtered = selectedCategory === 'All' 
-        ? allGalleryCache 
-        : allGalleryCache.filter(item => item.category === selectedCategory);
-
-      if (!filtered.length) {
-        grid.innerHTML = '<p class="text-xs text-slate-400 col-span-full">No pictures found in this category.</p>';
-        return;
-      }
-
-      grid.innerHTML = filtered.map((g, idx) => `
-        <div onclick="openLightbox('${encodeURIComponent(g.url)}', '${encodeURIComponent(g.title)}', '${encodeURIComponent(g.category)}')" 
-             class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition cursor-pointer group">
-          <div class="h-48 overflow-hidden bg-slate-100 relative">
-            <img src="${g.url}" alt="${g.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" 
-                 onerror="this.src='https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600'">
-            <span class="absolute top-2 right-2 bg-indigo-950/80 backdrop-blur-sm text-white font-bold text-[10px] px-2 py-0.5 rounded-md">
-              ${g.category}
-            </span>
-          </div>
-          <div class="p-3 flex justify-between items-center text-xs">
-            <span class="font-bold text-slate-800 truncate">${g.title}</span>
-            <span class="text-indigo-600 text-[11px] font-semibold">Enlarge &rarr;</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function openLightbox(encodedUrl, encodedTitle, encodedCategory) {
-      const url = decodeURIComponent(encodedUrl);
-      const title = decodeURIComponent(encodedTitle);
-      const cat = decodeURIComponent(encodedCategory);
-
-      document.getElementById('lightboxImg').src = url;
-      document.getElementById('lightboxTitle').innerText = title;
-      document.getElementById('lightboxCategory').innerText = cat;
-      document.getElementById('galleryLightbox').classList.remove('hidden');
-    }
-
-    function closeLightbox() {
-      document.getElementById('galleryLightbox').classList.add('hidden');
-    }
-
-    // Admin Dashboard Data Fetcher
-    function fetchAdminData() {
-      google.script.run.withSuccessHandler(stats => {
-        document.getElementById('statStudents').innerText = stats.students;
-        document.getElementById('statEvents').innerText = stats.events;
-        document.getElementById('statNotices').innerText = stats.notices;
-        document.getElementById('statGallery').innerText = stats.gallery;
-        document.getElementById('statAdmissions').innerText = stats.admissions;
-        document.getElementById('statInquiries').innerText = stats.inquiries;
-      }).getAdminStats();
-
-      google.script.run.withSuccessHandler(rows => {
-        const tbody = document.getElementById('admissionsTableBody');
-        if (!rows || !rows.length) return tbody.innerHTML = '<tr><td colspan="6" class="p-3 text-center text-slate-400">No applicants yet.</td></tr>';
-        tbody.innerHTML = rows.map(r => `
-          <tr class="hover:bg-slate-50">
-            <td class="p-3 text-slate-400">${r.time}</td>
-            <td class="p-3 font-bold">${r.student}</td>
-            <td class="p-3">${r.parent}</td>
-            <td class="p-3 font-semibold">${r.grade}</td>
-            <td class="p-3 font-mono">${r.phone}</td>
-            <td class="p-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-semibold text-[10px]">${r.status}</span></td>
-          </tr>
-        `).join('');
-      }).getAdmissions();
-    }
-
-    // Student Portal Lookup
-    function handlePortalLookup(e) {
-      e.preventDefault();
-      const id = document.getElementById('portalId').value;
-      const res = document.getElementById('portalResult');
-      res.classList.remove('hidden');
-      res.innerHTML = '<p class="text-slate-400">Verifying records...</p>';
-
-      google.script.run.withSuccessHandler(stu => {
-        if (!stu.found) {
-          res.innerHTML = '<p class="text-rose-500 font-semibold">No record located for this ID.</p>';
-          return;
+    // -------------------------------------------------------------
+    // NAVIGATION ROUTER
+    // -------------------------------------------------------------
+    function navigateTo(viewId) {
+      document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById('view-' + viewId);
+      if (target) {
+        target.classList.remove('hidden');
+        if (viewId === 'calendar') {
+          setTimeout(() => {
+            if (calendarInstance) calendarInstance.render();
+          }, 150);
         }
-        res.innerHTML = `
-          <div class="p-4 bg-slate-50 rounded-2xl border space-y-1">
-            <p><strong>Student Name:</strong> ${stu.name}</p>
-            <p><strong>Class & Section:</strong> ${stu.grade} (${stu.section})</p>
-            <p><strong>Attendance Percentage:</strong> <span class="text-indigo-600 font-bold">${stu.attendance}</span></p>
-            <p><strong>Term Assessment:</strong> <span class="font-bold">${stu.result}</span></p>
-            <p><strong>Quarterly Fee Status:</strong> <span class="${stu.feeStatus === 'Paid' ? 'text-emerald-600' : 'text-rose-600'} font-bold">${stu.feeStatus}</span></p>
-          </div>
-        `;
-      }).findStudentById(id);
+      }
+      const mobileNav = document.getElementById('mobileNav');
+      if (mobileNav) mobileNav.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Public Form Submissions
-    function handleAdmissionSubmit(e) {
-      e.preventDefault();
-      const payload = {
-        studentName: document.getElementById('admStudent').value,
-        parentName: document.getElementById('admParent').value,
-        grade: document.getElementById('admGrade').value,
-        phone: document.getElementById('admPhone').value,
-        email: document.getElementById('admEmail').value
-      };
-      google.script.run.withSuccessHandler(() => {
-        alert('Admission submitted! The office will contact you.');
-        e.target.reset();
-      }).submitAdmission(payload);
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('hidden');
     }
 
-    function handleInquirySubmit(e) {
-      e.preventDefault();
-      const payload = {
-        name: document.getElementById('inqName').value,
-        email: document.getElementById('inqEmail').value,
-        subject: document.getElementById('inqSubject').value,
-        message: document.getElementById('inqMessage').value
-      };
-      google.script.run.withSuccessHandler(() => {
-        alert('Inquiry sent successfully!');
-        e.target.reset();
-      }).submitInquiry(payload);
+    function switchAdminTab(tabId) {
+      document.querySelectorAll('.admin-tab-pane').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-slate-800', 'text-amber-400', 'border-slate-700');
+        btn.classList.add('bg-slate-900', 'text-slate-400', 'border-slate-800');
+      });
+
+      const activePane = document.getElementById('admin-tab-' + tabId);
+      if (activePane) activePane.classList.remove('hidden');
+
+      const activeBtn = document.querySelector(`.admin-tab-btn[data-tab="${tabId}"]`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-slate-900', 'text-slate-400', 'border-slate-800');
+        activeBtn.classList.add('bg-slate-800', 'text-amber-400', 'border-slate-700');
+      }
+
+      if (tabId === 'admissions') adminLoadAdmissions();
+      if (tabId === 'leads') adminLoadLeads();
+      if (tabId === 'students') adminLoadStudents();
     }
 
-    // Admin Creation Form Handlers
-    function adminAddNotice(e) {
-      e.preventDefault();
+    // -------------------------------------------------------------
+    // BRANDING & STAT COUNTERS ENGINE
+    // -------------------------------------------------------------
+    function fetchSettings() {
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res && res.success && res.data) {
+            const d = res.data;
+            if (d.schoolName) {
+              document.getElementById('brandSchoolName').innerText = d.schoolName;
+              document.getElementById('adminSchoolName').value = d.schoolName;
+            }
+            if (d.tagline) {
+              document.getElementById('brandTagline').innerText = d.tagline;
+              document.getElementById('adminTagline').value = d.tagline;
+            }
+            if (d.noticeTicker) {
+              document.getElementById('tickerContent').innerText = d.noticeTicker;
+              document.getElementById('adminNoticeTicker').value = d.noticeTicker;
+            }
+
+            // Populate Dynamic Hero Stat Counters
+            if (d.countStudents) {
+              document.getElementById('heroStatStudents').innerText = d.countStudents;
+              document.getElementById('adminCountStudents').value = d.countStudents;
+            }
+            if (d.countBoardPass) {
+              document.getElementById('heroStatBoardPass').innerText = d.countBoardPass;
+              document.getElementById('adminCountBoardPass').value = d.countBoardPass;
+            }
+            if (d.countFacultyRatio) {
+              document.getElementById('heroStatFacultyRatio').innerText = d.countFacultyRatio;
+              document.getElementById('adminCountFacultyRatio').value = d.countFacultyRatio;
+            }
+            if (d.countCampusArea) {
+              document.getElementById('heroStatCampusArea').innerText = d.countCampusArea;
+              document.getElementById('adminCountCampusArea').value = d.countCampusArea;
+            }
+          }
+        })
+        .withFailureHandler(err => console.error("Failed to load settings:", err))
+        .getSchoolSettings();
+    }
+
+    function saveAdminSettings() {
       const payload = {
-        date: document.getElementById('adNoticeDate').value,
-        category: document.getElementById('adNoticeCat').value,
-        title: document.getElementById('adNoticeTitle').value,
-        content: document.getElementById('adNoticeContent').value
+        schoolName: document.getElementById('adminSchoolName').value.trim(),
+        tagline: document.getElementById('adminTagline').value.trim(),
+        noticeTicker: document.getElementById('adminNoticeTicker').value.trim(),
+        countStudents: document.getElementById('adminCountStudents').value.trim(),
+        countBoardPass: document.getElementById('adminCountBoardPass').value.trim(),
+        countFacultyRatio: document.getElementById('adminCountFacultyRatio').value.trim(),
+        countCampusArea: document.getElementById('adminCountCampusArea').value.trim()
       };
-      google.script.run.withSuccessHandler(() => {
-        alert('Notice published!');
-        e.target.reset();
-        fetchAdminData();
-      }).addNotice(payload);
+
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res && res.success) {
+            alert('✅ ' + res.message);
+            fetchSettings();
+          } else {
+            alert('⚠️ ' + (res ? res.message : 'Error updating settings.'));
+          }
+        })
+        .withFailureHandler(err => alert('❌ Server Error: ' + err.message))
+        .updateSchoolSettings(payload);
+    }
+
+    // -------------------------------------------------------------
+    // CALENDAR & EVENTS ENGINE (CLEAN DATE PARSING)
+    // -------------------------------------------------------------
+    function fetchEvents() {
+      const list = document.getElementById('eventsList');
+      const adminList = document.getElementById('adminEventsReviewList');
+      list.innerHTML = '<p class="text-xs text-slate-500">Loading events...</p>';
+
+      google.script.run
+        .withSuccessHandler(data => {
+          eventsCache = (data || []).map(e => {
+            let cleanTime = String(e.time || '').trim();
+            if (cleanTime.includes('1899') || cleanTime.includes('GMT')) {
+              const m = cleanTime.match(/\b\d{1,2}:\d{2}(?::\d{2})?\b/);
+              cleanTime = m ? m[0] : '';
+            }
+            let cleanDate = String(e.date || '').trim();
+            if (cleanDate.includes('T')) cleanDate = cleanDate.split('T')[0];
+
+            return { ...e, date: cleanDate, time: cleanTime };
+          });
+
+          document.getElementById('eventsCount').innerText = `${eventsCache.length} scheduled`;
+
+          if (!eventsCache.length) {
+            list.innerHTML = '<p class="text-xs text-slate-500">No events scheduled.</p>';
+            if (adminList) adminList.innerHTML = '<p class="text-slate-500">No events in database.</p>';
+          } else {
+            const html = eventsCache.map(e => `
+              <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs space-y-1">
+                <div class="font-bold text-white">${e.title}</div>
+                <div class="text-[11px] text-amber-400 font-semibold">${e.date}${e.time ? ' &bull; ' + e.time : ''}</div>
+                <div class="text-slate-400 text-[11px]">${e.description}</div>
+                <div class="text-[10px] text-slate-500">📍 ${e.location || 'Campus'}</div>
+              </div>
+            `).join('');
+
+            list.innerHTML = html;
+            if (adminList) adminList.innerHTML = html;
+          }
+
+          // FullCalendar Initialization
+          const calEl = document.getElementById('calendar');
+          if (calendarInstance) calendarInstance.destroy();
+
+          calendarInstance = new FullCalendar.Calendar(calEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek'
+            },
+            events: eventsCache.map(ev => ({
+              title: ev.title,
+              start: ev.date,
+              extendedProps: { ...ev }
+            })),
+            eventClick: function(info) {
+              const p = info.event.extendedProps;
+              alert(`📌 ${p.title}\n📅 Date: ${p.date}\n⏰ Time: ${p.time || 'N/A'}\n📍 Location: ${p.location || 'Campus'}\n\n${p.description || ''}`);
+            }
+          });
+          calendarInstance.render();
+        })
+        .withFailureHandler(err => {
+          list.innerHTML = `<p class="text-xs text-red-400">Failed to load calendar: ${err.message}</p>`;
+        })
+        .getEvents();
     }
 
     function adminAddEvent(e) {
       e.preventDefault();
       const payload = {
-        title: document.getElementById('adEventTitle').value,
-        date: document.getElementById('adEventDate').value,
-        time: document.getElementById('adEventTime').value,
-        location: document.getElementById('adEventLoc').value,
-        desc: document.getElementById('adEventDesc').value
+        title: document.getElementById('evTitle').value,
+        date: document.getElementById('evDate').value,
+        time: document.getElementById('evTime').value,
+        location: document.getElementById('evLoc').value,
+        description: document.getElementById('evDesc').value
       };
-      google.script.run.withSuccessHandler(() => {
-        alert('Event added!');
-        e.target.reset();
-        fetchAdminData();
-      }).addEvent(payload);
+
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res && res.success) {
+            alert('✅ ' + res.message);
+            document.getElementById('evTitle').value = '';
+            document.getElementById('evDate').value = '';
+            document.getElementById('evTime').value = '';
+            document.getElementById('evLoc').value = '';
+            document.getElementById('evDesc').value = '';
+            fetchEvents();
+          } else {
+            alert('⚠️ ' + (res ? res.message : 'Error adding event.'));
+          }
+        })
+        .withFailureHandler(err => alert('❌ Error: ' + err.message))
+        .addCalendarEvent(payload);
     }
 
-    function adminAddStudent(e) {
+    // -------------------------------------------------------------
+    // NOTICES ENGINE
+    // -------------------------------------------------------------
+    function fetchNotices() {
+      const container = document.getElementById('noticesContainer');
+      google.script.run
+        .withSuccessHandler(notices => {
+          if (!notices || !notices.length) {
+            container.innerHTML = '<p class="text-xs text-slate-500">No active circulars at this moment.</p>';
+            return;
+          }
+          container.innerHTML = notices.map(n => `
+            <div class="p-5 bg-slate-900/80 rounded-xl border border-slate-800 space-y-2">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">${n.category}</span>
+              <h4 class="font-bold text-sm text-white">${n.title}</h4>
+              <p class="text-xs text-slate-400 leading-relaxed">${n.details}</p>
+              <div class="text-[10px] text-slate-500 pt-2 border-t border-slate-800/80">Posted: ${n.date}</div>
+            </div>
+          `).join('');
+        })
+        .withFailureHandler(err => {
+          container.innerHTML = `<p class="text-xs text-red-400">Failed to load notices: ${err.message}</p>`;
+        })
+        .getNotices();
+    }
+
+    function adminAddNotice(e) {
       e.preventDefault();
       const payload = {
-        id: document.getElementById('adStuId').value,
-        name: document.getElementById('adStuName').value,
-        grade: document.getElementById('adStuGrade').value,
-        section: document.getElementById('adStuSec').value,
-        attendance: document.getElementById('adStuAtt').value,
-        result: document.getElementById('adStuRes').value,
-        feeStatus: document.getElementById('adStuFee').value
+        title: document.getElementById('ntTitle').value,
+        category: document.getElementById('ntCat').value,
+        details: document.getElementById('ntDet').value
       };
-      google.script.run.withSuccessHandler(() => {
-        alert('Student enrolled!');
-        e.target.reset();
-        fetchAdminData();
-      }).addStudent(payload);
-    }
 
-    // Dual-Mode Gallery Manager Handlers
-    function switchGalleryMode(mode) {
-      const isUrl = mode === 'url';
-      document.getElementById('formUploadUrl').classList.toggle('hidden', !isUrl);
-      document.getElementById('formUploadFile').classList.toggle('hidden', isUrl);
-
-      const tabUrl = document.getElementById('tabModeUrl');
-      const tabFile = document.getElementById('tabModeFile');
-      if (isUrl) {
-        tabUrl.className = 'px-2 py-0.5 rounded-md bg-white shadow-sm text-indigo-950';
-        tabFile.className = 'px-2 py-0.5 rounded-md text-slate-500 hover:text-indigo-950';
-      } else {
-        tabFile.className = 'px-2 py-0.5 rounded-md bg-white shadow-sm text-indigo-950';
-        tabUrl.className = 'px-2 py-0.5 rounded-md text-slate-500 hover:text-indigo-950';
-      }
-    }
-
-    function handleGalleryUrlSubmit(e) {
-      e.preventDefault();
-      const title = document.getElementById('galTitleCommon').value;
-      const category = document.getElementById('galCatCommon').value;
-      const url = document.getElementById('galUrlInput').value;
-      const btn = document.getElementById('btnUrlSubmit');
-
-      btn.disabled = true;
-      btn.innerText = 'Saving...';
-
-      google.script.run.withSuccessHandler(() => {
-        btn.disabled = false;
-        btn.innerText = 'Save to Gallery';
-        alert('Photo link added to Gallery!');
-        document.getElementById('galTitleCommon').value = '';
-        document.getElementById('galCatCommon').value = '';
-        document.getElementById('galUrlInput').value = '';
-        fetchAdminData();
-        fetchGallery(); // Immediately reflects in the Gallery section
-      }).addGalleryItem({ title, category, url });
-    }
-
-    function handleGalleryFileSubmit(e) {
-      e.preventDefault();
-      const fileInput = document.getElementById('galFileInput');
-      const file = fileInput.files[0];
-      if (!file) return alert('Please choose an image file.');
-
-      const title = document.getElementById('galTitleCommon').value;
-      const category = document.getElementById('galCatCommon').value;
-      const btn = document.getElementById('btnFileSubmit');
-
-      btn.disabled = true;
-      btn.innerText = 'Uploading to Drive...';
-
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const payload = {
-          name: file.name,
-          type: file.type,
-          base64: event.target.result,
-          title: title,
-          category: category
-        };
-
-        google.script.run.withSuccessHandler(res => {
-          btn.disabled = false;
-          btn.innerText = 'Upload to Drive';
-          if (res.success) {
-            alert('Photo uploaded to Google Drive & reflected in Gallery!');
-            document.getElementById('galTitleCommon').value = '';
-            document.getElementById('galCatCommon').value = '';
-            fileInput.value = '';
-            fetchAdminData();
-            fetchGallery(); // Immediately reflects in the Gallery section
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res && res.success) {
+            alert('✅ ' + res.message);
+            document.getElementById('ntTitle').value = '';
+            document.getElementById('ntDet').value = '';
+            fetchNotices();
           } else {
-            alert('Upload error: ' + res.message);
+            alert('⚠️ ' + res.message);
           }
-        }).uploadImageToDrive(payload);
+        })
+        .withFailureHandler(err => alert('❌ Error: ' + err.message))
+        .addNotice(payload);
+    }
+
+    // -------------------------------------------------------------
+    // GALLERY ENGINE
+    // -------------------------------------------------------------
+    function fetchGallery() {
+      const gBox = document.getElementById('galleryContainer');
+      google.script.run
+        .withSuccessHandler(images => {
+          if (!images || !images.length) {
+            gBox.innerHTML = '<p class="text-xs text-slate-500">No gallery pictures uploaded yet.</p>';
+            return;
+          }
+          gBox.innerHTML = images.map(img => `
+            <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-lg group">
+              <div class="h-48 overflow-hidden bg-slate-950">
+                <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+              </div>
+              <div class="p-4 space-y-1">
+                <span class="text-[10px] font-bold text-amber-400">${img.category || 'Event'}</span>
+                <h4 class="font-bold text-sm text-white">${img.title}</h4>
+              </div>
+            </div>
+          `).join('');
+        })
+        .withFailureHandler(err => {
+          gBox.innerHTML = `<p class="text-xs text-red-400">Failed to load gallery: ${err.message}</p>`;
+        })
+        .getGalleryImages();
+    }
+
+    // -------------------------------------------------------------
+    // STUDENT ROSTER & VERIFICATION
+    // -------------------------------------------------------------
+    function searchStudent() {
+      const q = document.getElementById('searchStudentId').value.trim();
+      const box = document.getElementById('studentResultCard');
+      if (!q) return;
+
+      box.classList.remove('hidden');
+      box.innerHTML = '<span class="text-slate-400">Searching records...</span>';
+
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res && res.success) {
+            const s = res.student;
+            box.innerHTML = `
+              <div class="flex justify-between items-center">
+                <div class="font-bold text-base text-white">${s.name}</div>
+                <span class="text-xs bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 px-2 py-0.5 rounded font-mono">${s.id}</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-800 text-center">
+                <div><span class="text-slate-400 text-[10px] block">Class</span><b class="text-white">${s.class}</b></div>
+                <div><span class="text-slate-400 text-[10px] block">Attendance</span><b class="text-emerald-400">${s.attendance}</b></div>
+                <div><span class="text-slate-400 text-[10px] block">Fee Clearance</span><b class="text-amber-400">${s.feeStatus}</b></div>
+              </div>
+              <div class="pt-2 border-t border-slate-800/80">
+                <span class="text-slate-400 text-[10px] block">Term Grade / Result:</span>
+                <b class="text-white text-xs">${s.result}</b>
+              </div>
+            `;
+          } else {
+            box.innerHTML = `<span class="text-red-400">${res.message}</span>`;
+          }
+        })
+        .withFailureHandler(err => { box.innerHTML = `<span class="text-red-400">Error: ${err.message}</span>`; })
+        .lookupStudent(q);
+    }
+
+    function adminSaveStudent(e) {
+      e.preventDefault();
+      const payload = {
+        id: document.getElementById('stId').value.trim(),
+        name: document.getElementById('stName').value.trim(),
+        class: document.getElementById('stClass').value.trim(),
+        attendance: document.getElementById('stAtt').value.trim(),
+        feeStatus: document.getElementById('stFee').value.trim(),
+        result: document.getElementById('stRes').value.trim()
+      };
+
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res && res.success) {
+            alert('✅ ' + res.message);
+            adminLoadStudents();
+          } else {
+            alert('⚠️ ' + res.message);
+          }
+        })
+        .withFailureHandler(err => alert('❌ Error: ' + err.message))
+        .saveStudentRecord(payload);
+    }
+
+    function adminLoadStudents() {
+      const box = document.getElementById('adminStudentsTable');
+      box.innerHTML = '<p class="text-slate-500">Refreshing roster...</p>';
+
+      google.script.run
+        .withSuccessHandler(students => {
+          if (!students || !students.length) {
+            box.innerHTML = '<p class="text-slate-500">No students recorded.</p>';
+            return;
+          }
+          box.innerHTML = students.map(s => `
+            <div class="p-2.5 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
+              <div>
+                <span class="font-bold text-white">${s.name}</span>
+                <span class="text-slate-500 text-[10px] block">${s.id} &bull; ${s.class}</span>
+              </div>
+              <div class="text-right">
+                <span class="text-emerald-400 font-bold">${s.attendance}</span>
+                <span class="text-slate-400 text-[10px] block">${s.feeStatus}</span>
+              </div>
+            </div>
+          `).join('');
+        })
+        .withFailureHandler(err => { box.innerHTML = `<p class="text-red-400">Error: ${err.message}</p>`; })
+        .getAllStudents();
+    }
+
+    // -------------------------------------------------------------
+    // ADMISSIONS PIPELINE
+    // -------------------------------------------------------------
+    function submitAdmission(e) {
+      e.preventDefault();
+      const btn = document.getElementById('admSubmitBtn');
+      btn.innerText = 'Submitting Application...';
+      btn.disabled = true;
+
+      const payload = {
+        studentName: document.getElementById('admStudent').value,
+        parentName: document.getElementById('admParent').value,
+        grade: document.getElementById('admClass').value,
+        phone: document.getElementById('admPhone').value,
+        email: document.getElementById('admEmail').value,
+        address: document.getElementById('admAddress').value
+      };
+
+      google.script.run
+        .withSuccessHandler(res => {
+          btn.innerText = 'Submit Admission Application';
+          btn.disabled = false;
+          if (res && res.success) {
+            alert('✅ ' + res.message);
+            e.target.reset();
+            navigateTo('home');
+          } else {
+            alert('⚠️ ' + res.message);
+          }
+        })
+        .withFailureHandler(err => {
+          btn.innerText = 'Submit Admission Application';
+          btn.disabled = false;
+          alert('❌ Error: ' + err.message);
+        })
+        .submitAdmissionForm(payload);
+    }
+
+    function adminLoadAdmissions() {
+      const tbody = document.getElementById('admissionsTableBody');
+      tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-center text-slate-500">Loading admissions...</td></tr>';
+
+      google.script.run
+        .withSuccessHandler(admissions => {
+          if (!admissions || !admissions.length) {
+            tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-center text-slate-500">No applications registered.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = admissions.map(a => `
+            <tr class="hover:bg-slate-800/40 transition">
+              <td class="px-4 py-3 whitespace-nowrap text-slate-400">${a.timestamp}</td>
+              <td class="px-4 py-3 font-bold text-white">${a.studentName}</td>
+              <td class="px-4 py-3 text-slate-300">${a.parentName}</td>
+              <td class="px-4 py-3 text-amber-400 font-semibold">${a.grade}</td>
+              <td class="px-4 py-3 text-slate-300 font-mono">${a.phone}</td>
+              <td class="px-4 py-3 text-cyan-400">${a.email}</td>
+            </tr>
+          `).join('');
+        })
+        .withFailureHandler(err => {
+          tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-4 text-center text-red-400">Error: ${err.message}</td></tr>`;
+        })
+        .getAdmissions();
+    }
+
+    // -------------------------------------------------------------
+    // CONTACT & LEADS PIPELINE
+    // -------------------------------------------------------------
+    function submitGeneralInquiry(e) {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('contactName').value,
+        email: document.getElementById('contactEmail').value,
+        service: document.getElementById('contactSubject').value,
+        budget: 'General Inquiry',
+        details: document.getElementById('contactMessage').value
+      };
+
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res && res.success) {
+            alert('✅ ' + res.message);
+            e.target.reset();
+            navigateTo('home');
+          } else {
+            alert('⚠️ ' + res.message);
+          }
+        })
+        .withFailureHandler(err => alert('❌ Error: ' + err.message))
+        .submitInquiry(payload);
+    }
+
+    function adminLoadLeads() {
+      const tbody = document.getElementById('adminLeadsTableBody');
+      tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-center text-slate-500">Loading leads...</td></tr>';
+
+      google.script.run
+        .withSuccessHandler(leads => {
+          if (!leads || !leads.length) {
+            tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-center text-slate-500">No leads found in database.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = leads.map(l => `
+            <tr class="hover:bg-slate-800/40 transition">
+              <td class="px-4 py-3 whitespace-nowrap text-slate-400 font-mono">${l.timestamp}</td>
+              <td class="px-4 py-3 font-bold text-white">${l.name}</td>
+              <td class="px-4 py-3 text-cyan-400"><a href="mailto:${l.email}">${l.email}</a></td>
+              <td class="px-4 py-3">${l.service}</td>
+              <td class="px-4 py-3 text-emerald-400 font-semibold">${l.budget}</td>
+              <td class="px-4 py-3 text-slate-300 max-w-xs truncate">${l.details}</td>
+            </tr>
+          `).join('');
+        })
+        .withFailureHandler(err => {
+          tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-4 text-center text-red-400">Error: ${err.message}</td></tr>`;
+        })
+        .getLeads();
+    }
+
+    // -------------------------------------------------------------
+    // DRIVE CLOUD UPLOADER
+    // -------------------------------------------------------------
+    function adminUploadDriveMedia() {
+      const fileInput = document.getElementById('mediaFile');
+      const resBox = document.getElementById('driveUploadResult');
+      const title = document.getElementById('upTitle').value.trim();
+      const cat = document.getElementById('upCat').value.trim();
+
+      if (!fileInput.files.length) {
+        alert('Please choose an image file first.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      resBox.classList.remove('hidden');
+      resBox.innerHTML = '<span class="text-purple-400">Uploading to Google Drive...</span>';
+
+      reader.onload = function(evt) {
+        google.script.run
+          .withSuccessHandler(res => {
+            if (res && res.success) {
+              resBox.innerHTML = `✅ ${res.message}<br><a href="${res.url}" target="_blank" class="text-cyan-400 underline font-semibold">Open Drive Image</a>`;
+              fetchGallery();
+            } else {
+              resBox.innerHTML = `<span class="text-red-400">Upload failed: ${res.message}</span>`;
+            }
+          })
+          .withFailureHandler(err => {
+            resBox.innerHTML = `<span class="text-red-400">Upload error: ${err.message}</span>`;
+          })
+          .uploadImageToDrive(evt.target.result, file.name, title, cat);
       };
       reader.readAsDataURL(file);
     }
-
-    // Initialize
-    window.onload = () => {
-      loadBrandSettings();
-      navigate('home');
-    };
   </script>
 </body>
 </html>
