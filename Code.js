@@ -1,11 +1,21 @@
 /**
- * Greenwood Public School & Agency Portal / Admin CRM
- * Serverless Backend Engine for Google Apps Script
+ * Greenwood Public School — Serverless Backend Engine
+ * Google Apps Script & Google Sheets CRM
  */
 
+const SPREADSHEET_ID = '1UF8xuxirPcGUwm3fsfSQVTghFzuloDhJJqpkjwi9454';
+
 function doGet(e) {
+  // If called with ?api=admissions, return direct JSON without iframe sandbox
+  if (e && e.parameter && e.parameter.api === 'admissions') {
+    const data = getAdmissions();
+    return ContentService.createTextOutput(JSON.stringify(data))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  // Default HTML render
   return HtmlService.createHtmlOutputFromFile('Index')
-    .setTitle('Greenwood Public School — Official Portal & Admin')
+    .setTitle('Greenwood Public School — Official Portal & Admin Hub')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
@@ -14,9 +24,21 @@ function doGet(e) {
 // 1. DATABASE & SHEET HELPERS
 // -------------------------------------------------------------
 
+function getSpreadsheet() {
+  try {
+    return SpreadsheetApp.openById(SPREADSHEET_ID);
+  } catch (err) {
+    return SpreadsheetApp.getActiveSpreadsheet();
+  }
+}
+
 function getOrCreateSheet(sheetName, headers) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getSpreadsheet();
   let sheet = ss.getSheetByName(sheetName);
+  if (!sheet) {
+    const sheets = ss.getSheets();
+    sheet = sheets.find(s => s.getName().trim().toLowerCase() === sheetName.trim().toLowerCase());
+  }
   if (!sheet) {
     sheet = ss.insertSheet(sheetName);
     if (headers && headers.length) {
@@ -50,16 +72,13 @@ function sanitizeTimeString(timeVal, tz) {
 }
 
 // -------------------------------------------------------------
-// 2. SETTINGS & BRANDING
+// 2. SETTINGS, BRANDING & STAT COUNTERS
 // -------------------------------------------------------------
 
-// Get School Settings AND Dynamic Sheet Counters
 function getSchoolSettings() {
   try {
     const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
     const rows = sheet.getDataRange().getValues();
-    
-    // Default base metrics
     const settings = {
       schoolName: 'Greenwood Public School',
       tagline: 'AFFILIATED TO CBSE • NEW DELHI',
@@ -72,15 +91,6 @@ function getSchoolSettings() {
 
     for (let i = 1; i < rows.length; i++) {
       if (rows[i][0]) settings[String(rows[i][0])] = String(rows[i][1]);
-    }
-
-    // Optional Auto-Count: If Students sheet has more records, reflect live count
-    const studentSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Students');
-    if (studentSheet) {
-      const studentCount = Math.max(0, studentSheet.getLastRow() - 1);
-      if (studentCount > 0 && (!settings.countStudents || settings.countStudents === '2,400+')) {
-        settings.countStudents = studentCount + '+';
-      }
     }
 
     return { success: true, data: settings };
@@ -108,7 +118,7 @@ function updateSchoolSettings(settings) {
         sheet.appendRow([key, settings[key]]);
       }
     });
-    return { success: true, message: 'Settings updated successfully!' };
+    return { success: true, message: 'Settings and Stat Counters updated successfully!' };
   } catch (err) {
     return { success: false, message: err.toString() };
   }
@@ -153,16 +163,6 @@ function addCalendarEvent(eventData) {
 
     sheet.appendRow([title, date, time, location, desc]);
     return { success: true, message: 'Event successfully published!' };
-  } catch (err) {
-    return { success: false, message: err.toString() };
-  }
-}
-
-function deleteCalendarEvent(rowNumber) {
-  try {
-    const sheet = getOrCreateSheet('Events', ['Title', 'Date', 'Time', 'Location', 'Description']);
-    sheet.deleteRow(Number(rowNumber) + 1);
-    return { success: true, message: 'Event removed.' };
   } catch (err) {
     return { success: false, message: err.toString() };
   }
@@ -293,50 +293,114 @@ function saveStudentRecord(student) {
 }
 
 // -------------------------------------------------------------
-// 6. ADMISSIONS PIPELINE
+// 6. ADMISSIONS PIPELINE & STATUS UPDATE
 // -------------------------------------------------------------
 
+// 1. Submit form from public page (sets Address to Col G, Status to Col H)
 function submitAdmissionForm(formData) {
   try {
-    const sheet = getOrCreateSheet('Admissions', ['Timestamp', 'StudentName', 'ParentName', 'Class', 'Phone', 'Email', 'Address']);
+    const sheet = getOrCreateSheet('Admissions', [
+      'Timestamp', 'StudentName', 'ParentName', 'Grade', 'Phone', 'Email', 'Address', 'Status'
+    ]);
     const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
     const dateStr = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd HH:mm:ss');
 
     sheet.appendRow([
-      dateStr,
-      String(formData.studentName || ''),
-      String(formData.parentName || ''),
-      String(formData.grade || ''),
-      String(formData.phone || ''),
-      String(formData.email || ''),
-      String(formData.address || '')
+      dateStr,                                          // Col A: Timestamp
+      String(formData.studentName || '').trim(),        // Col B: Student Name
+      String(formData.parentName || '').trim(),         // Col C: Parent Name
+      String(formData.grade || '').trim(),              // Col D: Grade
+      String(formData.phone || '').trim(),              // Col E: Phone
+      String(formData.email || '').trim(),              // Col F: Email
+      String(formData.address || '').trim(),            // Col G: Address
+      'Pending Review'                                  // Col H: Status (Default)
     ]);
-    return { success: true, message: 'Application registered successfully!' };
+    return { success: true, message: 'Application submitted successfully! Default status: Pending Review.' };
   } catch (err) {
     return { success: false, message: err.toString() };
   }
 }
 
+// 2. Fetch both separated Address and Status for the Admin table
 function getAdmissions() {
   try {
-    const sheet = getOrCreateSheet('Admissions', ['Timestamp', 'StudentName', 'ParentName', 'Class', 'Phone', 'Email', 'Address']);
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    let sheet = ss.getSheetByName('Admissions');
+    if (!sheet) {
+      const sheets = ss.getSheets();
+      sheet = sheets.find(s => s.getName().trim().toLowerCase() === 'admissions');
+    }
+    if (!sheet) return [];
+
     const rows = sheet.getDataRange().getValues();
     if (rows.length <= 1) return [];
-    rows.shift();
-    return rows.reverse().map(r => ({
-      timestamp: r[0],
-      studentName: r[1],
-      parentName: r[2],
-      grade: r[3],
-      phone: r[4],
-      email: r[5],
-      address: r[6]
-    }));
+    rows.shift(); // Remove header row
+
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+
+    const list = [];
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i];
+      if (!r[0] && !r[1]) continue;
+
+      let dateStr = '';
+      if (r[0] instanceof Date) {
+        dateStr = Utilities.formatDate(r[0], tz, 'yyyy-MM-dd HH:mm');
+      } else {
+        dateStr = String(r[0] || '').trim();
+      }
+
+      // Col G (index 6) is Address, Col H (index 7) is Status
+      let addressVal = String(r[6] || '').trim();
+      let statusVal = r[7] ? String(r[7]).trim() : 'Pending Review';
+
+      // Fallback if older data placed address directly into status column
+      if (!r[7] && addressVal && (addressVal.includes('Review') || addressVal.includes('Scheduled') || addressVal.includes('Approved') || addressVal.includes('Enrolled') || addressVal.includes('Rejected'))) {
+        statusVal = addressVal;
+        addressVal = '';
+      }
+
+      list.push({
+        rowNumber: i + 2, // 1-based row index in Sheet
+        time: dateStr,
+        student: String(r[1] || ''),
+        parent: String(r[2] || ''),
+        grade: String(r[3] || ''),
+        phone: String(r[4] || ''),
+        email: String(r[5] || ''),
+        address: addressVal,
+        status: statusVal
+      });
+    }
+
+    return list.reverse();
   } catch (err) {
     return [];
   }
 }
 
+// 3. Update only the Status (Column H / Col 8) without altering Address
+function updateAdmissionStatus(rowNumber, newStatus) {
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    let sheet = ss.getSheetByName('Admissions');
+    if (!sheet) throw new Error('Admissions sheet not found.');
+
+    const row = Number(rowNumber);
+    if (!row || row < 2) throw new Error('Invalid row number.');
+
+    // Ensure header names
+    sheet.getRange(1, 7).setValue('Address');
+    sheet.getRange(1, 8).setValue('Status');
+
+    // Update Column H (8)
+    sheet.getRange(row, 8).setValue(newStatus);
+
+    return { success: true, message: 'Status updated to "' + newStatus + '"!' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
 // -------------------------------------------------------------
 // 7. LEADS & INQUIRIES CRM
 // -------------------------------------------------------------
