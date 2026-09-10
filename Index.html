@@ -144,9 +144,7 @@
   <!-- ========================================================= -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 1: HOME PAGE (HERO SECTION + DYNAMIC STATS)     -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 1: HOME PAGE (HERO SECTION + DYNAMIC STATS) -->
     <section id="view-home" class="page-view space-y-12">
       <!-- Hero Banner Card -->
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#121633] via-[#0d1024] to-[#080914] border border-indigo-900/40 p-8 sm:p-14 lg:p-16 shadow-2xl">
@@ -169,7 +167,6 @@
             </button>
           </div>
         </div>
-        <!-- Decorative Glow Blur -->
         <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
       </div>
 
@@ -213,9 +210,7 @@
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 2: ABOUT US                                      -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 2: ABOUT US -->
     <section id="view-about" class="page-view hidden space-y-8">
       <div class="max-w-3xl space-y-4">
         <h2 class="text-3xl font-extrabold text-white tracking-tight">About Greenwood Public School</h2>
@@ -240,9 +235,7 @@
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 3: ACADEMICS                                     -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 3: ACADEMICS -->
     <section id="view-academics" class="page-view hidden space-y-8">
       <div>
         <h2 class="text-3xl font-extrabold text-white tracking-tight">Academic Framework</h2>
@@ -268,17 +261,13 @@
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 4: CALENDAR & EVENTS                             -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 4: CALENDAR & EVENTS -->
     <section id="view-calendar" class="page-view hidden space-y-8">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Interactive FullCalendar Element -->
         <div class="lg:col-span-2 bg-slate-900/70 p-6 rounded-2xl border border-slate-800 shadow-xl backdrop-blur-sm">
           <div id="calendar"></div>
         </div>
 
-        <!-- Scheduled Events Sidebar -->
         <div class="space-y-4">
           <div class="flex items-center justify-between pb-2 border-b border-slate-800">
             <h3 class="text-sm font-bold tracking-wide uppercase text-slate-300">Scheduled Events</h3>
@@ -291,9 +280,7 @@
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 5: NOTICES & CIRCULARS                           -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 5: NOTICES & CIRCULARS -->
     <section id="view-notices" class="page-view hidden space-y-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -310,9 +297,7 @@
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 6: PHOTO GALLERY                                 -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 6: PHOTO GALLERY -->
     <section id="view-gallery" class="page-view hidden space-y-6">
       <div>
         <h2 class="text-2xl font-bold text-white tracking-tight">Campus &amp; Event Gallery</h2>
@@ -324,9 +309,7 @@
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 7: ADMISSIONS (APPLICANT FORM)                   -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 7: ADMISSIONS (APPLICANT FORM) -->
     <section id="view-admissions" class="page-view hidden max-w-2xl mx-auto space-y-6">
       <div class="text-center space-y-2">
         <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">ENROLLMENT OPEN</span>
@@ -367,9 +350,7 @@
       </form>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 8: STUDENT PORTAL (STATUS & RESULTS)             -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 8: STUDENT PORTAL (STATUS & RESULTS) -->
     <section id="view-student-portal" class="page-view hidden max-w-xl mx-auto space-y-6">
       <div class="text-center space-y-2">
         <h2 class="text-2xl font-bold text-white">Student Status &amp; Result Lookup</h2>
@@ -386,9 +367,7 @@
       <div id="studentResultCard" class="hidden bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-4 text-xs shadow-xl"></div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 9: CONTACT US                                    -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 9: CONTACT US -->
     <section id="view-contact" class="page-view hidden max-w-2xl mx-auto space-y-6">
       <div class="text-center space-y-2">
         <h2 class="text-2xl font-bold text-white">Get in Touch</h2>
@@ -420,9 +399,7 @@
       </form>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 10: ADMIN HUB (FULL FUNCTIONALITY)               -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 10: ADMIN HUB (FULL FUNCTIONALITY) -->
     <section id="view-admin" class="page-view hidden space-y-8">
       <!-- Admin Hub Navigation / Header -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-800">
@@ -609,36 +586,37 @@
 
       <!-- TAB 5: ADMISSIONS REVIEW & STATUS MANAGER -->
       <div id="admin-tab-admissions" class="admin-tab-pane hidden space-y-6">
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-    <div>
-      <h3 class="font-bold text-sm text-slate-100 uppercase tracking-wide">Submitted Admission Applications</h3>
-      <p class="text-xs text-slate-400">Review applicant records, residential addresses, and update admission status.</p>
-    </div>
-    <button onclick="adminLoadAdmissions()" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs text-amber-400 font-semibold rounded-lg border border-slate-700 transition">
-      Refresh Applications
-    </button>
-  </div>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h3 class="font-bold text-sm text-slate-100 uppercase tracking-wide">Submitted Admission Applications</h3>
+            <p class="text-xs text-slate-400">Review applicant records, residential addresses, and update admission status.</p>
+          </div>
+          <button onclick="adminLoadAdmissions()" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs text-amber-400 font-semibold rounded-lg border border-slate-700 transition">
+            Refresh Applications
+          </button>
+        </div>
 
-  <div class="overflow-x-auto bg-slate-900/80 rounded-2xl border border-slate-800 shadow-xl">
-    <table class="w-full text-left text-xs text-slate-300">
-      <thead class="text-[11px] uppercase tracking-wider text-slate-400 bg-slate-950/80 border-b border-slate-800">
-        <tr>
-          <th class="px-4 py-3">Time</th>
-          <th class="px-4 py-3">Student Name</th>
-          <th class="px-4 py-3">Parent Name</th>
-          <th class="px-4 py-3">Grade</th>
-          <th class="px-4 py-3">Phone</th>
-          <th class="px-4 py-3">Residential Address</th>
-          <th class="px-4 py-3">Current Status</th>
-          <th class="px-4 py-3">Change Status</th>
-        </tr>
-      </thead>
-      <tbody id="admissionsTableBody" class="divide-y divide-slate-800">
-        <tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">Loading admissions...</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+        <div class="overflow-x-auto bg-slate-900/80 rounded-2xl border border-slate-800 shadow-xl">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="text-[11px] uppercase tracking-wider text-slate-400 bg-slate-950/80 border-b border-slate-800">
+              <tr>
+                <th class="px-4 py-3">Time</th>
+                <th class="px-4 py-3">Student Name</th>
+                <th class="px-4 py-3">Parent Name</th>
+                <th class="px-4 py-3">Grade</th>
+                <th class="px-4 py-3">Phone</th>
+                <th class="px-4 py-3">Residential Address</th>
+                <th class="px-4 py-3">Current Status</th>
+                <th class="px-4 py-3">Change Status</th>
+              </tr>
+            </thead>
+            <tbody id="admissionsTableBody" class="divide-y divide-slate-800">
+              <tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">Loading admissions...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- TAB 6: GOOGLE DRIVE UPLOADER -->
       <div id="admin-tab-drive" class="admin-tab-pane hidden space-y-6">
         <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-xl space-y-4 shadow-xl">
@@ -699,14 +677,17 @@
   <footer class="border-t border-slate-900 bg-[#080a14] py-8 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 space-y-2">
       <p>&copy; 2026 Greenwood Public School. Affiliated to CBSE, New Delhi.</p>
-      <p class="text-[11px] text-slate-600">Powered by Google Apps Script, Google Sheets CRM &amp; Tailwind CSS.</p>
+      <p class="text-[11px] text-slate-600">Frontend on Vercel &bull; Google Sheets Database Engine</p>
     </div>
   </footer>
 
   <!-- ========================================================= -->
-  <!-- 5. CLIENT-SIDE CONTROLLER & APP ENGINE                    -->
+  <!-- 5. CLIENT-SIDE CONTROLLER VIA FETCH API (VERCEL COMPATIBLE) -->
   <!-- ========================================================= -->
   <script>
+    // Live Apps Script Web App Deployment URL
+    const API_URL = 'https://script.google.com/macros/s/AKfycbw-W1XeVVv_BehY1reZqf_3afk9L_jctCvdPO-k_oGB0dx7bx3Hax3-XSb6MU4nWAWv/exec';
+
     let calendarInstance = null;
     let eventsCache = [];
 
@@ -718,9 +699,7 @@
       fetchGallery();
     });
 
-    // -------------------------------------------------------------
     // NAVIGATION ROUTER
-    // -------------------------------------------------------------
     function navigateTo(viewId) {
       document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById('view-' + viewId);
@@ -762,254 +741,247 @@
       if (tabId === 'students') adminLoadStudents();
     }
 
-    // -------------------------------------------------------------
-    // BRANDING & STAT COUNTERS ENGINE
-    // -------------------------------------------------------------
-    function fetchSettings() {
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res && res.success && res.data) {
-            const d = res.data;
-            if (d.schoolName) {
-              document.getElementById('brandSchoolName').innerText = d.schoolName;
-              document.getElementById('adminSchoolName').value = d.schoolName;
-            }
-            if (d.tagline) {
-              document.getElementById('brandTagline').innerText = d.tagline;
-              document.getElementById('adminTagline').value = d.tagline;
-            }
-            if (d.noticeTicker) {
-              document.getElementById('tickerContent').innerText = d.noticeTicker;
-              document.getElementById('adminNoticeTicker').value = d.noticeTicker;
-            }
-
-            // Populate Dynamic Hero Stat Counters
-            if (d.countStudents) {
-              document.getElementById('heroStatStudents').innerText = d.countStudents;
-              document.getElementById('adminCountStudents').value = d.countStudents;
-            }
-            if (d.countBoardPass) {
-              document.getElementById('heroStatBoardPass').innerText = d.countBoardPass;
-              document.getElementById('adminCountBoardPass').value = d.countBoardPass;
-            }
-            if (d.countFacultyRatio) {
-              document.getElementById('heroStatFacultyRatio').innerText = d.countFacultyRatio;
-              document.getElementById('adminCountFacultyRatio').value = d.countFacultyRatio;
-            }
-            if (d.countCampusArea) {
-              document.getElementById('heroStatCampusArea').innerText = d.countCampusArea;
-              document.getElementById('adminCountCampusArea').value = d.countCampusArea;
-            }
-          }
-        })
-        .withFailureHandler(err => console.error("Failed to load settings:", err))
-        .getSchoolSettings();
+    // GENERIC REST HELPERS
+    async function apiGet(action, params = {}) {
+      const url = new URL(API_URL);
+      url.searchParams.append('action', action);
+      Object.keys(params).forEach(k => url.searchParams.append(k, params[k]));
+      const res = await fetch(url.toString(), { method: 'GET' });
+      return await res.json();
     }
 
-    function saveAdminSettings() {
+    async function apiPost(action, data) {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: action, ...data })
+      });
+      return await res.json();
+    }
+
+    // BRANDING & STAT COUNTERS
+    async function fetchSettings() {
+      try {
+        const res = await apiGet('getSettings');
+        if (res && res.success && res.data) {
+          const d = res.data;
+          if (d.schoolName) {
+            document.getElementById('brandSchoolName').innerText = d.schoolName;
+            document.getElementById('adminSchoolName').value = d.schoolName;
+          }
+          if (d.tagline) {
+            document.getElementById('brandTagline').innerText = d.tagline;
+            document.getElementById('adminTagline').value = d.tagline;
+          }
+          if (d.noticeTicker) {
+            document.getElementById('tickerContent').innerText = d.noticeTicker;
+            document.getElementById('adminNoticeTicker').value = d.noticeTicker;
+          }
+
+          if (d.countStudents) {
+            document.getElementById('heroStatStudents').innerText = d.countStudents;
+            document.getElementById('adminCountStudents').value = d.countStudents;
+          }
+          if (d.countBoardPass) {
+            document.getElementById('heroStatBoardPass').innerText = d.countBoardPass;
+            document.getElementById('adminCountBoardPass').value = d.countBoardPass;
+          }
+          if (d.countFacultyRatio) {
+            document.getElementById('heroStatFacultyRatio').innerText = d.countFacultyRatio;
+            document.getElementById('adminCountFacultyRatio').value = d.countFacultyRatio;
+          }
+          if (d.countCampusArea) {
+            document.getElementById('heroStatCampusArea').innerText = d.countCampusArea;
+            document.getElementById('adminCountCampusArea').value = d.countCampusArea;
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load settings:", err);
+      }
+    }
+
+    async function saveAdminSettings() {
       const payload = {
-        schoolName: document.getElementById('adminSchoolName').value.trim(),
-        tagline: document.getElementById('adminTagline').value.trim(),
-        noticeTicker: document.getElementById('adminNoticeTicker').value.trim(),
-        countStudents: document.getElementById('adminCountStudents').value.trim(),
-        countBoardPass: document.getElementById('adminCountBoardPass').value.trim(),
-        countFacultyRatio: document.getElementById('adminCountFacultyRatio').value.trim(),
-        countCampusArea: document.getElementById('adminCountCampusArea').value.trim()
+        data: {
+          schoolName: document.getElementById('adminSchoolName').value.trim(),
+          tagline: document.getElementById('adminTagline').value.trim(),
+          noticeTicker: document.getElementById('adminNoticeTicker').value.trim(),
+          countStudents: document.getElementById('adminCountStudents').value.trim(),
+          countBoardPass: document.getElementById('adminCountBoardPass').value.trim(),
+          countFacultyRatio: document.getElementById('adminCountFacultyRatio').value.trim(),
+          countCampusArea: document.getElementById('adminCountCampusArea').value.trim()
+        }
       };
 
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res && res.success) {
-            alert('✅ ' + res.message);
-            fetchSettings();
-          } else {
-            alert('⚠️ ' + (res ? res.message : 'Error updating settings.'));
-          }
-        })
-        .withFailureHandler(err => alert('❌ Server Error: ' + err.message))
-        .updateSchoolSettings(payload);
+      try {
+        const res = await apiPost('updateSettings', payload);
+        alert('✅ ' + (res.message || 'Settings saved'));
+        fetchSettings();
+      } catch (err) {
+        alert('❌ Error: ' + err.message);
+      }
     }
 
-    // -------------------------------------------------------------
-    // CALENDAR & EVENTS ENGINE (CLEAN DATE PARSING)
-    // -------------------------------------------------------------
-    function fetchEvents() {
+    // CALENDAR & EVENTS
+    async function fetchEvents() {
       const list = document.getElementById('eventsList');
       const adminList = document.getElementById('adminEventsReviewList');
       list.innerHTML = '<p class="text-xs text-slate-500">Loading events...</p>';
 
-      google.script.run
-        .withSuccessHandler(data => {
-          eventsCache = (data || []).map(e => {
-            let cleanTime = String(e.time || '').trim();
-            if (cleanTime.includes('1899') || cleanTime.includes('GMT')) {
-              const m = cleanTime.match(/\b\d{1,2}:\d{2}(?::\d{2})?\b/);
-              cleanTime = m ? m[0] : '';
-            }
-            let cleanDate = String(e.date || '').trim();
-            if (cleanDate.includes('T')) cleanDate = cleanDate.split('T')[0];
-
-            return { ...e, date: cleanDate, time: cleanTime };
-          });
-
-          document.getElementById('eventsCount').innerText = `${eventsCache.length} scheduled`;
-
-          if (!eventsCache.length) {
-            list.innerHTML = '<p class="text-xs text-slate-500">No events scheduled.</p>';
-            if (adminList) adminList.innerHTML = '<p class="text-slate-500">No events in database.</p>';
-          } else {
-            const html = eventsCache.map(e => `
-              <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs space-y-1">
-                <div class="font-bold text-white">${e.title}</div>
-                <div class="text-[11px] text-amber-400 font-semibold">${e.date}${e.time ? ' &bull; ' + e.time : ''}</div>
-                <div class="text-slate-400 text-[11px]">${e.description}</div>
-                <div class="text-[10px] text-slate-500">📍 ${e.location || 'Campus'}</div>
-              </div>
-            `).join('');
-
-            list.innerHTML = html;
-            if (adminList) adminList.innerHTML = html;
+      try {
+        const data = await apiGet('getEvents');
+        eventsCache = (data || []).map(e => {
+          let cleanTime = String(e.time || '').trim();
+          if (cleanTime.includes('1899') || cleanTime.includes('GMT')) {
+            const m = cleanTime.match(/\b\d{1,2}:\d{2}(?::\d{2})?\b/);
+            cleanTime = m ? m[0] : '';
           }
+          let cleanDate = String(e.date || '').trim();
+          if (cleanDate.includes('T')) cleanDate = cleanDate.split('T')[0];
 
-          // FullCalendar Initialization
-          const calEl = document.getElementById('calendar');
-          if (calendarInstance) calendarInstance.destroy();
+          return { ...e, date: cleanDate, time: cleanTime };
+        });
 
-          calendarInstance = new FullCalendar.Calendar(calEl, {
-            initialView: 'dayGridMonth',
-            headerToolbar: {
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek'
-            },
-            events: eventsCache.map(ev => ({
-              title: ev.title,
-              start: ev.date,
-              extendedProps: { ...ev }
-            })),
-            eventClick: function(info) {
-              const p = info.event.extendedProps;
-              alert(`📌 ${p.title}\n📅 Date: ${p.date}\n⏰ Time: ${p.time || 'N/A'}\n📍 Location: ${p.location || 'Campus'}\n\n${p.description || ''}`);
-            }
-          });
-          calendarInstance.render();
-        })
-        .withFailureHandler(err => {
-          list.innerHTML = `<p class="text-xs text-red-400">Failed to load calendar: ${err.message}</p>`;
-        })
-        .getEvents();
+        document.getElementById('eventsCount').innerText = `${eventsCache.length} scheduled`;
+
+        if (!eventsCache.length) {
+          list.innerHTML = '<p class="text-xs text-slate-500">No events scheduled.</p>';
+          if (adminList) adminList.innerHTML = '<p class="text-slate-500">No events in database.</p>';
+        } else {
+          const html = eventsCache.map(e => `
+            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs space-y-1">
+              <div class="font-bold text-white">${e.title}</div>
+              <div class="text-[11px] text-amber-400 font-semibold">${e.date}${e.time ? ' &bull; ' + e.time : ''}</div>
+              <div class="text-slate-400 text-[11px]">${e.description}</div>
+              <div class="text-[10px] text-slate-500">📍 ${e.location || 'Campus'}</div>
+            </div>
+          `).join('');
+
+          list.innerHTML = html;
+          if (adminList) adminList.innerHTML = html;
+        }
+
+        const calEl = document.getElementById('calendar');
+        if (calendarInstance) calendarInstance.destroy();
+
+        calendarInstance = new FullCalendar.Calendar(calEl, {
+          initialView: 'dayGridMonth',
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek'
+          },
+          events: eventsCache.map(ev => ({
+            title: ev.title,
+            start: ev.date,
+            extendedProps: { ...ev }
+          })),
+          eventClick: function(info) {
+            const p = info.event.extendedProps;
+            alert(`📌 ${p.title}\n📅 Date: ${p.date}\n⏰ Time: ${p.time || 'N/A'}\n📍 Location: ${p.location || 'Campus'}\n\n${p.description || ''}`);
+          }
+        });
+        calendarInstance.render();
+      } catch (err) {
+        list.innerHTML = `<p class="text-xs text-red-400">Failed to load calendar: ${err.message}</p>`;
+      }
     }
 
-    function adminAddEvent(e) {
+    async function adminAddEvent(e) {
       e.preventDefault();
       const payload = {
-        title: document.getElementById('evTitle').value,
-        date: document.getElementById('evDate').value,
-        time: document.getElementById('evTime').value,
-        location: document.getElementById('evLoc').value,
-        description: document.getElementById('evDesc').value
+        data: {
+          title: document.getElementById('evTitle').value,
+          date: document.getElementById('evDate').value,
+          time: document.getElementById('evTime').value,
+          location: document.getElementById('evLoc').value,
+          description: document.getElementById('evDesc').value
+        }
       };
 
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res && res.success) {
-            alert('✅ ' + res.message);
-            document.getElementById('evTitle').value = '';
-            document.getElementById('evDate').value = '';
-            document.getElementById('evTime').value = '';
-            document.getElementById('evLoc').value = '';
-            document.getElementById('evDesc').value = '';
-            fetchEvents();
-          } else {
-            alert('⚠️ ' + (res ? res.message : 'Error adding event.'));
-          }
-        })
-        .withFailureHandler(err => alert('❌ Error: ' + err.message))
-        .addCalendarEvent(payload);
+      try {
+        const res = await apiPost('addEvent', payload);
+        alert('✅ ' + (res.message || 'Event added'));
+        document.getElementById('evTitle').value = '';
+        document.getElementById('evDate').value = '';
+        document.getElementById('evTime').value = '';
+        document.getElementById('evLoc').value = '';
+        document.getElementById('evDesc').value = '';
+        fetchEvents();
+      } catch (err) {
+        alert('❌ Error: ' + err.message);
+      }
     }
 
-    // -------------------------------------------------------------
-    // NOTICES ENGINE
-    // -------------------------------------------------------------
-    function fetchNotices() {
+    // NOTICES
+    async function fetchNotices() {
       const container = document.getElementById('noticesContainer');
-      google.script.run
-        .withSuccessHandler(notices => {
-          if (!notices || !notices.length) {
-            container.innerHTML = '<p class="text-xs text-slate-500">No active circulars at this moment.</p>';
-            return;
-          }
-          container.innerHTML = notices.map(n => `
-            <div class="p-5 bg-slate-900/80 rounded-xl border border-slate-800 space-y-2">
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">${n.category}</span>
-              <h4 class="font-bold text-sm text-white">${n.title}</h4>
-              <p class="text-xs text-slate-400 leading-relaxed">${n.details}</p>
-              <div class="text-[10px] text-slate-500 pt-2 border-t border-slate-800/80">Posted: ${n.date}</div>
-            </div>
-          `).join('');
-        })
-        .withFailureHandler(err => {
-          container.innerHTML = `<p class="text-xs text-red-400">Failed to load notices: ${err.message}</p>`;
-        })
-        .getNotices();
+      try {
+        const notices = await apiGet('getNotices');
+        if (!notices || !notices.length) {
+          container.innerHTML = '<p class="text-xs text-slate-500">No active circulars at this moment.</p>';
+          return;
+        }
+        container.innerHTML = notices.map(n => `
+          <div class="p-5 bg-slate-900/80 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">${n.category}</span>
+            <h4 class="font-bold text-sm text-white">${n.title}</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">${n.details}</p>
+            <div class="text-[10px] text-slate-500 pt-2 border-t border-slate-800/80">Posted: ${n.date}</div>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = `<p class="text-xs text-red-400">Failed to load notices: ${err.message}</p>`;
+      }
     }
 
-    function adminAddNotice(e) {
+    async function adminAddNotice(e) {
       e.preventDefault();
       const payload = {
-        title: document.getElementById('ntTitle').value,
-        category: document.getElementById('ntCat').value,
-        details: document.getElementById('ntDet').value
+        data: {
+          title: document.getElementById('ntTitle').value,
+          category: document.getElementById('ntCat').value,
+          details: document.getElementById('ntDet').value
+        }
       };
 
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res && res.success) {
-            alert('✅ ' + res.message);
-            document.getElementById('ntTitle').value = '';
-            document.getElementById('ntDet').value = '';
-            fetchNotices();
-          } else {
-            alert('⚠️ ' + res.message);
-          }
-        })
-        .withFailureHandler(err => alert('❌ Error: ' + err.message))
-        .addNotice(payload);
+      try {
+        const res = await apiPost('addNotice', payload);
+        alert('✅ ' + (res.message || 'Notice added'));
+        document.getElementById('ntTitle').value = '';
+        document.getElementById('ntDet').value = '';
+        fetchNotices();
+      } catch (err) {
+        alert('❌ Error: ' + err.message);
+      }
     }
 
-    // -------------------------------------------------------------
-    // GALLERY ENGINE
-    // -------------------------------------------------------------
-    function fetchGallery() {
+    // GALLERY
+    async function fetchGallery() {
       const gBox = document.getElementById('galleryContainer');
-      google.script.run
-        .withSuccessHandler(images => {
-          if (!images || !images.length) {
-            gBox.innerHTML = '<p class="text-xs text-slate-500">No gallery pictures uploaded yet.</p>';
-            return;
-          }
-          gBox.innerHTML = images.map(img => `
-            <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-lg group">
-              <div class="h-48 overflow-hidden bg-slate-950">
-                <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-              </div>
-              <div class="p-4 space-y-1">
-                <span class="text-[10px] font-bold text-amber-400">${img.category || 'Event'}</span>
-                <h4 class="font-bold text-sm text-white">${img.title}</h4>
-              </div>
+      try {
+        const images = await apiGet('getGallery');
+        if (!images || !images.length) {
+          gBox.innerHTML = '<p class="text-xs text-slate-500">No gallery pictures uploaded yet.</p>';
+          return;
+        }
+        gBox.innerHTML = images.map(img => `
+          <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-lg group">
+            <div class="h-48 overflow-hidden bg-slate-950">
+              <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
             </div>
-          `).join('');
-        })
-        .withFailureHandler(err => {
-          gBox.innerHTML = `<p class="text-xs text-red-400">Failed to load gallery: ${err.message}</p>`;
-        })
-        .getGalleryImages();
+            <div class="p-4 space-y-1">
+              <span class="text-[10px] font-bold text-amber-400">${img.category || 'Event'}</span>
+              <h4 class="font-bold text-sm text-white">${img.title}</h4>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        gBox.innerHTML = `<p class="text-xs text-red-400">Failed to load gallery: ${err.message}</p>`;
+      }
     }
 
-    // -------------------------------------------------------------
-    // STUDENT ROSTER & VERIFICATION
-    // -------------------------------------------------------------
-    function searchStudent() {
+    // STUDENT ROSTER
+    async function searchStudent() {
       const q = document.getElementById('searchStudentId').value.trim();
       const box = document.getElementById('studentResultCard');
       if (!q) return;
@@ -1017,249 +989,229 @@
       box.classList.remove('hidden');
       box.innerHTML = '<span class="text-slate-400">Searching records...</span>';
 
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res && res.success) {
-            const s = res.student;
-            box.innerHTML = `
-              <div class="flex justify-between items-center">
-                <div class="font-bold text-base text-white">${s.name}</div>
-                <span class="text-xs bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 px-2 py-0.5 rounded font-mono">${s.id}</span>
-              </div>
-              <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-800 text-center">
-                <div><span class="text-slate-400 text-[10px] block">Class</span><b class="text-white">${s.class}</b></div>
-                <div><span class="text-slate-400 text-[10px] block">Attendance</span><b class="text-emerald-400">${s.attendance}</b></div>
-                <div><span class="text-slate-400 text-[10px] block">Fee Clearance</span><b class="text-amber-400">${s.feeStatus}</b></div>
-              </div>
-              <div class="pt-2 border-t border-slate-800/80">
-                <span class="text-slate-400 text-[10px] block">Term Grade / Result:</span>
-                <b class="text-white text-xs">${s.result}</b>
-              </div>
-            `;
-          } else {
-            box.innerHTML = `<span class="text-red-400">${res.message}</span>`;
-          }
-        })
-        .withFailureHandler(err => { box.innerHTML = `<span class="text-red-400">Error: ${err.message}</span>`; })
-        .lookupStudent(q);
+      try {
+        const res = await apiGet('lookupStudent', { id: q });
+        if (res && res.success) {
+          const s = res.student;
+          box.innerHTML = `
+            <div class="flex justify-between items-center">
+              <div class="font-bold text-base text-white">${s.name}</div>
+              <span class="text-xs bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 px-2 py-0.5 rounded font-mono">${s.id}</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-800 text-center">
+              <div><span class="text-slate-400 text-[10px] block">Class</span><b class="text-white">${s.class}</b></div>
+              <div><span class="text-slate-400 text-[10px] block">Attendance</span><b class="text-emerald-400">${s.attendance}</b></div>
+              <div><span class="text-slate-400 text-[10px] block">Fee Clearance</span><b class="text-amber-400">${s.feeStatus}</b></div>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80">
+              <span class="text-slate-400 text-[10px] block">Term Grade / Result:</span>
+              <b class="text-white text-xs">${s.result}</b>
+            </div>
+          `;
+        } else {
+          box.innerHTML = `<span class="text-red-400">${res.message}</span>`;
+        }
+      } catch (err) {
+        box.innerHTML = `<span class="text-red-400">Error: ${err.message}</span>`;
+      }
     }
 
-    function adminSaveStudent(e) {
+    async function adminSaveStudent(e) {
       e.preventDefault();
       const payload = {
-        id: document.getElementById('stId').value.trim(),
-        name: document.getElementById('stName').value.trim(),
-        class: document.getElementById('stClass').value.trim(),
-        attendance: document.getElementById('stAtt').value.trim(),
-        feeStatus: document.getElementById('stFee').value.trim(),
-        result: document.getElementById('stRes').value.trim()
+        data: {
+          id: document.getElementById('stId').value.trim(),
+          name: document.getElementById('stName').value.trim(),
+          class: document.getElementById('stClass').value.trim(),
+          attendance: document.getElementById('stAtt').value.trim(),
+          feeStatus: document.getElementById('stFee').value.trim(),
+          result: document.getElementById('stRes').value.trim()
+        }
       };
 
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res && res.success) {
-            alert('✅ ' + res.message);
-            adminLoadStudents();
-          } else {
-            alert('⚠️ ' + res.message);
-          }
-        })
-        .withFailureHandler(err => alert('❌ Error: ' + err.message))
-        .saveStudentRecord(payload);
+      try {
+        const res = await apiPost('saveStudent', payload);
+        alert('✅ ' + (res.message || 'Student saved'));
+        adminLoadStudents();
+      } catch (err) {
+        alert('❌ Error: ' + err.message);
+      }
     }
 
-    function adminLoadStudents() {
+    async function adminLoadStudents() {
       const box = document.getElementById('adminStudentsTable');
       box.innerHTML = '<p class="text-slate-500">Refreshing roster...</p>';
 
-      google.script.run
-        .withSuccessHandler(students => {
-          if (!students || !students.length) {
-            box.innerHTML = '<p class="text-slate-500">No students recorded.</p>';
-            return;
-          }
-          box.innerHTML = students.map(s => `
-            <div class="p-2.5 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
-              <div>
-                <span class="font-bold text-white">${s.name}</span>
-                <span class="text-slate-500 text-[10px] block">${s.id} &bull; ${s.class}</span>
-              </div>
-              <div class="text-right">
-                <span class="text-emerald-400 font-bold">${s.attendance}</span>
-                <span class="text-slate-400 text-[10px] block">${s.feeStatus}</span>
-              </div>
+      try {
+        const students = await apiGet('getStudents');
+        if (!students || !students.length) {
+          box.innerHTML = '<p class="text-slate-500">No students recorded.</p>';
+          return;
+        }
+        box.innerHTML = students.map(s => `
+          <div class="p-2.5 bg-slate-950 rounded-lg border border-slate-800 flex justify-between items-center">
+            <div>
+              <span class="font-bold text-white">${s.name}</span>
+              <span class="text-slate-500 text-[10px] block">${s.id} &bull; ${s.class}</span>
             </div>
-          `).join('');
-        })
-        .withFailureHandler(err => { box.innerHTML = `<p class="text-red-400">Error: ${err.message}</p>`; })
-        .getAllStudents();
+            <div class="text-right">
+              <span class="text-emerald-400 font-bold">${s.attendance}</span>
+              <span class="text-slate-400 text-[10px] block">${s.feeStatus}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        box.innerHTML = `<p class="text-red-400">Error: ${err.message}</p>`;
+      }
     }
 
-    // -------------------------------------------------------------
-    // ADMISSIONS PIPELINE & STATUS MANAGER
-    // -------------------------------------------------------------
-    function submitAdmission(e) {
+    // ADMISSIONS PIPELINE (REST-BASED)
+    async function submitAdmission(e) {
       e.preventDefault();
       const btn = document.getElementById('admSubmitBtn');
       btn.innerText = 'Submitting Application...';
       btn.disabled = true;
 
       const payload = {
-        studentName: document.getElementById('admStudent').value,
-        parentName: document.getElementById('admParent').value,
-        grade: document.getElementById('admClass').value,
-        phone: document.getElementById('admPhone').value,
-        email: document.getElementById('admEmail').value,
-        address: document.getElementById('admAddress').value
+        data: {
+          studentName: document.getElementById('admStudent').value,
+          parentName: document.getElementById('admParent').value,
+          grade: document.getElementById('admClass').value,
+          phone: document.getElementById('admPhone').value,
+          email: document.getElementById('admEmail').value,
+          address: document.getElementById('admAddress').value
+        }
       };
 
-      google.script.run
-        .withSuccessHandler(res => {
-          btn.innerText = 'Submit Admission Application';
-          btn.disabled = false;
-          if (res && res.success) {
-            alert('✅ ' + res.message);
-            e.target.reset();
-            navigateTo('home');
-          } else {
-            alert('⚠️ ' + res.message);
-          }
-        })
-        .withFailureHandler(err => {
-          btn.innerText = 'Submit Admission Application';
-          btn.disabled = false;
-          alert('❌ Error: ' + err.message);
-        })
-        .submitAdmissionForm(payload);
+      try {
+        const res = await apiPost('submitAdmission', payload);
+        btn.innerText = 'Submit Admission Application';
+        btn.disabled = false;
+        alert('✅ ' + (res.message || 'Submitted successfully'));
+        e.target.reset();
+        navigateTo('home');
+      } catch (err) {
+        btn.innerText = 'Submit Admission Application';
+        btn.disabled = false;
+        alert('❌ Error: ' + err.message);
+      }
     }
 
-function adminLoadAdmissions() {
-  const tbody = document.getElementById('admissionsTableBody');
-  tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">Loading applications...</td></tr>';
+    async function adminLoadAdmissions() {
+      const tbody = document.getElementById('admissionsTableBody');
+      tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">Loading applications...</td></tr>';
 
-  google.script.run
-    .withSuccessHandler(data => {
-      if (!data || !data.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">No applications registered.</td></tr>';
-        return;
-      }
-      tbody.innerHTML = data.map(row => {
-        // Status badge color logic
-        let badgeClass = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-        if (row.status === 'Enrolled' || row.status === 'Approved') {
-          badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-        } else if (row.status === 'Interview Scheduled') {
-          badgeClass = 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
-        } else if (row.status === 'Rejected') {
-          badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
+      try {
+        const data = await apiGet('getAdmissions');
+        if (!data || !data.length) {
+          tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">No applications registered.</td></tr>';
+          return;
         }
+        tbody.innerHTML = data.map(row => {
+          let badgeClass = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+          if (row.status === 'Enrolled' || row.status === 'Approved') {
+            badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+          } else if (row.status === 'Interview Scheduled') {
+            badgeClass = 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
+          } else if (row.status === 'Rejected') {
+            badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
+          }
 
-        return `
-          <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/60">
-            <td class="px-4 py-3 whitespace-nowrap text-slate-400 font-mono text-[11px]">${row.time}</td>
-            <td class="px-4 py-3 font-bold text-white">${row.student}</td>
-            <td class="px-4 py-3 text-slate-300">${row.parent}</td>
-            <td class="px-4 py-3 text-amber-400 font-semibold">${row.grade}</td>
-            <td class="px-4 py-3 text-slate-300 font-mono text-[11px]">${row.phone}</td>
-            <td class="px-4 py-3 text-slate-300 max-w-xs truncate text-[11px]">${row.address || '—'}</td>
-            <td class="px-4 py-3 whitespace-nowrap">
-              <span class="inline-block px-2.5 py-0.5 rounded-full border text-[10px] font-bold ${badgeClass}">
-                ${row.status}
-              </span>
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap">
-              <select onchange="changeAdmissionStatus(${row.rowNumber}, this.value)" class="bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-amber-400">
-                <option value="" disabled selected>Update...</option>
-                <option value="Pending Review">Pending Review</option>
-                <option value="Interview Scheduled">Interview Scheduled</option>
-                <option value="Approved">Approved</option>
-                <option value="Enrolled">Enrolled</option>
-                <option value="Rejected">Rejected</option>
-              </select>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    })
-    .withFailureHandler(err => {
-      tbody.innerHTML = `<tr><td colspan="8" class="px-4 py-6 text-center text-red-400">Error: ${err.message}</td></tr>`;
-    })
-    .getAdmissions();
-}
-
-function changeAdmissionStatus(rowNumber, newStatus) {
-  if (!newStatus) return;
-
-  google.script.run
-    .withSuccessHandler(res => {
-      if (res && res.success) {
-        alert('✅ ' + res.message);
-        adminLoadAdmissions();
-      } else {
-        alert('⚠️ ' + (res ? res.message : 'Update failed.'));
+          return `
+            <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/60">
+              <td class="px-4 py-3 whitespace-nowrap text-slate-400 font-mono text-[11px]">${row.time}</td>
+              <td class="px-4 py-3 font-bold text-white">${row.student}</td>
+              <td class="px-4 py-3 text-slate-300">${row.parent}</td>
+              <td class="px-4 py-3 text-amber-400 font-semibold">${row.grade}</td>
+              <td class="px-4 py-3 text-slate-300 font-mono text-[11px]">${row.phone}</td>
+              <td class="px-4 py-3 text-slate-300 max-w-xs truncate text-[11px]">${row.address || '—'}</td>
+              <td class="px-4 py-3 whitespace-nowrap">
+                <span class="inline-block px-2.5 py-0.5 rounded-full border text-[10px] font-bold ${badgeClass}">
+                  ${row.status}
+                </span>
+              </td>
+              <td class="px-4 py-3 whitespace-nowrap">
+                <select onchange="changeAdmissionStatus(${row.rowNumber}, this.value)" class="bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-amber-400">
+                  <option value="" disabled selected>Update...</option>
+                  <option value="Pending Review">Pending Review</option>
+                  <option value="Interview Scheduled">Interview Scheduled</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Enrolled">Enrolled</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" class="px-4 py-6 text-center text-red-400">Error: ${err.message}</td></tr>`;
       }
-    })
-    .withFailureHandler(err => alert('❌ Server Error: ' + err.message))
-    .updateAdmissionStatus(rowNumber, newStatus);
-}
+    }
 
-    // -------------------------------------------------------------
+    async function changeAdmissionStatus(rowNumber, newStatus) {
+      if (!newStatus) return;
+
+      try {
+        const res = await apiPost('updateAdmissionStatus', {
+          rowNumber: rowNumber,
+          newStatus: newStatus
+        });
+        alert('✅ ' + (res.message || 'Status updated'));
+        adminLoadAdmissions();
+      } catch (err) {
+        alert('❌ Server Error: ' + err.message);
+      }
+    }
+
     // CONTACT & LEADS PIPELINE
-    // -------------------------------------------------------------
-    function submitGeneralInquiry(e) {
+    async function submitGeneralInquiry(e) {
       e.preventDefault();
       const payload = {
-        name: document.getElementById('contactName').value,
-        email: document.getElementById('contactEmail').value,
-        service: document.getElementById('contactSubject').value,
-        budget: 'General Inquiry',
-        details: document.getElementById('contactMessage').value
+        data: {
+          name: document.getElementById('contactName').value,
+          email: document.getElementById('contactEmail').value,
+          service: document.getElementById('contactSubject').value,
+          budget: 'General Inquiry',
+          details: document.getElementById('contactMessage').value
+        }
       };
 
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res && res.success) {
-            alert('✅ ' + res.message);
-            e.target.reset();
-            navigateTo('home');
-          } else {
-            alert('⚠️ ' + res.message);
-          }
-        })
-        .withFailureHandler(err => alert('❌ Error: ' + err.message))
-        .submitInquiry(payload);
+      try {
+        const res = await apiPost('submitInquiry', payload);
+        alert('✅ ' + (res.message || 'Inquiry submitted'));
+        e.target.reset();
+        navigateTo('home');
+      } catch (err) {
+        alert('❌ Error: ' + err.message);
+      }
     }
 
-    function adminLoadLeads() {
+    async function adminLoadLeads() {
       const tbody = document.getElementById('adminLeadsTableBody');
       tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-center text-slate-500">Loading leads...</td></tr>';
 
-      google.script.run
-        .withSuccessHandler(leads => {
-          if (!leads || !leads.length) {
-            tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-center text-slate-500">No leads found in database.</td></tr>';
-            return;
-          }
-          tbody.innerHTML = leads.map(l => `
-            <tr class="hover:bg-slate-800/40 transition">
-              <td class="px-4 py-3 whitespace-nowrap text-slate-400 font-mono">${l.timestamp}</td>
-              <td class="px-4 py-3 font-bold text-white">${l.name}</td>
-              <td class="px-4 py-3 text-cyan-400"><a href="mailto:${l.email}">${l.email}</a></td>
-              <td class="px-4 py-3">${l.service}</td>
-              <td class="px-4 py-3 text-emerald-400 font-semibold">${l.budget}</td>
-              <td class="px-4 py-3 text-slate-300 max-w-xs truncate">${l.details}</td>
-            </tr>
-          `).join('');
-        })
-        .withFailureHandler(err => {
-          tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-4 text-center text-red-400">Error: ${err.message}</td></tr>`;
-        })
-        .getLeads();
+      try {
+        const leads = await apiGet('getLeads');
+        if (!leads || !leads.length) {
+          tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-center text-slate-500">No leads found in database.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = leads.map(l => `
+          <tr class="hover:bg-slate-800/40 transition">
+            <td class="px-4 py-3 whitespace-nowrap text-slate-400 font-mono">${l.timestamp}</td>
+            <td class="px-4 py-3 font-bold text-white">${l.name}</td>
+            <td class="px-4 py-3 text-cyan-400"><a href="mailto:${l.email}">${l.email}</a></td>
+            <td class="px-4 py-3">${l.service}</td>
+            <td class="px-4 py-3 text-emerald-400 font-semibold">${l.budget}</td>
+            <td class="px-4 py-3 text-slate-300 max-w-xs truncate">${l.details}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-4 text-center text-red-400">Error: ${err.message}</td></tr>`;
+      }
     }
 
-    // -------------------------------------------------------------
     // DRIVE CLOUD UPLOADER
-    // -------------------------------------------------------------
     function adminUploadDriveMedia() {
       const fileInput = document.getElementById('mediaFile');
       const resBox = document.getElementById('driveUploadResult');
@@ -1277,20 +1229,23 @@ function changeAdmissionStatus(rowNumber, newStatus) {
       resBox.classList.remove('hidden');
       resBox.innerHTML = '<span class="text-purple-400">Uploading to Google Drive...</span>';
 
-      reader.onload = function(evt) {
-        google.script.run
-          .withSuccessHandler(res => {
-            if (res && res.success) {
-              resBox.innerHTML = `✅ ${res.message}<br><a href="${res.url}" target="_blank" class="text-cyan-400 underline font-semibold">Open Drive Image</a>`;
-              fetchGallery();
-            } else {
-              resBox.innerHTML = `<span class="text-red-400">Upload failed: ${res.message}</span>`;
-            }
-          })
-          .withFailureHandler(err => {
-            resBox.innerHTML = `<span class="text-red-400">Upload error: ${err.message}</span>`;
-          })
-          .uploadImageToDrive(evt.target.result, file.name, title, cat);
+      reader.onload = async function(evt) {
+        try {
+          const res = await apiPost('uploadDrive', {
+            base64Data: evt.target.result,
+            fileName: file.name,
+            title: title,
+            category: cat
+          });
+          if (res && res.success) {
+            resBox.innerHTML = `✅ ${res.message}<br><a href="${res.url}" target="_blank" class="text-cyan-400 underline font-semibold">Open Drive Image</a>`;
+            fetchGallery();
+          } else {
+            resBox.innerHTML = `<span class="text-red-400">Upload failed: ${res.message}</span>`;
+          }
+        } catch (err) {
+          resBox.innerHTML = `<span class="text-red-400">Upload error: ${err.message}</span>`;
+        }
       };
       reader.readAsDataURL(file);
     }
