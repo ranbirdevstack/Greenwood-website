@@ -1,9 +1,28 @@
 /**
  * Greenwood Public School — Serverless Backend Engine
- * Google Apps Script & Google Sheets CRM (Vercel REST API Enabled)
+ * Google Apps Script & Google Sheets CRM
  */
 
 const SPREADSHEET_ID = '1UF8xuxirPcGUwm3fsfSQVTghFzuloDhJJqpkjwi9454';
+
+function doGet(e) {
+  // If called with ?api=admissions, return direct JSON without iframe sandbox
+  if (e && e.parameter && e.parameter.api === 'admissions') {
+    const data = getAdmissions();
+    return ContentService.createTextOutput(JSON.stringify(data))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  // Default HTML render
+  return HtmlService.createHtmlOutputFromFile('Index')
+    .setTitle('Greenwood Public School — Official Portal & Admin Hub')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+}
+
+// -------------------------------------------------------------
+// 1. DATABASE & SHEET HELPERS
+// -------------------------------------------------------------
 
 function getSpreadsheet() {
   try {
@@ -29,97 +48,6 @@ function getOrCreateSheet(sheetName, headers) {
   return sheet;
 }
 
-function createJsonResponse(data) {
-  return ContentService.createTextOutput(JSON.stringify(data))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-// -------------------------------------------------------------
-// REST API ROUTERS (GET & POST)
-// -------------------------------------------------------------
-
-function doGet(e) {
-  const action = (e && e.parameter && e.parameter.action) || (e && e.parameter && e.parameter.api) || '';
-
-  if (action === 'getSettings') {
-    return createJsonResponse(getSchoolSettings());
-  }
-  if (action === 'getEvents') {
-    return createJsonResponse(getEvents());
-  }
-  if (action === 'getNotices') {
-    return createJsonResponse(getNotices());
-  }
-  if (action === 'getGallery') {
-    return createJsonResponse(getGalleryImages());
-  }
-  if (action === 'getAdmissions' || action === 'admissions') {
-    return createJsonResponse(getAdmissions());
-  }
-  if (action === 'getStudents') {
-    return createJsonResponse(getAllStudents());
-  }
-  if (action === 'getLeads') {
-    return createJsonResponse(getLeads());
-  }
-  if (action === 'lookupStudent') {
-    return createJsonResponse(lookupStudent(e.parameter.id));
-  }
-
-  // Standalone fallback HTML output if opened directly
-  return HtmlService.createHtmlOutputFromFile('Index')
-    .setTitle('Greenwood Public School — Official Portal & Admin Hub')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
-}
-
-function doPost(e) {
-  try {
-    let payload = {};
-    if (e && e.postData && e.postData.contents) {
-      payload = JSON.parse(e.postData.contents);
-    } else if (e && e.parameter) {
-      payload = e.parameter;
-    }
-
-    const action = payload.action || '';
-    const data = payload.data || payload;
-
-    if (action === 'submitAdmission') {
-      return createJsonResponse(submitAdmissionForm(data));
-    }
-    if (action === 'updateAdmissionStatus') {
-      return createJsonResponse(updateAdmissionStatus(payload.rowNumber, payload.newStatus));
-    }
-    if (action === 'updateSettings') {
-      return createJsonResponse(updateSchoolSettings(data));
-    }
-    if (action === 'addEvent') {
-      return createJsonResponse(addCalendarEvent(data));
-    }
-    if (action === 'addNotice') {
-      return createJsonResponse(addNotice(data));
-    }
-    if (action === 'saveStudent') {
-      return createJsonResponse(saveStudentRecord(data));
-    }
-    if (action === 'submitInquiry') {
-      return createJsonResponse(submitInquiry(data));
-    }
-    if (action === 'uploadDrive') {
-      return createJsonResponse(uploadImageToDrive(payload.base64Data, payload.fileName, payload.title, payload.category));
-    }
-
-    return createJsonResponse({ success: false, message: 'Invalid action requested.' });
-  } catch (err) {
-    return createJsonResponse({ success: false, message: err.toString() });
-  }
-}
-
-// -------------------------------------------------------------
-// DATA HELPERS & SANITIZATION
-// -------------------------------------------------------------
-
 function sanitizeDateString(dateVal, tz) {
   if (!dateVal) return '';
   if (dateVal instanceof Date) {
@@ -144,7 +72,7 @@ function sanitizeTimeString(timeVal, tz) {
 }
 
 // -------------------------------------------------------------
-// MODULES
+// 2. SETTINGS, BRANDING & STAT COUNTERS
 // -------------------------------------------------------------
 
 function getSchoolSettings() {
@@ -164,6 +92,7 @@ function getSchoolSettings() {
     for (let i = 1; i < rows.length; i++) {
       if (rows[i][0]) settings[String(rows[i][0])] = String(rows[i][1]);
     }
+
     return { success: true, data: settings };
   } catch (err) {
     return { success: false, message: err.toString() };
@@ -185,13 +114,19 @@ function updateSchoolSettings(settings) {
           break;
         }
       }
-      if (!found) sheet.appendRow([key, settings[key]]);
+      if (!found) {
+        sheet.appendRow([key, settings[key]]);
+      }
     });
     return { success: true, message: 'Settings and Stat Counters updated successfully!' };
   } catch (err) {
     return { success: false, message: err.toString() };
   }
 }
+
+// -------------------------------------------------------------
+// 3. CALENDAR EVENTS ENGINE
+// -------------------------------------------------------------
 
 function getEvents() {
   try {
@@ -201,6 +136,7 @@ function getEvents() {
     rows.shift();
 
     const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+
     return rows.map((r, index) => ({
       id: index + 1,
       title: String(r[0] || ''),
@@ -232,6 +168,10 @@ function addCalendarEvent(eventData) {
   }
 }
 
+// -------------------------------------------------------------
+// 4. NOTICES & CIRCULARS ENGINE
+// -------------------------------------------------------------
+
 function getNotices() {
   try {
     const sheet = getOrCreateSheet('Notices', ['Title', 'Category', 'Date', 'Details']);
@@ -240,6 +180,7 @@ function getNotices() {
     rows.shift();
 
     const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+
     return rows.reverse().map((r, index) => ({
       id: index + 1,
       title: String(r[0] || ''),
@@ -269,6 +210,10 @@ function addNotice(noticeData) {
     return { success: false, message: err.toString() };
   }
 }
+
+// -------------------------------------------------------------
+// 5. STUDENT ROSTER & VERIFICATION PORTAL
+// -------------------------------------------------------------
 
 function lookupStudent(studentId) {
   try {
@@ -347,6 +292,11 @@ function saveStudentRecord(student) {
   }
 }
 
+// -------------------------------------------------------------
+// 6. ADMISSIONS PIPELINE & STATUS UPDATE
+// -------------------------------------------------------------
+
+// 1. Submit form from public page (sets Address to Col G, Status to Col H)
 function submitAdmissionForm(formData) {
   try {
     const sheet = getOrCreateSheet('Admissions', [
@@ -356,14 +306,14 @@ function submitAdmissionForm(formData) {
     const dateStr = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd HH:mm:ss');
 
     sheet.appendRow([
-      dateStr,
-      String(formData.studentName || '').trim(),
-      String(formData.parentName || '').trim(),
-      String(formData.grade || '').trim(),
-      String(formData.phone || '').trim(),
-      String(formData.email || '').trim(),
-      String(formData.address || '').trim(),
-      'Pending Review'
+      dateStr,                                          // Col A: Timestamp
+      String(formData.studentName || '').trim(),        // Col B: Student Name
+      String(formData.parentName || '').trim(),         // Col C: Parent Name
+      String(formData.grade || '').trim(),              // Col D: Grade
+      String(formData.phone || '').trim(),              // Col E: Phone
+      String(formData.email || '').trim(),              // Col F: Email
+      String(formData.address || '').trim(),            // Col G: Address
+      'Pending Review'                                  // Col H: Status (Default)
     ]);
     return { success: true, message: 'Application submitted successfully! Default status: Pending Review.' };
   } catch (err) {
@@ -371,9 +321,10 @@ function submitAdmissionForm(formData) {
   }
 }
 
+// 2. Fetch both separated Address and Status for the Admin table
 function getAdmissions() {
   try {
-    const ss = getSpreadsheet();
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
     let sheet = ss.getSheetByName('Admissions');
     if (!sheet) {
       const sheets = ss.getSheets();
@@ -383,11 +334,11 @@ function getAdmissions() {
 
     const rows = sheet.getDataRange().getValues();
     if (rows.length <= 1) return [];
-    rows.shift();
+    rows.shift(); // Remove header row
 
     const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
-    const list = [];
 
+    const list = [];
     for (let i = 0; i < rows.length; i++) {
       const r = rows[i];
       if (!r[0] && !r[1]) continue;
@@ -399,16 +350,18 @@ function getAdmissions() {
         dateStr = String(r[0] || '').trim();
       }
 
+      // Col G (index 6) is Address, Col H (index 7) is Status
       let addressVal = String(r[6] || '').trim();
       let statusVal = r[7] ? String(r[7]).trim() : 'Pending Review';
 
+      // Fallback if older data placed address directly into status column
       if (!r[7] && addressVal && (addressVal.includes('Review') || addressVal.includes('Scheduled') || addressVal.includes('Approved') || addressVal.includes('Enrolled') || addressVal.includes('Rejected'))) {
         statusVal = addressVal;
         addressVal = '';
       }
 
       list.push({
-        rowNumber: i + 2,
+        rowNumber: i + 2, // 1-based row index in Sheet
         time: dateStr,
         student: String(r[1] || ''),
         parent: String(r[2] || ''),
@@ -426,17 +379,21 @@ function getAdmissions() {
   }
 }
 
+// 3. Update only the Status (Column H / Col 8) without altering Address
 function updateAdmissionStatus(rowNumber, newStatus) {
   try {
-    const ss = getSpreadsheet();
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
     let sheet = ss.getSheetByName('Admissions');
     if (!sheet) throw new Error('Admissions sheet not found.');
 
     const row = Number(rowNumber);
     if (!row || row < 2) throw new Error('Invalid row number.');
 
+    // Ensure header names
     sheet.getRange(1, 7).setValue('Address');
     sheet.getRange(1, 8).setValue('Status');
+
+    // Update Column H (8)
     sheet.getRange(row, 8).setValue(newStatus);
 
     return { success: true, message: 'Status updated to "' + newStatus + '"!' };
@@ -444,6 +401,9 @@ function updateAdmissionStatus(rowNumber, newStatus) {
     return { success: false, message: err.toString() };
   }
 }
+// -------------------------------------------------------------
+// 7. LEADS & INQUIRIES CRM
+// -------------------------------------------------------------
 
 function submitInquiry(lead) {
   try {
@@ -473,6 +433,7 @@ function getLeads() {
     rows.shift();
 
     const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+
     return rows.reverse().map(r => ({
       timestamp: r[0] instanceof Date ? Utilities.formatDate(r[0], tz, 'yyyy-MM-dd HH:mm') : String(r[0] || ''),
       name: String(r[1] || ''),
@@ -485,6 +446,10 @@ function getLeads() {
     return [];
   }
 }
+
+// -------------------------------------------------------------
+// 8. GOOGLE DRIVE MEDIA UPLOADER & GALLERY
+// -------------------------------------------------------------
 
 function uploadImageToDrive(base64Data, fileName, title, category) {
   try {
@@ -522,7 +487,7 @@ function getGalleryImages() {
     if (rows.length <= 1) return [];
     rows.shift();
     return rows.reverse().map(r => ({
-      title: r[0], 
+      title: r[0],
       category: r[1],
       url: r[2],
       date: r[3]
