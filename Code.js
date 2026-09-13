@@ -1,19 +1,11 @@
 /**
- * Greenwood Public School — Serverless Backend Engine
- * Google Apps Script & Google Sheets CRM
+ * Greenwood Public School — Serverless Web App Backend
+ * Bound to Google Sheets Database
  */
 
 const SPREADSHEET_ID = '1UF8xuxirPcGUwm3fsfSQVTghFzuloDhJJqpkjwi9454';
 
 function doGet(e) {
-  // If called with ?api=admissions, return direct JSON without iframe sandbox
-  if (e && e.parameter && e.parameter.api === 'admissions') {
-    const data = getAdmissions();
-    return ContentService.createTextOutput(JSON.stringify(data))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-
-  // Default HTML render
   return HtmlService.createHtmlOutputFromFile('Index')
     .setTitle('Greenwood Public School — Official Portal & Admin Hub')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
@@ -21,7 +13,7 @@ function doGet(e) {
 }
 
 // -------------------------------------------------------------
-// 1. DATABASE & SHEET HELPERS
+// 1. DATABASE & SHEET ENGINE
 // -------------------------------------------------------------
 
 function getSpreadsheet() {
@@ -72,25 +64,39 @@ function sanitizeTimeString(timeVal, tz) {
 }
 
 // -------------------------------------------------------------
-// 2. SETTINGS, BRANDING & STAT COUNTERS
+// 2. SETTINGS & BRANDING CONFIGURATION
 // -------------------------------------------------------------
 
 function getSchoolSettings() {
   try {
-    const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
+    const sheet = getOrCreateSheet('Settings', ['Key', 'Value', 'Description / Used In']);
     const rows = sheet.getDataRange().getValues();
+    
     const settings = {
-      schoolName: 'Greenwood Public School',
-      tagline: 'AFFILIATED TO CBSE • NEW DELHI',
-      noticeTicker: 'Admissions open for Session 2026-27 • Term 1 Datesheets Published • Scholarship Test Registrations Open',
-      countStudents: '2,400+',
+      SchoolName: 'Greenwood Public School',
+      SchoolTagline: 'Affiliated to CBSE • New Delhi',
+      AcademicSession: '2026-2027',
+      AffiliationNumber: '2130849',
+      SchoolCode: '70142',
+      CampusArea: '15 Acres',
+      TotalStudents: '2,400+',
       countBoardPass: '100%',
-      countFacultyRatio: '1:20',
-      countCampusArea: '15 Acres'
+      StudentTeacherRatio: '01:20',
+      ContactPhone: '+91 542 223344',
+      ContactMobile: '+91 98765 43210',
+      ContactEmail: 'admissions@greenwoodpublic.edu.in',
+      SchoolAddress: 'Knowledge Park, Varanasi, UP - 221005',
+      OfficeHours: 'Mon - Sat (8:00 AM - 2:30 PM)',
+      AdmissionTickerAlert: 'Admissions open for Session 2026-27 • Term 1 Datesheet Announced',
+      admin_username: 'admin',
+      admin_password: 'admin123',
+      admin_mobile: '8787262194'
     };
 
     for (let i = 1; i < rows.length; i++) {
-      if (rows[i][0]) settings[String(rows[i][0])] = String(rows[i][1]);
+      if (rows[i][0]) {
+        settings[String(rows[i][0]).trim()] = String(rows[i][1] || '').trim();
+      }
     }
 
     return { success: true, data: settings };
@@ -99,33 +105,266 @@ function getSchoolSettings() {
   }
 }
 
-function updateSchoolSettings(settings) {
+function updateSchoolSettings(newSettings) {
   try {
-    const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
+    const sheet = getOrCreateSheet('Settings', ['Key', 'Value', 'Description / Used In']);
     const data = sheet.getDataRange().getValues();
-    const keys = Object.keys(settings);
+    const keys = Object.keys(newSettings);
 
     keys.forEach(key => {
       let found = false;
       for (let i = 1; i < data.length; i++) {
-        if (data[i][0] === key) {
-          sheet.getRange(i + 1, 2).setValue(settings[key]);
+        if (String(data[i][0]).trim() === key) {
+          sheet.getRange(i + 1, 2).setValue(newSettings[key]);
           found = true;
           break;
         }
       }
       if (!found) {
-        sheet.appendRow([key, settings[key]]);
+        sheet.appendRow([key, newSettings[key], 'Web App Config']);
       }
     });
-    return { success: true, message: 'Settings and Stat Counters updated successfully!' };
+
+    return { success: true, message: 'Settings updated successfully!' };
   } catch (err) {
     return { success: false, message: err.toString() };
   }
 }
 
 // -------------------------------------------------------------
-// 3. CALENDAR EVENTS ENGINE
+// 3. ADMIN AUTH & MOBILE-VERIFIED OTP RECOVERY
+// -------------------------------------------------------------
+
+function verifyAdminCredentials(username, password) {
+  try {
+    const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
+    const rows = sheet.getDataRange().getValues();
+    
+    let storedUser = 'admin';
+    let storedPass = 'admin123';
+
+    for (let i = 1; i < rows.length; i++) {
+      const key = String(rows[i][0]).trim();
+      if (key === 'admin_username') storedUser = String(rows[i][1]).trim();
+      if (key === 'admin_password') storedPass = String(rows[i][1]).trim();
+    }
+
+    if (username.trim() === storedUser && password.trim() === storedPass) {
+      return { success: true, message: 'Authentication successful.' };
+    }
+    return { success: false, message: 'Invalid username or password.' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function generateAdminOtpForMobile(mobileNumber) {
+  try {
+    const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
+    const rows = sheet.getDataRange().getValues();
+
+    let registeredMobile = '8787262194';
+
+    for (let i = 1; i < rows.length; i++) {
+      if (String(rows[i][0]).trim() === 'admin_mobile') {
+        registeredMobile = String(rows[i][1]).trim();
+      }
+    }
+
+    const cleanInput = String(mobileNumber || '').replace(/\D/g, '').slice(-10);
+    const cleanStored = registeredMobile.replace(/\D/g, '').slice(-10);
+
+    if (!cleanInput || cleanInput !== cleanStored) {
+      return { 
+        success: false, 
+        message: 'Mobile number not recognized. Please enter the registered administrator number.' 
+      };
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiry = new Date().getTime() + (10 * 60 * 1000); // 10 minutes
+
+    const payload = {
+      'admin_mobile': cleanStored,
+      'admin_reset_otp': otp,
+      'admin_reset_expiry': expiry.toString()
+    };
+
+    const data = sheet.getDataRange().getValues();
+    Object.keys(payload).forEach(k => {
+      let found = false;
+      for (let i = 1; i < data.length; i++) {
+        if (String(data[i][0]).trim() === k) {
+          sheet.getRange(i + 1, 2).setValue(payload[k]);
+          found = true;
+          break;
+        }
+      }
+      if (!found) sheet.appendRow([k, payload[k]]);
+    });
+
+    return { success: true, otp: otp };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function updateAdminPassword(enteredOtp, newPassword) {
+  try {
+    const sheet = getOrCreateSheet('Settings', ['Key', 'Value']);
+    const rows = sheet.getDataRange().getValues();
+    
+    let savedOtp = '';
+    let expiry = 0;
+
+    for (let i = 1; i < rows.length; i++) {
+      const key = String(rows[i][0]).trim();
+      if (key === 'admin_reset_otp') savedOtp = String(rows[i][1]).trim();
+      if (key === 'admin_reset_expiry') expiry = Number(rows[i][1]);
+    }
+
+    if (!savedOtp || !expiry) {
+      return { success: false, message: 'No active OTP found. Please request a new code.' };
+    }
+
+    const now = new Date().getTime();
+    if (now > expiry) {
+      return { success: false, message: 'OTP has expired. Please request a new code.' };
+    }
+
+    if (String(enteredOtp).trim() !== savedOtp) {
+      return { success: false, message: 'Incorrect OTP entered. Password was not updated.' };
+    }
+
+    const data = sheet.getDataRange().getValues();
+    let updated = false;
+
+    for (let i = 1; i < data.length; i++) {
+      const key = String(data[i][0]).trim();
+      if (key === 'admin_password') {
+        sheet.getRange(i + 1, 2).setValue(newPassword.trim());
+        updated = true;
+      }
+      if (key === 'admin_reset_otp') {
+        sheet.getRange(i + 1, 2).setValue('');
+      }
+    }
+
+    if (!updated) {
+      sheet.appendRow(['admin_password', newPassword.trim()]);
+    }
+
+    return { success: true, message: 'Password updated successfully! Please log in with your new password.' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+// -------------------------------------------------------------
+// 4. ADMISSIONS PIPELINE (SEPARATED ADDRESS & STATUS)
+// -------------------------------------------------------------
+
+function submitAdmissionForm(formData) {
+  try {
+    const sheet = getOrCreateSheet('Admissions', [
+      'Timestamp', 'StudentName', 'ParentName', 'Grade', 'Phone', 'Email', 'Address', 'Status'
+    ]);
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+    const dateStr = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd HH:mm:ss');
+
+    sheet.appendRow([
+      dateStr,
+      String(formData.studentName || '').trim(),
+      String(formData.parentName || '').trim(),
+      String(formData.grade || '').trim(),
+      String(formData.phone || '').trim(),
+      String(formData.email || '').trim(),
+      String(formData.address || '').trim(),
+      'Pending Review'
+    ]);
+    return { success: true, message: 'Application submitted successfully! Your status is Pending Review.' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+function getAdmissions() {
+  try {
+    const ss = getSpreadsheet();
+    let sheet = ss.getSheetByName('Admissions');
+    if (!sheet) {
+      const sheets = ss.getSheets();
+      sheet = sheets.find(s => s.getName().trim().toLowerCase() === 'admissions');
+    }
+    if (!sheet) return [];
+
+    const rows = sheet.getDataRange().getValues();
+    if (rows.length <= 1) return [];
+    rows.shift();
+
+    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
+    const result = [];
+
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i];
+      if (!r[0] && !r[1]) continue;
+
+      let dateStr = '';
+      if (r[0] instanceof Date) {
+        dateStr = Utilities.formatDate(r[0], tz, 'yyyy-MM-dd HH:mm');
+      } else {
+        dateStr = String(r[0] || '').trim();
+      }
+
+      let addressVal = String(r[6] || '').trim();
+      let statusVal = r[7] ? String(r[7]).trim() : 'Pending Review';
+
+      // Backward fallback if older single-column schema was used
+      if (!r[7] && addressVal && (addressVal.includes('Review') || addressVal.includes('Scheduled') || addressVal.includes('Approved') || addressVal.includes('Enrolled') || addressVal.includes('Rejected'))) {
+        statusVal = addressVal;
+        addressVal = '';
+      }
+
+      result.push({
+        rowNumber: i + 2,
+        time: dateStr,
+        student: String(r[1] || ''),
+        parent: String(r[2] || ''),
+        grade: String(r[3] || ''),
+        phone: String(r[4] || ''),
+        email: String(r[5] || ''),
+        address: addressVal,
+        status: statusVal
+      });
+    }
+
+    return result.reverse();
+  } catch (err) {
+    return [];
+  }
+}
+
+function updateAdmissionStatus(rowNumber, newStatus) {
+  try {
+    const ss = getSpreadsheet();
+    let sheet = ss.getSheetByName('Admissions');
+    if (!sheet) throw new Error('Admissions sheet not found.');
+
+    const row = Number(rowNumber);
+    if (!row || row < 2) throw new Error('Invalid row index.');
+
+    sheet.getRange(1, 7).setValue('Address');
+    sheet.getRange(1, 8).setValue('Status');
+    sheet.getRange(row, 8).setValue(newStatus);
+
+    return { success: true, message: 'Status updated to "' + newStatus + '"!' };
+  } catch (err) {
+    return { success: false, message: err.toString() };
+  }
+}
+
+// -------------------------------------------------------------
+// 5. CALENDAR EVENTS ENGINE
 // -------------------------------------------------------------
 
 function getEvents() {
@@ -169,7 +408,7 @@ function addCalendarEvent(eventData) {
 }
 
 // -------------------------------------------------------------
-// 4. NOTICES & CIRCULARS ENGINE
+// 6. NOTICES & CIRCULARS ENGINE
 // -------------------------------------------------------------
 
 function getNotices() {
@@ -212,7 +451,7 @@ function addNotice(noticeData) {
 }
 
 // -------------------------------------------------------------
-// 5. STUDENT ROSTER & VERIFICATION PORTAL
+// 7. STUDENT ROSTER & VERIFICATION
 // -------------------------------------------------------------
 
 function lookupStudent(studentId) {
@@ -236,7 +475,7 @@ function lookupStudent(studentId) {
         };
       }
     }
-    return { success: false, message: 'No student found with ID: ' + studentId };
+    return { success: false, message: 'No student record found with ID: ' + studentId };
   } catch (err) {
     return { success: false, message: err.toString() };
   }
@@ -286,123 +525,14 @@ function saveStudentRecord(student) {
       student.feeStatus,
       student.result
     ]);
-    return { success: true, message: 'New student added.' };
+    return { success: true, message: 'New student added to roster.' };
   } catch (err) {
     return { success: false, message: err.toString() };
   }
 }
 
 // -------------------------------------------------------------
-// 6. ADMISSIONS PIPELINE & STATUS UPDATE
-// -------------------------------------------------------------
-
-// 1. Submit form from public page (sets Address to Col G, Status to Col H)
-function submitAdmissionForm(formData) {
-  try {
-    const sheet = getOrCreateSheet('Admissions', [
-      'Timestamp', 'StudentName', 'ParentName', 'Grade', 'Phone', 'Email', 'Address', 'Status'
-    ]);
-    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
-    const dateStr = Utilities.formatDate(new Date(), tz, 'yyyy-MM-dd HH:mm:ss');
-
-    sheet.appendRow([
-      dateStr,                                          // Col A: Timestamp
-      String(formData.studentName || '').trim(),        // Col B: Student Name
-      String(formData.parentName || '').trim(),         // Col C: Parent Name
-      String(formData.grade || '').trim(),              // Col D: Grade
-      String(formData.phone || '').trim(),              // Col E: Phone
-      String(formData.email || '').trim(),              // Col F: Email
-      String(formData.address || '').trim(),            // Col G: Address
-      'Pending Review'                                  // Col H: Status (Default)
-    ]);
-    return { success: true, message: 'Application submitted successfully! Default status: Pending Review.' };
-  } catch (err) {
-    return { success: false, message: err.toString() };
-  }
-}
-
-// 2. Fetch both separated Address and Status for the Admin table
-function getAdmissions() {
-  try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    let sheet = ss.getSheetByName('Admissions');
-    if (!sheet) {
-      const sheets = ss.getSheets();
-      sheet = sheets.find(s => s.getName().trim().toLowerCase() === 'admissions');
-    }
-    if (!sheet) return [];
-
-    const rows = sheet.getDataRange().getValues();
-    if (rows.length <= 1) return [];
-    rows.shift(); // Remove header row
-
-    const tz = Session.getScriptTimeZone() || 'Asia/Kolkata';
-
-    const list = [];
-    for (let i = 0; i < rows.length; i++) {
-      const r = rows[i];
-      if (!r[0] && !r[1]) continue;
-
-      let dateStr = '';
-      if (r[0] instanceof Date) {
-        dateStr = Utilities.formatDate(r[0], tz, 'yyyy-MM-dd HH:mm');
-      } else {
-        dateStr = String(r[0] || '').trim();
-      }
-
-      // Col G (index 6) is Address, Col H (index 7) is Status
-      let addressVal = String(r[6] || '').trim();
-      let statusVal = r[7] ? String(r[7]).trim() : 'Pending Review';
-
-      // Fallback if older data placed address directly into status column
-      if (!r[7] && addressVal && (addressVal.includes('Review') || addressVal.includes('Scheduled') || addressVal.includes('Approved') || addressVal.includes('Enrolled') || addressVal.includes('Rejected'))) {
-        statusVal = addressVal;
-        addressVal = '';
-      }
-
-      list.push({
-        rowNumber: i + 2, // 1-based row index in Sheet
-        time: dateStr,
-        student: String(r[1] || ''),
-        parent: String(r[2] || ''),
-        grade: String(r[3] || ''),
-        phone: String(r[4] || ''),
-        email: String(r[5] || ''),
-        address: addressVal,
-        status: statusVal
-      });
-    }
-
-    return list.reverse();
-  } catch (err) {
-    return [];
-  }
-}
-
-// 3. Update only the Status (Column H / Col 8) without altering Address
-function updateAdmissionStatus(rowNumber, newStatus) {
-  try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    let sheet = ss.getSheetByName('Admissions');
-    if (!sheet) throw new Error('Admissions sheet not found.');
-
-    const row = Number(rowNumber);
-    if (!row || row < 2) throw new Error('Invalid row number.');
-
-    // Ensure header names
-    sheet.getRange(1, 7).setValue('Address');
-    sheet.getRange(1, 8).setValue('Status');
-
-    // Update Column H (8)
-    sheet.getRange(row, 8).setValue(newStatus);
-
-    return { success: true, message: 'Status updated to "' + newStatus + '"!' };
-  } catch (err) {
-    return { success: false, message: err.toString() };
-  }
-}
-// -------------------------------------------------------------
-// 7. LEADS & INQUIRIES CRM
+// 8. CRM INQUIRIES & DRIVE MEDIA UPLOADER
 // -------------------------------------------------------------
 
 function submitInquiry(lead) {
@@ -446,10 +576,6 @@ function getLeads() {
     return [];
   }
 }
-
-// -------------------------------------------------------------
-// 8. GOOGLE DRIVE MEDIA UPLOADER & GALLERY
-// -------------------------------------------------------------
 
 function uploadImageToDrive(base64Data, fileName, title, category) {
   try {

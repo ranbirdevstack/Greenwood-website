@@ -9,7 +9,7 @@
   <!-- FullCalendar Core & Plugins -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
-  <!-- Custom Styling for Ticker & FullCalendar Overrides -->
+  <!-- Custom Styling for Ticker & FullCalendar -->
   <style>
     @keyframes tickerSlide {
       0% { transform: translateX(100%); }
@@ -74,7 +74,7 @@
       </span>
       <div class="overflow-hidden whitespace-nowrap w-full">
         <span id="tickerContent" class="animate-ticker font-medium tracking-wide">
-          Admissions open for Session 2026-27 • Term 1 Datesheets Published • Scholarship Test Registrations Open
+          Admissions open for Session 2026-27 • Term 1 Datesheet Announced
         </span>
       </div>
     </div>
@@ -95,27 +95,27 @@
         </div>
         <div>
           <h1 id="brandSchoolName" class="font-extrabold text-base tracking-wide text-white leading-tight">Greenwood Public School</h1>
-          <p id="brandTagline" class="text-[10px] text-amber-400 tracking-wider font-semibold uppercase">AFFILIATED TO CBSE • NEW DELHI</p>
+          <p id="brandTagline" class="text-[10px] text-amber-400 tracking-wider font-semibold uppercase">Affiliated to CBSE • New Delhi</p>
         </div>
       </div>
 
       <!-- Desktop Navigation Links -->
       <nav class="hidden xl:flex items-center space-x-5 text-[13px] font-medium text-slate-300">
-        <button onclick="navigateTo('home')" class="nav-item hover:text-amber-400 transition" data-target="home">Home</button>
-        <button onclick="navigateTo('about')" class="nav-item hover:text-amber-400 transition" data-target="about">About Us</button>
-        <button onclick="navigateTo('academics')" class="nav-item hover:text-amber-400 transition" data-target="academics">Academics</button>
-        <button onclick="navigateTo('calendar')" class="nav-item hover:text-amber-400 transition" data-target="calendar">Calendar</button>
-        <button onclick="navigateTo('notices')" class="nav-item hover:text-amber-400 transition" data-target="notices">Notices</button>
-        <button onclick="navigateTo('gallery')" class="nav-item hover:text-amber-400 transition" data-target="gallery">Gallery</button>
-        <button onclick="navigateTo('admissions')" class="nav-item hover:text-amber-400 transition" data-target="admissions">Admissions</button>
-        <button onclick="navigateTo('student-portal')" class="nav-item hover:text-amber-400 transition" data-target="student-portal">Student Portal</button>
-        <button onclick="navigateTo('contact')" class="nav-item hover:text-amber-400 transition" data-target="contact">Contact</button>
+        <button onclick="navigateTo('home')" class="hover:text-amber-400 transition">Home</button>
+        <button onclick="navigateTo('about')" class="hover:text-amber-400 transition">About Us</button>
+        <button onclick="navigateTo('academics')" class="hover:text-amber-400 transition">Academics</button>
+        <button onclick="navigateTo('calendar')" class="hover:text-amber-400 transition">Calendar</button>
+        <button onclick="navigateTo('notices')" class="hover:text-amber-400 transition">Notices</button>
+        <button onclick="navigateTo('gallery')" class="hover:text-amber-400 transition">Gallery</button>
+        <button onclick="navigateTo('admissions')" class="hover:text-amber-400 transition">Admissions</button>
+        <button onclick="navigateTo('student-portal')" class="hover:text-amber-400 transition">Student Portal</button>
+        <button onclick="navigateTo('contact')" class="hover:text-amber-400 transition">Contact</button>
         <button onclick="navigateTo('admin')" class="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg shadow-md transition transform active:scale-95">
           Admin Hub
         </button>
       </nav>
 
-      <!-- Mobile Navbar Hamburger -->
+      <!-- Mobile Navbar Controls -->
       <div class="xl:hidden flex items-center space-x-2">
         <button onclick="navigateTo('admin')" class="px-3 py-1.5 bg-amber-400 text-slate-950 font-bold text-xs rounded-lg">Admin</button>
         <button onclick="toggleMobileNav()" class="p-2 text-slate-400 hover:text-white rounded-lg focus:outline-none bg-slate-900 border border-slate-800">
@@ -144,21 +144,18 @@
   <!-- ========================================================= -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 1: HOME PAGE (HERO SECTION + DYNAMIC STATS)     -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 1: HOME (HERO & DYNAMIC STATS) -->
     <section id="view-home" class="page-view space-y-12">
-      <!-- Hero Banner Card -->
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#121633] via-[#0d1024] to-[#080914] border border-indigo-900/40 p-8 sm:p-14 lg:p-16 shadow-2xl">
         <div class="max-w-3xl space-y-6 relative z-10">
-          <span class="inline-block bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+          <span id="heroSessionBadge" class="inline-block bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
             SESSION 2026-2027
           </span>
           <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight">
             Welcome to Greenwood Public School
           </h2>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl font-normal">
-            Inspiring intellectual curiosity, innovative thinking, and grounded human character in an environment designed for holistic growth.
+            Inspiring intellectual curiosity, innovative thinking, and grounded character in an environment designed for holistic growth.
           </p>
           <div class="flex flex-wrap gap-4 pt-2">
             <button onclick="navigateTo('admissions')" class="px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl shadow-lg shadow-amber-400/20 transition transform active:scale-95">
@@ -169,11 +166,10 @@
             </button>
           </div>
         </div>
-        <!-- Decorative Glow Blur -->
         <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
       </div>
 
-      <!-- 4 DYNAMIC STAT COUNTERS -->
+      <!-- 4 DYNAMIC HERO STAT COUNTERS -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
         <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 text-center space-y-1 shadow-lg hover:border-slate-700 transition">
           <div id="heroStatStudents" class="text-3xl sm:text-4xl font-black text-white">2,400+</div>
@@ -184,7 +180,7 @@
           <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Board Pass Record</div>
         </div>
         <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 text-center space-y-1 shadow-lg hover:border-slate-700 transition">
-          <div id="heroStatFacultyRatio" class="text-3xl sm:text-4xl font-black text-white">1:20</div>
+          <div id="heroStatFacultyRatio" class="text-3xl sm:text-4xl font-black text-white">01:20</div>
           <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Faculty Ratio</div>
         </div>
         <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 text-center space-y-1 shadow-lg hover:border-slate-700 transition">
@@ -193,7 +189,7 @@
         </div>
       </div>
 
-      <!-- Quick Feature Highlights -->
+      <!-- Feature Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
         <div class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 space-y-3">
           <div class="text-2xl">🔬</div>
@@ -202,8 +198,8 @@
         </div>
         <div class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 space-y-3">
           <div class="text-2xl">🏆</div>
-          <h3 class="text-lg font-bold text-white">Comprehensive Athletics</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Olympic-grade track, football fields, indoor badminton courts, and competitive swimming coaching.</p>
+          <h3 class="text-lg font-bold text-white">Athletic Complex</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Olympic-grade running track, football fields, indoor badminton courts, and competitive swimming coaching.</p>
         </div>
         <div class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 space-y-3">
           <div class="text-2xl">🎨</div>
@@ -213,42 +209,32 @@
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 2: ABOUT US                                      -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 2: ABOUT US -->
     <section id="view-about" class="page-view hidden space-y-8">
       <div class="max-w-3xl space-y-4">
         <h2 class="text-3xl font-extrabold text-white tracking-tight">About Greenwood Public School</h2>
         <p class="text-sm text-slate-300 leading-relaxed">
-          Founded on principles of educational excellence and moral discipline, Greenwood Public School provides premier CBSE schooling from kindergarten through senior secondary level. Our campus integrates green spaces with intelligent learning infrastructure.
+          Founded on principles of educational excellence and moral discipline, Greenwood Public School provides premier CBSE schooling from kindergarten through senior secondary level.
         </p>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-        <div class="bg-slate-900/70 p-6 rounded-2xl border border-slate-800 space-y-3">
-          <h3 class="text-base font-bold text-amber-400 uppercase tracking-wide">Our Mission</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            To empower young learners with rigorous intellectual stamina, ethical resilience, and global competence so they emerge as empathetic leaders of tomorrow.
-          </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <div class="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
+          <span class="text-slate-500 font-semibold uppercase text-[10px]">CBSE Affiliation Number</span>
+          <p id="aboutAffiliation" class="text-base font-bold text-amber-400">2130849</p>
         </div>
-        <div class="bg-slate-900/70 p-6 rounded-2xl border border-slate-800 space-y-3">
-          <h3 class="text-base font-bold text-cyan-400 uppercase tracking-wide">Our Vision</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            To remain a pioneer in experiential schooling, setting benchmarks in technology-driven pedagogy, inclusivity, and holistic student achievement.
-          </p>
+        <div class="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
+          <span class="text-slate-500 font-semibold uppercase text-[10px]">Official School Code</span>
+          <p id="aboutSchoolCode" class="text-base font-bold text-cyan-400">70142</p>
         </div>
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 3: ACADEMICS                                     -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 3: ACADEMICS -->
     <section id="view-academics" class="page-view hidden space-y-8">
       <div>
         <h2 class="text-3xl font-extrabold text-white tracking-tight">Academic Framework</h2>
         <p class="text-xs text-slate-400 mt-1">Structured CBSE curriculum tailored for continuous scholastic evaluation.</p>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-3">
           <span class="text-[10px] font-black uppercase text-amber-400 tracking-wider">FOUNDATION</span>
@@ -263,22 +249,17 @@
         <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-3">
           <span class="text-[10px] font-black uppercase text-emerald-400 tracking-wider">ADVANCED</span>
           <h3 class="text-lg font-bold text-white">Senior Secondary (Grades 9-12)</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Specialized streams in Science (PCM/PCB), Commerce, and Humanities paired with competitive exam mentoring (NEET, JEE, CUET).</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Specialized streams in Science (PCM/PCB), Commerce, and Humanities paired with competitive exam mentoring.</p>
         </div>
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 4: CALENDAR & EVENTS                             -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 4: CALENDAR & EVENTS -->
     <section id="view-calendar" class="page-view hidden space-y-8">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Interactive FullCalendar Element -->
         <div class="lg:col-span-2 bg-slate-900/70 p-6 rounded-2xl border border-slate-800 shadow-xl backdrop-blur-sm">
           <div id="calendar"></div>
         </div>
-
-        <!-- Scheduled Events Sidebar -->
         <div class="space-y-4">
           <div class="flex items-center justify-between pb-2 border-b border-slate-800">
             <h3 class="text-sm font-bold tracking-wide uppercase text-slate-300">Scheduled Events</h3>
@@ -291,47 +272,39 @@
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 5: NOTICES & CIRCULARS                           -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 5: NOTICES -->
     <section id="view-notices" class="page-view hidden space-y-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 class="text-2xl font-bold text-white tracking-tight">Official Circulars &amp; Notices</h2>
-          <p class="text-xs text-slate-400">Timely administrative announcements, examination datesheets, and holiday schedules.</p>
+          <p class="text-xs text-slate-400">Administrative announcements, examination schedules, and circulars.</p>
         </div>
         <button onclick="fetchNotices()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-lg border border-slate-700 transition">
           Refresh Circulars
         </button>
       </div>
-
       <div id="noticesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <p class="text-xs text-slate-500">Loading notices...</p>
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 6: PHOTO GALLERY                                 -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 6: GALLERY -->
     <section id="view-gallery" class="page-view hidden space-y-6">
       <div>
         <h2 class="text-2xl font-bold text-white tracking-tight">Campus &amp; Event Gallery</h2>
-        <p class="text-xs text-slate-400">Moments from annual functions, sports meets, exhibitions, and campus activities.</p>
+        <p class="text-xs text-slate-400">Moments from annual functions, sports meets, and student exhibitions.</p>
       </div>
-
       <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <p class="text-xs text-slate-500">Loading gallery photos...</p>
       </div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 7: ADMISSIONS (APPLICANT FORM)                   -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 7: ADMISSIONS APPLICATION -->
     <section id="view-admissions" class="page-view hidden max-w-2xl mx-auto space-y-6">
       <div class="text-center space-y-2">
         <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">ENROLLMENT OPEN</span>
         <h2 class="text-3xl font-extrabold text-white">Online Admission Application</h2>
-        <p class="text-xs text-slate-400">Complete the form below to initiate enrollment for Academic Session 2026-2027.</p>
+        <p class="text-xs text-slate-400">Complete the application below to initiate enrollment for Session 2026-2027.</p>
       </div>
 
       <form onsubmit="submitAdmission(event)" class="bg-slate-900/80 p-8 rounded-2xl border border-slate-800 space-y-4 text-xs shadow-2xl">
@@ -358,8 +331,8 @@
           <input type="email" id="admEmail" placeholder="guardian@example.com" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
         </div>
         <div>
-          <label class="block text-slate-300 mb-1">Residential Address</label>
-          <textarea id="admAddress" rows="2" placeholder="Full residential postal address" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400"></textarea>
+          <label class="block text-slate-300 mb-1">Residential Address *</label>
+          <textarea id="admAddress" rows="2" required placeholder="Full residential postal address" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400"></textarea>
         </div>
         <button type="submit" id="admSubmitBtn" class="w-full py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg text-sm transition shadow-lg shadow-amber-400/20 active:scale-95">
           Submit Admission Application
@@ -367,13 +340,11 @@
       </form>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 8: STUDENT PORTAL (STATUS & RESULTS)             -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 8: STUDENT PORTAL -->
     <section id="view-student-portal" class="page-view hidden max-w-xl mx-auto space-y-6">
       <div class="text-center space-y-2">
         <h2 class="text-2xl font-bold text-white">Student Status &amp; Result Lookup</h2>
-        <p class="text-xs text-slate-400">Enter your official Student Enrollment ID to view verified attendance, fee clearance, and term grades.</p>
+        <p class="text-xs text-slate-400">Enter Enrollment ID to view verified attendance, fee status, and grades.</p>
       </div>
 
       <div class="flex gap-2">
@@ -386,13 +357,31 @@
       <div id="studentResultCard" class="hidden bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-4 text-xs shadow-xl"></div>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 9: CONTACT US                                    -->
-    <!-- ----------------------------------------------------- -->
-    <section id="view-contact" class="page-view hidden max-w-2xl mx-auto space-y-6">
+    <!-- VIEW 9: CONTACT US -->
+    <section id="view-contact" class="page-view hidden max-w-4xl mx-auto space-y-8">
       <div class="text-center space-y-2">
         <h2 class="text-2xl font-bold text-white">Get in Touch</h2>
-        <p class="text-xs text-slate-400">Have questions about admissions, campus visits, or academics? Send us a direct inquiry.</p>
+        <p class="text-xs text-slate-400">Have questions about admissions or scheduling a campus tour?</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-2 text-xs">
+          <div class="text-lg">📍</div>
+          <div class="font-bold text-white">Campus Address</div>
+          <div id="contactAddressDisplay" class="text-slate-400 leading-relaxed">Knowledge Park, Varanasi, UP - 221005</div>
+        </div>
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-2 text-xs">
+          <div class="text-lg">📞</div>
+          <div class="font-bold text-white">Phone &amp; Helpdesk</div>
+          <div id="contactPhoneDisplay" class="text-slate-400 font-mono">+91 542 223344</div>
+          <div id="contactMobileDisplay" class="text-slate-500 font-mono">+91 98765 43210</div>
+        </div>
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-2 text-xs">
+          <div class="text-lg">⏰</div>
+          <div class="font-bold text-white">Visiting Hours</div>
+          <div id="contactHoursDisplay" class="text-slate-400">Mon - Sat (8:00 AM - 2:30 PM)</div>
+          <div id="contactEmailDisplay" class="text-amber-400 pt-1">admissions@greenwoodpublic.edu.in</div>
+        </div>
       </div>
 
       <form onsubmit="submitGeneralInquiry(event)" class="bg-slate-900/80 p-8 rounded-2xl border border-slate-800 space-y-4 text-xs shadow-2xl">
@@ -407,12 +396,12 @@
           </div>
         </div>
         <div>
-          <label class="block text-slate-300 mb-1">Subject / Inquiry Type</label>
-          <input type="text" id="contactSubject" placeholder="Admissions / Transport / Transfer Certificate" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
+          <label class="block text-slate-300 mb-1">Subject</label>
+          <input type="text" id="contactSubject" placeholder="General Inquiry / Campus Visit" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400">
         </div>
         <div>
-          <label class="block text-slate-300 mb-1">Your Message *</label>
-          <textarea id="contactMessage" rows="4" required placeholder="Write your message here..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400"></textarea>
+          <label class="block text-slate-300 mb-1">Message *</label>
+          <textarea id="contactMessage" rows="4" required class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-400"></textarea>
         </div>
         <button type="submit" class="w-full py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg transition shadow-md">
           Send Inquiry
@@ -420,275 +409,307 @@
       </form>
     </section>
 
-    <!-- ----------------------------------------------------- -->
-    <!-- VIEW 10: ADMIN HUB (FULL FUNCTIONALITY)               -->
-    <!-- ----------------------------------------------------- -->
+    <!-- VIEW 10: ADMIN HUB (AUTH LOCK & CONTROLS) -->
     <section id="view-admin" class="page-view hidden space-y-8">
-      <!-- Admin Hub Navigation / Header -->
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-800">
-        <div>
-          <h2 class="text-2xl font-extrabold text-white tracking-tight">Administration Control Hub</h2>
-          <p class="text-xs text-slate-400">Directly sync branding, calendar events, notices, admissions, and student records with Google Sheets.</p>
+      <!-- LOGIN MODAL -->
+      <div id="adminLoginBox" class="max-w-md mx-auto bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6">
+        <div class="text-center space-y-2">
+          <div class="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-400 text-2xl mx-auto shadow-lg">
+            🔒
+          </div>
+          <h2 class="text-2xl font-black text-white">Admin Authentication</h2>
+          <p class="text-xs text-slate-400">Sign in with administrator credentials to manage records.</p>
         </div>
-        <!-- Admin Sub-Navigation Tabs -->
-        <div class="flex flex-wrap gap-2 text-xs">
-          <button onclick="switchAdminTab('branding')" class="admin-tab-btn px-3 py-1.5 bg-slate-800 text-amber-400 rounded-lg font-bold border border-slate-700" data-tab="branding">Branding</button>
-          <button onclick="switchAdminTab('events')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="events">Events</button>
-          <button onclick="switchAdminTab('notices')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="notices">Notices</button>
-          <button onclick="switchAdminTab('students')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="students">Students</button>
-          <button onclick="switchAdminTab('admissions')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="admissions">Admissions</button>
-          <button onclick="switchAdminTab('drive')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="drive">Drive Upload</button>
-          <button onclick="switchAdminTab('leads')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="leads">Agency Leads</button>
-        </div>
+
+        <form onsubmit="handleAdminLogin(event)" class="space-y-4 text-xs">
+          <div>
+            <label class="block text-slate-300 mb-1 font-semibold">Username</label>
+            <input type="text" id="adminAuthUser" required placeholder="admin" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1 font-semibold">Password</label>
+            <input type="password" id="adminAuthPass" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400">
+          </div>
+          
+          <div class="flex justify-between items-center text-[11px] pt-1">
+            <button type="button" onclick="handleForgotPassword()" class="text-amber-400 hover:underline font-semibold">
+              Forgot Password?
+            </button>
+          </div>
+
+          <button type="submit" id="adminLoginBtn" class="w-full py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl text-sm transition shadow-lg shadow-amber-400/20 active:scale-95">
+            Log In to Admin Hub
+          </button>
+        </form>
       </div>
 
-      <!-- TAB 1: BRANDING, TICKER & STAT COUNTERS -->
-      <div id="admin-tab-branding" class="admin-tab-pane space-y-6">
-        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-2xl space-y-5 shadow-xl">
-          <h3 class="font-bold text-sm text-amber-400 uppercase tracking-wide">1. School Branding &amp; Notice Ticker</h3>
-          <div class="space-y-3 text-xs">
-            <div>
-              <label class="block text-slate-400 mb-1">School / Organization Name</label>
-              <input type="text" id="adminSchoolName" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Header Tagline</label>
-              <input type="text" id="adminTagline" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Top Notice Ticker Text</label>
-              <input type="text" id="adminNoticeTicker" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
-            </div>
-
-            <!-- Hero Stat Counters Settings -->
-            <div class="pt-4 border-t border-slate-800 space-y-3">
-              <h4 class="font-bold text-xs text-amber-400 uppercase tracking-wide">Hero Stat Counters</h4>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-slate-400 mb-1">Students Enrolled Count</label>
-                  <input type="text" id="adminCountStudents" placeholder="2,400+" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
-                </div>
-                <div>
-                  <label class="block text-slate-400 mb-1">Board Pass Record</label>
-                  <input type="text" id="adminCountBoardPass" placeholder="100%" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
-                </div>
-                <div>
-                  <label class="block text-slate-400 mb-1">Faculty Ratio</label>
-                  <input type="text" id="adminCountFacultyRatio" placeholder="1:20" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
-                </div>
-                <div>
-                  <label class="block text-slate-400 mb-1">Campus Area</label>
-                  <input type="text" id="adminCountCampusArea" placeholder="15 Acres" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
-                </div>
-              </div>
-            </div>
-
-            <button onclick="saveAdminSettings()" class="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg transition shadow-md">
-              Save Branding &amp; Counter Updates
+      <!-- AUTHENTICATED ADMIN DASHBOARD -->
+      <div id="adminProtectedContent" class="hidden space-y-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-800">
+          <div>
+            <h2 class="text-2xl font-extrabold text-white tracking-tight">Administration Control Hub</h2>
+            <p class="text-xs text-slate-400">Directly sync branding, calendar events, notices, admissions, and student records.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <button onclick="switchAdminTab('branding')" class="admin-tab-btn px-3 py-1.5 bg-slate-800 text-amber-400 rounded-lg font-bold border border-slate-700" data-tab="branding">Branding</button>
+            <button onclick="switchAdminTab('events')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="events">Events</button>
+            <button onclick="switchAdminTab('notices')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="notices">Notices</button>
+            <button onclick="switchAdminTab('students')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="students">Students</button>
+            <button onclick="switchAdminTab('admissions')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="admissions">Admissions</button>
+            <button onclick="switchAdminTab('drive')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="drive">Drive Upload</button>
+            <button onclick="switchAdminTab('leads')" class="admin-tab-btn px-3 py-1.5 bg-slate-900 text-slate-400 rounded-lg font-semibold border border-slate-800" data-tab="leads">Agency Leads</button>
+            <button onclick="handleAdminLogout()" class="px-3 py-1.5 bg-rose-900/40 text-rose-300 hover:bg-rose-800 border border-rose-800 rounded-lg font-semibold transition">
+              Logout
             </button>
           </div>
         </div>
-      </div>
 
-      <!-- TAB 2: EVENTS SCHEDULER -->
-      <div id="admin-tab-events" class="admin-tab-pane hidden space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-4 shadow-xl">
-            <h3 class="font-bold text-sm text-cyan-400 uppercase tracking-wide">Add New Calendar Event</h3>
-            <form onsubmit="adminAddEvent(event)" class="space-y-3 text-xs">
+        <!-- TAB 1: BRANDING & HERO COUNTERS -->
+        <div id="admin-tab-branding" class="admin-tab-pane space-y-6">
+          <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-2xl space-y-5 shadow-xl">
+            <h3 class="font-bold text-sm text-amber-400 uppercase tracking-wide">1. Branding &amp; Ticker</h3>
+            <div class="space-y-3 text-xs">
               <div>
-                <label class="block text-slate-400 mb-1">Event Title *</label>
-                <input type="text" id="evTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+                <label class="block text-slate-400 mb-1">School Name</label>
+                <input type="text" id="adminSchoolName" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
               </div>
-              <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-slate-400 mb-1">Tagline</label>
+                <input type="text" id="adminTagline" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Notice Ticker Text</label>
+                <input type="text" id="adminNoticeTicker" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-amber-400">
+              </div>
+
+              <div class="pt-4 border-t border-slate-800 space-y-3">
+                <h4 class="font-bold text-xs text-amber-400 uppercase tracking-wide">Hero Stat Counters</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-slate-400 mb-1">Students Enrolled</label>
+                    <input type="text" id="adminCountStudents" placeholder="2,400+" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  </div>
+                  <div>
+                    <label class="block text-slate-400 mb-1">Board Pass Record</label>
+                    <input type="text" id="adminCountBoardPass" placeholder="100%" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  </div>
+                  <div>
+                    <label class="block text-slate-400 mb-1">Faculty Ratio</label>
+                    <input type="text" id="adminCountFacultyRatio" placeholder="01:20" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  </div>
+                  <div>
+                    <label class="block text-slate-400 mb-1">Campus Area</label>
+                    <input type="text" id="adminCountCampusArea" placeholder="15 Acres" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  </div>
+                </div>
+              </div>
+
+              <button onclick="saveAdminSettings()" class="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-lg transition shadow-md">
+                Save Branding &amp; Counter Updates
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: EVENTS SCHEDULER -->
+        <div id="admin-tab-events" class="admin-tab-pane hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-4 shadow-xl">
+              <h3 class="font-bold text-sm text-cyan-400 uppercase tracking-wide">Add New Calendar Event</h3>
+              <form onsubmit="adminAddEvent(event)" class="space-y-3 text-xs">
                 <div>
-                  <label class="block text-slate-400 mb-1">Date *</label>
-                  <input type="date" id="evDate" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+                  <label class="block text-slate-400 mb-1">Event Title *</label>
+                  <input type="text" id="evTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-slate-400 mb-1">Date *</label>
+                    <input type="date" id="evDate" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+                  </div>
+                  <div>
+                    <label class="block text-slate-400 mb-1">Time (e.g. 10:00 AM)</label>
+                    <input type="text" id="evTime" placeholder="10:00 AM" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+                  </div>
                 </div>
                 <div>
-                  <label class="block text-slate-400 mb-1">Time (e.g. 10:00 AM)</label>
-                  <input type="text" id="evTime" placeholder="10:00 AM" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+                  <label class="block text-slate-400 mb-1">Location</label>
+                  <input type="text" id="evLoc" placeholder="Main Auditorium" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
                 </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">Description</label>
+                  <textarea id="evDesc" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400"></textarea>
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-cyan-600 hover:bg-cyan-500 font-semibold rounded-lg transition shadow-md">
+                  Publish Event
+                </button>
+              </form>
+            </div>
+
+            <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 space-y-4">
+              <h3 class="font-bold text-sm text-slate-300 uppercase tracking-wide">Live Calendar Review</h3>
+              <div id="adminEventsReviewList" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 text-xs">
+                <p class="text-slate-500">Loading events...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: NOTICES POSTER -->
+        <div id="admin-tab-notices" class="admin-tab-pane hidden space-y-6">
+          <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-xl space-y-4 shadow-xl">
+            <h3 class="font-bold text-sm text-emerald-400 uppercase tracking-wide">Post Circular / Notice</h3>
+            <form onsubmit="adminAddNotice(event)" class="space-y-3 text-xs">
+              <div>
+                <label class="block text-slate-400 mb-1">Title *</label>
+                <input type="text" id="ntTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-emerald-400">
               </div>
               <div>
-                <label class="block text-slate-400 mb-1">Location</label>
-                <input type="text" id="evLoc" placeholder="Senior Auditorium" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400">
+                <label class="block text-slate-400 mb-1">Category</label>
+                <input type="text" id="ntCat" placeholder="Academic / Holiday / Examination" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-emerald-400">
               </div>
               <div>
-                <label class="block text-slate-400 mb-1">Description</label>
-                <textarea id="evDesc" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-cyan-400"></textarea>
+                <label class="block text-slate-400 mb-1">Details *</label>
+                <textarea id="ntDet" rows="3" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-emerald-400"></textarea>
               </div>
-              <button type="submit" class="w-full py-2.5 bg-cyan-600 hover:bg-cyan-500 font-semibold rounded-lg transition shadow-md">
-                Publish Event
+              <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 font-semibold rounded-lg transition shadow-md">
+                Broadcast Notice
               </button>
             </form>
           </div>
+        </div>
 
-          <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-sm text-slate-300 uppercase tracking-wide">Live Calendar Sync</h3>
-            <div id="adminEventsReviewList" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 text-xs">
-              <p class="text-slate-500">Loading events...</p>
+        <!-- TAB 4: STUDENT ROSTER -->
+        <div id="admin-tab-students" class="admin-tab-pane hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-4 shadow-xl">
+              <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wide">Add / Update Student</h3>
+              <form onsubmit="adminSaveStudent(event)" class="space-y-3 text-xs">
+                <div>
+                  <label class="block text-slate-400 mb-1">Enrollment ID *</label>
+                  <input type="text" id="stId" placeholder="GW-2026-001" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+                </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">Student Full Name *</label>
+                  <input type="text" id="stName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-slate-400 mb-1">Class</label>
+                    <input type="text" id="stClass" placeholder="Class 10-A" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  </div>
+                  <div>
+                    <label class="block text-slate-400 mb-1">Attendance</label>
+                    <input type="text" id="stAtt" placeholder="96%" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-slate-400 mb-1">Fee Status</label>
+                    <input type="text" id="stFee" placeholder="Cleared / Due" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  </div>
+                  <div>
+                    <label class="block text-slate-400 mb-1">Term Result</label>
+                    <input type="text" id="stRes" placeholder="Grade A+" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  </div>
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 font-semibold rounded-lg transition shadow-md">
+                  Save Student to Database
+                </button>
+              </form>
+            </div>
+
+            <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 space-y-4">
+              <h3 class="font-bold text-sm text-slate-300 uppercase tracking-wide">Current Student Records</h3>
+              <button onclick="adminLoadStudents()" class="px-3 py-1 bg-slate-800 text-xs rounded border border-slate-700 hover:bg-slate-700">Refresh Roster</button>
+              <div id="adminStudentsTable" class="max-h-[380px] overflow-y-auto text-xs space-y-2">
+                <p class="text-slate-500">Click Refresh to inspect records.</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- TAB 3: NOTICES POSTER -->
-      <div id="admin-tab-notices" class="admin-tab-pane hidden space-y-6">
-        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-xl space-y-4 shadow-xl">
-          <h3 class="font-bold text-sm text-emerald-400 uppercase tracking-wide">Post Official Circular / Notice</h3>
-          <form onsubmit="adminAddNotice(event)" class="space-y-3 text-xs">
+        <!-- TAB 5: ADMISSIONS REVIEW & STATUS MANAGER -->
+        <div id="admin-tab-admissions" class="admin-tab-pane hidden space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <label class="block text-slate-400 mb-1">Notice Title *</label>
-              <input type="text" id="ntTitle" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-emerald-400">
+              <h3 class="font-bold text-sm text-amber-400 uppercase tracking-wide">Submitted Applications</h3>
+              <p class="text-xs text-slate-400">Review student details, residential addresses, and update admission status.</p>
             </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Category</label>
-              <input type="text" id="ntCat" placeholder="Academic / Examination / Holiday" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-emerald-400">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Notice Details *</label>
-              <textarea id="ntDet" rows="3" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-emerald-400"></textarea>
-            </div>
-            <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 font-semibold rounded-lg transition shadow-md">
-              Broadcast Notice
+            <button onclick="adminLoadAdmissions()" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs text-amber-400 font-semibold rounded-lg border border-slate-700 transition">
+              Refresh Applications
             </button>
-          </form>
+          </div>
+          <div class="overflow-x-auto bg-slate-900/80 rounded-2xl border border-slate-800 shadow-xl">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="text-[11px] uppercase tracking-wider text-slate-400 bg-slate-950/80 border-b border-slate-800">
+                <tr>
+                  <th class="px-4 py-3">Time</th>
+                  <th class="px-4 py-3">Student Name</th>
+                  <th class="px-4 py-3">Parent Name</th>
+                  <th class="px-4 py-3">Grade</th>
+                  <th class="px-4 py-3">Phone</th>
+                  <th class="px-4 py-3">Residential Address</th>
+                  <th class="px-4 py-3">Current Status</th>
+                  <th class="px-4 py-3">Change Status</th>
+                </tr>
+              </thead>
+              <tbody id="admissionsTableBody" class="divide-y divide-slate-800">
+                <tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">Loading admissions...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
-      <!-- TAB 4: STUDENT ROSTER EDITOR -->
-      <div id="admin-tab-students" class="admin-tab-pane hidden space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-4 shadow-xl">
-            <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wide">Add / Update Student Record</h3>
-            <form onsubmit="adminSaveStudent(event)" class="space-y-3 text-xs">
+        <!-- TAB 6: GOOGLE DRIVE UPLOADER -->
+        <div id="admin-tab-drive" class="admin-tab-pane hidden space-y-6">
+          <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-xl space-y-4 shadow-xl">
+            <h3 class="font-bold text-sm text-purple-400 uppercase tracking-wide">Cloud Drive Media Uploader</h3>
+            <div class="space-y-3 text-xs">
               <div>
-                <label class="block text-slate-400 mb-1">Enrollment ID *</label>
-                <input type="text" id="stId" placeholder="GW-2026-001" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+                <label class="block text-slate-400 mb-1">Image Title</label>
+                <input type="text" id="upTitle" placeholder="Sports Day 2026" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
               </div>
               <div>
-                <label class="block text-slate-400 mb-1">Student Full Name *</label>
-                <input type="text" id="stName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
+                <label class="block text-slate-400 mb-1">Category</label>
+                <input type="text" id="upCat" placeholder="Campus / Sports / Lab" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
               </div>
-              <div class="grid grid-cols-2 gap-2">
-                <div>
-                  <label class="block text-slate-400 mb-1">Class / Section</label>
-                  <input type="text" id="stClass" placeholder="Class 10-A" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
-                </div>
-                <div>
-                  <label class="block text-slate-400 mb-1">Attendance (e.g. 96%)</label>
-                  <input type="text" id="stAtt" placeholder="96%" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
-                </div>
+              <div>
+                <label class="block text-slate-400 mb-1">Choose Image</label>
+                <input type="file" id="mediaFile" accept="image/*" class="w-full text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-white hover:file:bg-slate-700">
               </div>
-              <div class="grid grid-cols-2 gap-2">
-                <div>
-                  <label class="block text-slate-400 mb-1">Fee Status</label>
-                  <input type="text" id="stFee" placeholder="Cleared / Pending" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
-                </div>
-                <div>
-                  <label class="block text-slate-400 mb-1">Term Result</label>
-                  <input type="text" id="stRes" placeholder="Grade A+ (94%)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-indigo-400">
-                </div>
-              </div>
-              <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 font-semibold rounded-lg transition shadow-md">
-                Save Student to Database
+              <button onclick="adminUploadDriveMedia()" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 font-semibold rounded-lg transition shadow-md">
+                Upload &amp; Sync Gallery
               </button>
-            </form>
-          </div>
-
-          <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-sm text-slate-300 uppercase tracking-wide">Current Student Records</h3>
-            <button onclick="adminLoadStudents()" class="px-3 py-1 bg-slate-800 text-xs rounded border border-slate-700 hover:bg-slate-700">Refresh Roster</button>
-            <div id="adminStudentsTable" class="max-h-[380px] overflow-y-auto text-xs space-y-2">
-              <p class="text-slate-500">Click Refresh to inspect records.</p>
+              <div id="driveUploadResult" class="hidden p-3 bg-slate-950 rounded-lg border border-slate-800 break-all text-xs"></div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- TAB 5: ADMISSIONS REVIEW & STATUS MANAGER -->
-      <div id="admin-tab-admissions" class="admin-tab-pane hidden space-y-6">
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-    <div>
-      <h3 class="font-bold text-sm text-slate-100 uppercase tracking-wide">Submitted Admission Applications</h3>
-      <p class="text-xs text-slate-400">Review applicant records, residential addresses, and update admission status.</p>
-    </div>
-    <button onclick="adminLoadAdmissions()" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs text-amber-400 font-semibold rounded-lg border border-slate-700 transition">
-      Refresh Applications
-    </button>
-  </div>
-
-  <div class="overflow-x-auto bg-slate-900/80 rounded-2xl border border-slate-800 shadow-xl">
-    <table class="w-full text-left text-xs text-slate-300">
-      <thead class="text-[11px] uppercase tracking-wider text-slate-400 bg-slate-950/80 border-b border-slate-800">
-        <tr>
-          <th class="px-4 py-3">Time</th>
-          <th class="px-4 py-3">Student Name</th>
-          <th class="px-4 py-3">Parent Name</th>
-          <th class="px-4 py-3">Grade</th>
-          <th class="px-4 py-3">Phone</th>
-          <th class="px-4 py-3">Residential Address</th>
-          <th class="px-4 py-3">Current Status</th>
-          <th class="px-4 py-3">Change Status</th>
-        </tr>
-      </thead>
-      <tbody id="admissionsTableBody" class="divide-y divide-slate-800">
-        <tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">Loading admissions...</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-      <!-- TAB 6: GOOGLE DRIVE UPLOADER -->
-      <div id="admin-tab-drive" class="admin-tab-pane hidden space-y-6">
-        <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 max-w-xl space-y-4 shadow-xl">
-          <h3 class="font-bold text-sm text-purple-400 uppercase tracking-wide">Direct Cloud Drive Media Uploader</h3>
-          <div class="space-y-3 text-xs">
-            <div>
-              <label class="block text-slate-400 mb-1">Image Title</label>
-              <input type="text" id="upTitle" placeholder="Annual Sports Day 2026" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Category</label>
-              <input type="text" id="upCat" placeholder="Sports / Campus / Science" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Choose File</label>
-              <input type="file" id="mediaFile" accept="image/*" class="w-full text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-white hover:file:bg-slate-700">
-            </div>
-            <button onclick="adminUploadDriveMedia()" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 font-semibold rounded-lg transition shadow-md">
-              Upload to Drive &amp; Sync Gallery
-            </button>
-            <div id="driveUploadResult" class="hidden p-3 bg-slate-950 rounded-lg border border-slate-800 break-all text-xs"></div>
+        <!-- TAB 7: LEADS CRM -->
+        <div id="admin-tab-leads" class="admin-tab-pane hidden space-y-6">
+          <div class="flex justify-between items-center">
+            <h3 class="font-bold text-sm text-cyan-400 uppercase tracking-wide">Agency Project Leads CRM</h3>
+            <button onclick="adminLoadLeads()" class="px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-xs rounded shadow transition">Refresh Leads</button>
+          </div>
+          <div class="overflow-x-auto bg-slate-900/80 rounded-2xl border border-slate-800">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="text-[11px] uppercase tracking-wider text-slate-400 bg-slate-950/80 border-b border-slate-800">
+                <tr>
+                  <th class="px-4 py-3">Timestamp</th>
+                  <th class="px-4 py-3">Client</th>
+                  <th class="px-4 py-3">Email</th>
+                  <th class="px-4 py-3">Service</th>
+                  <th class="px-4 py-3">Budget</th>
+                  <th class="px-4 py-3">Details</th>
+                </tr>
+              </thead>
+              <tbody id="adminLeadsTableBody" class="divide-y divide-slate-800">
+                <tr><td colspan="6" class="px-4 py-6 text-center text-slate-500">Click refresh to load inquiries.</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-
-      <!-- TAB 7: AGENCY LEADS CRM -->
-      <div id="admin-tab-leads" class="admin-tab-pane hidden space-y-6">
-        <div class="flex justify-between items-center">
-          <h3 class="font-bold text-sm text-cyan-400 uppercase tracking-wide">Agency Project Leads CRM</h3>
-          <button onclick="adminLoadLeads()" class="px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-xs rounded shadow transition">Refresh Leads</button>
-        </div>
-        <div class="overflow-x-auto bg-slate-900/80 rounded-2xl border border-slate-800">
-          <table class="w-full text-left text-xs text-slate-300">
-            <thead class="text-[11px] uppercase tracking-wider text-slate-400 bg-slate-950/80 border-b border-slate-800">
-              <tr>
-                <th class="px-4 py-3">Timestamp</th>
-                <th class="px-4 py-3">Client</th>
-                <th class="px-4 py-3">Email</th>
-                <th class="px-4 py-3">Service</th>
-                <th class="px-4 py-3">Budget</th>
-                <th class="px-4 py-3">Details</th>
-              </tr>
-            </thead>
-            <tbody id="adminLeadsTableBody" class="divide-y divide-slate-800">
-              <tr><td colspan="6" class="px-4 py-6 text-center text-slate-500">Click refresh to load inquiries.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
     </section>
 
   </main>
@@ -699,18 +720,18 @@
   <footer class="border-t border-slate-900 bg-[#080a14] py-8 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 space-y-2">
       <p>&copy; 2026 Greenwood Public School. Affiliated to CBSE, New Delhi.</p>
-      <p class="text-[11px] text-slate-600">Powered by Google Apps Script, Google Sheets CRM &amp; Tailwind CSS.</p>
+      <p class="text-[11px] text-slate-600">Google Apps Script &amp; Google Sheets CRM Engine.</p>
     </div>
   </footer>
 
   <!-- ========================================================= -->
-  <!-- 5. CLIENT-SIDE CONTROLLER & APP ENGINE                    -->
+  <!-- 5. JAVASCRIPT CONTROLLER                                 -->
   <!-- ========================================================= -->
   <script>
     let calendarInstance = null;
     let eventsCache = [];
+    let isAdminAuthenticated = false;
 
-    // Bootstrapping on DOM Load
     window.addEventListener('DOMContentLoaded', () => {
       fetchSettings();
       fetchEvents();
@@ -718,14 +739,21 @@
       fetchGallery();
     });
 
-    // -------------------------------------------------------------
-    // NAVIGATION ROUTER
-    // -------------------------------------------------------------
+    // NAVIGATION
     function navigateTo(viewId) {
       document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById('view-' + viewId);
       if (target) {
         target.classList.remove('hidden');
+        if (viewId === 'admin') {
+          if (isAdminAuthenticated) {
+            document.getElementById('adminLoginBox').classList.add('hidden');
+            document.getElementById('adminProtectedContent').classList.remove('hidden');
+          } else {
+            document.getElementById('adminProtectedContent').classList.add('hidden');
+            document.getElementById('adminLoginBox').classList.remove('hidden');
+          }
+        }
         if (viewId === 'calendar') {
           setTimeout(() => {
             if (calendarInstance) calendarInstance.render();
@@ -762,59 +790,174 @@
       if (tabId === 'students') adminLoadStudents();
     }
 
-    // -------------------------------------------------------------
-    // BRANDING & STAT COUNTERS ENGINE
-    // -------------------------------------------------------------
+    // AUTHENTICATION & FORGOT PASSWORD WORKFLOW
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('adminAuthUser').value;
+      const pass = document.getElementById('adminAuthPass').value;
+      const btn = document.getElementById('adminLoginBtn');
+
+      btn.innerText = 'Verifying...';
+      btn.disabled = true;
+
+      google.script.run
+        .withSuccessHandler(res => {
+          btn.innerText = 'Log In to Admin Hub';
+          btn.disabled = false;
+
+          if (res && res.success) {
+            isAdminAuthenticated = true;
+            document.getElementById('adminLoginBox').classList.add('hidden');
+            document.getElementById('adminProtectedContent').classList.remove('hidden');
+            switchAdminTab('branding');
+          } else {
+            alert('⚠️ ' + (res ? res.message : 'Invalid username or password.'));
+          }
+        })
+        .withFailureHandler(err => {
+          btn.innerText = 'Log In to Admin Hub';
+          btn.disabled = false;
+          alert('❌ Authentication Error: ' + err.message);
+        })
+        .verifyAdminCredentials(user, pass);
+    }
+
+    function handleAdminLogout() {
+      isAdminAuthenticated = false;
+      document.getElementById('adminAuthPass').value = '';
+      document.getElementById('adminProtectedContent').classList.add('hidden');
+      document.getElementById('adminLoginBox').classList.remove('hidden');
+    }
+
+    function handleForgotPassword() {
+      const mobile = prompt("Enter your registered administrator mobile number:");
+      if (!mobile || !mobile.trim()) {
+        alert("Mobile number is required for password recovery.");
+        return;
+      }
+
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res && res.success) {
+            alert(`🔑 PASSWORD RESET OTP\n\nYour 6-Digit OTP is: ${res.otp}\n\n(Valid for 10 minutes)`);
+
+            const enteredOtp = prompt("Enter the 6-digit OTP shown in the alert:");
+            if (!enteredOtp || !enteredOtp.trim()) {
+              alert("Password reset cancelled: OTP was not entered.");
+              return;
+            }
+
+            const newPassword = prompt("Enter your new administrator password:");
+            if (!newPassword || !newPassword.trim()) {
+              alert("Password reset cancelled: New password cannot be empty.");
+              return;
+            }
+
+            google.script.run
+              .withSuccessHandler(updateRes => {
+                if (updateRes && updateRes.success) {
+                  alert("✅ " + updateRes.message);
+                  document.getElementById('adminAuthUser').value = 'admin';
+                  document.getElementById('adminAuthPass').value = '';
+                  document.getElementById('adminAuthPass').focus();
+                } else {
+                  alert("⚠️ " + (updateRes ? updateRes.message : "Reset failed."));
+                }
+              })
+              .withFailureHandler(err => alert("❌ Server Error: " + err.message))
+              .updateAdminPassword(enteredOtp, newPassword);
+
+          } else {
+            alert("⚠️ " + (res ? res.message : "Could not generate OTP."));
+          }
+        })
+        .withFailureHandler(err => alert("❌ Error connecting to server: " + err.message))
+        .generateAdminOtpForMobile(mobile);
+    }
+
+    // SETTINGS LOADER
     function fetchSettings() {
       google.script.run
         .withSuccessHandler(res => {
           if (res && res.success && res.data) {
             const d = res.data;
-            if (d.schoolName) {
-              document.getElementById('brandSchoolName').innerText = d.schoolName;
-              document.getElementById('adminSchoolName').value = d.schoolName;
+            if (d.SchoolName) {
+              document.getElementById('brandSchoolName').innerText = d.SchoolName;
+              document.getElementById('adminSchoolName').value = d.SchoolName;
             }
-            if (d.tagline) {
-              document.getElementById('brandTagline').innerText = d.tagline;
-              document.getElementById('adminTagline').value = d.tagline;
+            if (d.SchoolTagline) {
+              document.getElementById('brandTagline').innerText = d.SchoolTagline;
+              document.getElementById('adminTagline').value = d.SchoolTagline;
             }
-            if (d.noticeTicker) {
-              document.getElementById('tickerContent').innerText = d.noticeTicker;
-              document.getElementById('adminNoticeTicker').value = d.noticeTicker;
+            if (d.AdmissionTickerAlert) {
+              document.getElementById('tickerContent').innerText = d.AdmissionTickerAlert;
+              document.getElementById('adminNoticeTicker').value = d.AdmissionTickerAlert;
+            }
+            if (d.AcademicSession) {
+              document.getElementById('heroSessionBadge').innerText = 'SESSION ' + d.AcademicSession;
+            }
+            if (d.AffiliationNumber) {
+              const el = document.getElementById('aboutAffiliation');
+              if (el) el.innerText = d.AffiliationNumber;
+            }
+            if (d.SchoolCode) {
+              const el = document.getElementById('aboutSchoolCode');
+              if (el) el.innerText = d.SchoolCode;
             }
 
-            // Populate Dynamic Hero Stat Counters
-            if (d.countStudents) {
-              document.getElementById('heroStatStudents').innerText = d.countStudents;
-              document.getElementById('adminCountStudents').value = d.countStudents;
+            // Stat Counters
+            if (d.TotalStudents) {
+              document.getElementById('heroStatStudents').innerText = d.TotalStudents;
+              document.getElementById('adminCountStudents').value = d.TotalStudents;
             }
             if (d.countBoardPass) {
               document.getElementById('heroStatBoardPass').innerText = d.countBoardPass;
               document.getElementById('adminCountBoardPass').value = d.countBoardPass;
             }
-            if (d.countFacultyRatio) {
-              document.getElementById('heroStatFacultyRatio').innerText = d.countFacultyRatio;
-              document.getElementById('adminCountFacultyRatio').value = d.countFacultyRatio;
+            if (d.StudentTeacherRatio) {
+              document.getElementById('heroStatFacultyRatio').innerText = d.StudentTeacherRatio;
+              document.getElementById('adminCountFacultyRatio').value = d.StudentTeacherRatio;
             }
-            if (d.countCampusArea) {
-              document.getElementById('heroStatCampusArea').innerText = d.countCampusArea;
-              document.getElementById('adminCountCampusArea').value = d.countCampusArea;
+            if (d.CampusArea) {
+              document.getElementById('heroStatCampusArea').innerText = d.CampusArea;
+              document.getElementById('adminCountCampusArea').value = d.CampusArea;
+            }
+
+            // Contact displays
+            if (d.SchoolAddress) {
+              const el = document.getElementById('contactAddressDisplay');
+              if (el) el.innerText = d.SchoolAddress;
+            }
+            if (d.ContactPhone) {
+              const el = document.getElementById('contactPhoneDisplay');
+              if (el) el.innerText = d.ContactPhone;
+            }
+            if (d.ContactMobile) {
+              const el = document.getElementById('contactMobileDisplay');
+              if (el) el.innerText = d.ContactMobile;
+            }
+            if (d.OfficeHours) {
+              const el = document.getElementById('contactHoursDisplay');
+              if (el) el.innerText = d.OfficeHours;
+            }
+            if (d.ContactEmail) {
+              const el = document.getElementById('contactEmailDisplay');
+              if (el) el.innerText = d.ContactEmail;
             }
           }
         })
-        .withFailureHandler(err => console.error("Failed to load settings:", err))
         .getSchoolSettings();
     }
 
     function saveAdminSettings() {
       const payload = {
-        schoolName: document.getElementById('adminSchoolName').value.trim(),
-        tagline: document.getElementById('adminTagline').value.trim(),
-        noticeTicker: document.getElementById('adminNoticeTicker').value.trim(),
-        countStudents: document.getElementById('adminCountStudents').value.trim(),
+        SchoolName: document.getElementById('adminSchoolName').value.trim(),
+        SchoolTagline: document.getElementById('adminTagline').value.trim(),
+        AdmissionTickerAlert: document.getElementById('adminNoticeTicker').value.trim(),
+        TotalStudents: document.getElementById('adminCountStudents').value.trim(),
         countBoardPass: document.getElementById('adminCountBoardPass').value.trim(),
-        countFacultyRatio: document.getElementById('adminCountFacultyRatio').value.trim(),
-        countCampusArea: document.getElementById('adminCountCampusArea').value.trim()
+        StudentTeacherRatio: document.getElementById('adminCountFacultyRatio').value.trim(),
+        CampusArea: document.getElementById('adminCountCampusArea').value.trim()
       };
 
       google.script.run
@@ -830,9 +973,7 @@
         .updateSchoolSettings(payload);
     }
 
-    // -------------------------------------------------------------
-    // CALENDAR & EVENTS ENGINE (CLEAN DATE PARSING)
-    // -------------------------------------------------------------
+    // CALENDAR EVENTS
     function fetchEvents() {
       const list = document.getElementById('eventsList');
       const adminList = document.getElementById('adminEventsReviewList');
@@ -871,7 +1012,6 @@
             if (adminList) adminList.innerHTML = html;
           }
 
-          // FullCalendar Initialization
           const calEl = document.getElementById('calendar');
           if (calendarInstance) calendarInstance.destroy();
 
@@ -928,9 +1068,7 @@
         .addCalendarEvent(payload);
     }
 
-    // -------------------------------------------------------------
-    // NOTICES ENGINE
-    // -------------------------------------------------------------
+    // NOTICES
     function fetchNotices() {
       const container = document.getElementById('noticesContainer');
       google.script.run
@@ -977,9 +1115,7 @@
         .addNotice(payload);
     }
 
-    // -------------------------------------------------------------
-    // GALLERY ENGINE
-    // -------------------------------------------------------------
+    // GALLERY
     function fetchGallery() {
       const gBox = document.getElementById('galleryContainer');
       google.script.run
@@ -1006,9 +1142,7 @@
         .getGalleryImages();
     }
 
-    // -------------------------------------------------------------
-    // STUDENT ROSTER & VERIFICATION
-    // -------------------------------------------------------------
+    // STUDENT PORTAL
     function searchStudent() {
       const q = document.getElementById('searchStudentId').value.trim();
       const box = document.getElementById('studentResultCard');
@@ -1029,7 +1163,7 @@
               <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-800 text-center">
                 <div><span class="text-slate-400 text-[10px] block">Class</span><b class="text-white">${s.class}</b></div>
                 <div><span class="text-slate-400 text-[10px] block">Attendance</span><b class="text-emerald-400">${s.attendance}</b></div>
-                <div><span class="text-slate-400 text-[10px] block">Fee Clearance</span><b class="text-amber-400">${s.feeStatus}</b></div>
+                <div><span class="text-slate-400 text-[10px] block">Fee Status</span><b class="text-amber-400">${s.feeStatus}</b></div>
               </div>
               <div class="pt-2 border-t border-slate-800/80">
                 <span class="text-slate-400 text-[10px] block">Term Grade / Result:</span>
@@ -1095,9 +1229,7 @@
         .getAllStudents();
     }
 
-    // -------------------------------------------------------------
-    // ADMISSIONS PIPELINE & STATUS MANAGER
-    // -------------------------------------------------------------
+    // ADMISSIONS PIPELINE
     function submitAdmission(e) {
       e.preventDefault();
       const btn = document.getElementById('admSubmitBtn');
@@ -1133,79 +1265,76 @@
         .submitAdmissionForm(payload);
     }
 
-function adminLoadAdmissions() {
-  const tbody = document.getElementById('admissionsTableBody');
-  tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">Loading applications...</td></tr>';
+    function adminLoadAdmissions() {
+      const tbody = document.getElementById('admissionsTableBody');
+      tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">Loading admissions...</td></tr>';
 
-  google.script.run
-    .withSuccessHandler(data => {
-      if (!data || !data.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">No applications registered.</td></tr>';
-        return;
-      }
-      tbody.innerHTML = data.map(row => {
-        // Status badge color logic
-        let badgeClass = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-        if (row.status === 'Enrolled' || row.status === 'Approved') {
-          badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-        } else if (row.status === 'Interview Scheduled') {
-          badgeClass = 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
-        } else if (row.status === 'Rejected') {
-          badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
-        }
+      google.script.run
+        .withSuccessHandler(data => {
+          if (!data || !data.length) {
+            tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-6 text-center text-slate-500">No applications registered.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = data.map(row => {
+            let badgeClass = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+            if (row.status === 'Enrolled' || row.status === 'Approved') {
+              badgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+            } else if (row.status === 'Interview Scheduled') {
+              badgeClass = 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
+            } else if (row.status === 'Rejected') {
+              badgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30';
+            }
 
-        return `
-          <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/60">
-            <td class="px-4 py-3 whitespace-nowrap text-slate-400 font-mono text-[11px]">${row.time}</td>
-            <td class="px-4 py-3 font-bold text-white">${row.student}</td>
-            <td class="px-4 py-3 text-slate-300">${row.parent}</td>
-            <td class="px-4 py-3 text-amber-400 font-semibold">${row.grade}</td>
-            <td class="px-4 py-3 text-slate-300 font-mono text-[11px]">${row.phone}</td>
-            <td class="px-4 py-3 text-slate-300 max-w-xs truncate text-[11px]">${row.address || '—'}</td>
-            <td class="px-4 py-3 whitespace-nowrap">
-              <span class="inline-block px-2.5 py-0.5 rounded-full border text-[10px] font-bold ${badgeClass}">
-                ${row.status}
-              </span>
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap">
-              <select onchange="changeAdmissionStatus(${row.rowNumber}, this.value)" class="bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-amber-400">
-                <option value="" disabled selected>Update...</option>
-                <option value="Pending Review">Pending Review</option>
-                <option value="Interview Scheduled">Interview Scheduled</option>
-                <option value="Approved">Approved</option>
-                <option value="Enrolled">Enrolled</option>
-                <option value="Rejected">Rejected</option>
-              </select>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    })
-    .withFailureHandler(err => {
-      tbody.innerHTML = `<tr><td colspan="8" class="px-4 py-6 text-center text-red-400">Error: ${err.message}</td></tr>`;
-    })
-    .getAdmissions();
-}
+            return `
+              <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/60">
+                <td class="px-4 py-3 whitespace-nowrap text-slate-400 font-mono text-[11px]">${row.time}</td>
+                <td class="px-4 py-3 font-bold text-white">${row.student}</td>
+                <td class="px-4 py-3 text-slate-300">${row.parent}</td>
+                <td class="px-4 py-3 text-amber-400 font-semibold">${row.grade}</td>
+                <td class="px-4 py-3 text-slate-300 font-mono text-[11px]">${row.phone}</td>
+                <td class="px-4 py-3 text-slate-300 max-w-xs truncate text-[11px]">${row.address || '—'}</td>
+                <td class="px-4 py-3 whitespace-nowrap">
+                  <span class="inline-block px-2.5 py-0.5 rounded-full border text-[10px] font-bold ${badgeClass}">
+                    ${row.status}
+                  </span>
+                </td>
+                <td class="px-4 py-3 whitespace-nowrap">
+                  <select onchange="changeAdmissionStatus(${row.rowNumber}, this.value)" class="bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-amber-400">
+                    <option value="" disabled selected>Update...</option>
+                    <option value="Pending Review">Pending Review</option>
+                    <option value="Interview Scheduled">Interview Scheduled</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Enrolled">Enrolled</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        })
+        .withFailureHandler(err => {
+          tbody.innerHTML = `<tr><td colspan="8" class="px-4 py-6 text-center text-red-400">Error: ${err.message}</td></tr>`;
+        })
+        .getAdmissions();
+    }
 
-function changeAdmissionStatus(rowNumber, newStatus) {
-  if (!newStatus) return;
+    function changeAdmissionStatus(rowNumber, newStatus) {
+      if (!newStatus) return;
 
-  google.script.run
-    .withSuccessHandler(res => {
-      if (res && res.success) {
-        alert('✅ ' + res.message);
-        adminLoadAdmissions();
-      } else {
-        alert('⚠️ ' + (res ? res.message : 'Update failed.'));
-      }
-    })
-    .withFailureHandler(err => alert('❌ Server Error: ' + err.message))
-    .updateAdmissionStatus(rowNumber, newStatus);
-}
+      google.script.run
+        .withSuccessHandler(res => {
+          if (res && res.success) {
+            alert('✅ ' + res.message);
+            adminLoadAdmissions();
+          } else {
+            alert('⚠️ ' + (res ? res.message : 'Update failed.'));
+          }
+        })
+        .withFailureHandler(err => alert('❌ Server Error: ' + err.message))
+        .updateAdmissionStatus(rowNumber, newStatus);
+    }
 
-    // -------------------------------------------------------------
-    // CONTACT & LEADS PIPELINE
-    // -------------------------------------------------------------
+    // CONTACT & LEADS
     function submitGeneralInquiry(e) {
       e.preventDefault();
       const payload = {
@@ -1257,9 +1386,7 @@ function changeAdmissionStatus(rowNumber, newStatus) {
         .getLeads();
     }
 
-    // -------------------------------------------------------------
-    // DRIVE CLOUD UPLOADER
-    // -------------------------------------------------------------
+    // DRIVE MEDIA UPLOADER
     function adminUploadDriveMedia() {
       const fileInput = document.getElementById('mediaFile');
       const resBox = document.getElementById('driveUploadResult');
